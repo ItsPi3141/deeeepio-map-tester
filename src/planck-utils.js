@@ -1,5 +1,4 @@
-import { Edge, Vec2 } from "planck";
-import { isClockwise } from "./game-utils/maploader";
+import { Edge, PolygonShape, Vec2 } from "planck";
 
 export function addBoundaries(world, width, height) {
 	const bottom = world.createBody();
@@ -25,30 +24,36 @@ export function addBoundaries(world, width, height) {
 }
 
 export function createTerrainCollider(world, terrain, pdf) {
-	if (!isClockwise(terrain.points)) {
-		terrain.points.reverse();
-	}
-	terrain.points.forEach((p, i) => {
-		const current = terrain.points[i];
-		const last = terrain.points[i > 0 ? i - 1 : terrain.points.length - 1];
+	// if (!isClockwise(terrain.points)) {
+	// 	terrain.points.reverse();
+	// }
+	// terrain.points.forEach((p, i) => {
+	// 	const current = terrain.points[i];
+	// 	const last = terrain.points[i > 0 ? i - 1 : terrain.points.length - 1];
 
-		var v0 = Vec2(p.x / pdf, p.y / pdf);
-		const pOld = terrain.points[(i + 1) % terrain.points.length];
-		var v1 = Vec2(pOld.x / pdf, pOld.y / pdf);
+	// 	var v0 = Vec2(p.x / pdf, p.y / pdf);
+	// 	const pOld = terrain.points[(i + 1) % terrain.points.length];
+	// 	var v1 = Vec2(pOld.x / pdf, pOld.y / pdf);
 
-		var pGhostOld = terrain.points[(terrain.points.length + i - 1) % terrain.points.length];
-		var vprev = Vec2(pGhostOld.x / pdf, pGhostOld.y / pdf);
-		var pGhostNew = terrain.points[(i + 2) % terrain.points.length];
-		var vnext = Vec2(pGhostNew.x / pdf, pGhostNew.y / pdf);
+	// 	var pGhostOld = terrain.points[(terrain.points.length + i - 1) % terrain.points.length];
+	// 	var vprev = Vec2(pGhostOld.x / pdf, pGhostOld.y / pdf);
+	// 	var pGhostNew = terrain.points[(i + 2) % terrain.points.length];
+	// 	var vnext = Vec2(pGhostNew.x / pdf, pGhostNew.y / pdf);
 
-		const edge = world.createBody({
-			userData: { type: isTopEdge(current, last) ? "terrainTop" : "terrainBottom" }
-		});
-		edge.createFixture({
-			shape: Edge(v0, v1).setPrevVertex(vprev).setNextVertex(vnext),
-			friction: 1,
-			restitution: 0
-		});
+	// 	const edge = world.createBody({
+	// 		userData: { type: isTopEdge(current, last) ? "terrainTop" : "terrainBottom" }
+	// 	});
+	// 	edge.createFixture({
+	// 		shape: Edge(v0, v1).setPrevVertex(vprev).setNextVertex(vnext),
+	// 		friction: 1,
+	// 		restitution: 0
+	// 	});
+	// });
+	const shape = world.createBody();
+	shape.createFixture({
+		shape: PolygonShape(terrain.points.map((p) => Vec2(p.x / pdf, p.y / pdf))),
+		friction: 1,
+		restitution: 0
 	});
 }
 
