@@ -19,7 +19,7 @@ import { Animal } from "./objects/animal";
 const map = loadMap(require("./star_rain_ffa.json"));
 console.log(map);
 
-loadAssets();
+await loadAssets();
 
 const world = new planck.World({
 	gravity: planck.Vec2(0, map.settings.gravity * 3)
@@ -183,7 +183,6 @@ map.screenObjects["hide-spaces"].forEach((hidespace) => {
 	object.position.set(hidespace.x, hidespace.y);
 	object.alpha = hidespace.opacity || 1;
 	object.angle = hidespace.rotation;
-	object.cullable = true;
 
 	if (hs.above) {
 		hideSpacesHighLayer.addChild(object);
@@ -298,6 +297,13 @@ function updateAnimal(animal, isMine, isMain = false) {
 			});
 
 			hideSpacesHighLayer.children.forEach((h) => {
+				if ((thisAnimal.pixiAnimal.x - h.x) ** 2 + (thisAnimal.pixiAnimal.y - h.y) ** 2 < Math.max(window.innerHeight, window.innerWidth) * zoom * 20) {
+					h.renderable = true;
+				} else {
+					h.renderable = false;
+				}
+			});
+			hideSpacesLowLayer.children.forEach((h) => {
 				if ((thisAnimal.pixiAnimal.x - h.x) ** 2 + (thisAnimal.pixiAnimal.y - h.y) ** 2 < Math.max(window.innerHeight, window.innerWidth) * zoom * 20) {
 					h.renderable = true;
 				} else {
