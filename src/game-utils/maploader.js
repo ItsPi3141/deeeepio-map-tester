@@ -1,4 +1,5 @@
 import hideSpaces from "./consts/hidespaces.json";
+import props from "./consts/props.json";
 import animals from "./consts/animals.json";
 
 /**
@@ -60,6 +61,9 @@ export function loadMap(json) {
 
 export function getHidespaceById(id) {
 	return hideSpaces.find((h) => h.id == id);
+}
+export function getPropById(id) {
+	return props.find((p) => p.id == id);
 }
 
 export function makeBrighter(t, i) {

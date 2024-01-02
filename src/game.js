@@ -13,7 +13,7 @@ import pointInPolygon from "robust-point-in-polygon";
 
 import { loadAssets } from "./assetsloader";
 
-import { getHidespaceById, loadMap } from "./game-utils/maploader";
+import { getHidespaceById, getPropById, loadMap } from "./game-utils/maploader";
 import { boostPower, linearDampingFactor, planckDownscaleFactor, speedRatio } from "./objects/constants";
 import { Animal } from "./objects/animal";
 const map = loadMap(require("./star_rain_ffa.json"));
@@ -189,6 +189,37 @@ map.screenObjects["hide-spaces"].forEach((hidespace) => {
 	} else {
 		hideSpacesLowLayer.addChild(object);
 	}
+});
+
+map.screenObjects.props.forEach((prop) => {
+	const p = getPropById(prop.pType);
+	const object = new PIXI.Sprite(PIXI.Assets.get(p.asset));
+	object.width = p.width * 10;
+	object.height = p.height * 10;
+	object.anchor.set(p.anchor_x, p.anchor_y);
+	object.position.set(prop.x, prop.y);
+	object.angle = prop.rotation;
+
+	// Message sign
+	if (p.id == 1 && prop.params?.text) {
+		const text = new PIXI.Text(prop.params.text, {
+			fontFamily: "Quicksand",
+			fontSize: 24,
+			fill: 0x7f694e,
+			align: "center",
+			wordWrapWidth: 300,
+			trim: true,
+			wordWrap: true,
+			breakWords: true,
+			fontWeight: "bolder"
+		});
+		text.anchor.set(0.5);
+		text.localTransform.setTransform(0, -350, 0, 0, 1, 1, 0, 0, 0);
+		console.log(text.localTransform);
+		object.addChild(text);
+	}
+
+	propsLayer.addChild(object);
 });
 
 // Get habitats
