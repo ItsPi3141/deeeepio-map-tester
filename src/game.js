@@ -244,7 +244,7 @@ function update(dt) {
 		updateAnimal(animal, true, index == 0);
 	});
 
-	world.step((app.ticker.elapsedMS / 1000) * dt, 5, 3);
+	world.step((app.ticker.elapsedMS / 1000) * dt, 8, 5);
 }
 
 function updateAnimal(animal, isMine, isMain = false) {
