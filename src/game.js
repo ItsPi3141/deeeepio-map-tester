@@ -174,6 +174,24 @@ map.screenObjects.ceilings?.forEach((ceiling) => {
 	ceilingsLayer.addChild(shape);
 });
 
+map.screenObjects["hide-spaces"].forEach((hidespace) => {
+	const hs = getHidespaceById(hidespace.hSType);
+	const object = new PIXI.Sprite(PIXI.Assets.get(hs.asset));
+	object.width = hs.width * 10;
+	object.height = hs.height * 10;
+	object.anchor.set(hs.anchor_x, hs.anchor_y);
+	object.position.set(hidespace.x, hidespace.y);
+	object.alpha = hidespace.opacity || 1;
+	object.angle = hidespace.rotation;
+	object.cullable = true;
+
+	if (hs.above) {
+		hideSpacesHighLayer.addChild(object);
+	} else {
+		hideSpacesLowLayer.addChild(object);
+	}
+});
+
 // Get habitats
 const habitats = map.screenObjects.habitats.map((h) => ({
 	...h,
@@ -279,26 +297,13 @@ function updateAnimal(animal, isMine, isMain = false) {
 				}
 			});
 
-			hideSpacesHighLayer.removeChildren();
-			hideSpacesLowLayer.removeChildren();
-
-			map.screenObjects["hide-spaces"]
-				?.filter((hidespace) => (thisAnimal.pixiAnimal.x - hidespace.x) ** 2 + (thisAnimal.pixiAnimal.y - hidespace.y) ** 2 < Math.max(window.innerHeight, window.innerWidth) * zoom * 20)
-				.forEach((hidespace) => {
-					const hs = getHidespaceById(hidespace.hSType);
-					const object = new PIXI.Sprite(PIXI.Assets.get(hs.asset));
-					object.width = hs.width * 10;
-					object.height = hs.height * 10;
-					object.anchor.set(hs.anchor_x, hs.anchor_y);
-					object.position.set(hidespace.x, hidespace.y);
-					object.alpha = hidespace.opacity || 1;
-					object.angle = hidespace.rotation;
-					if (hs.above) {
-						hideSpacesHighLayer.addChild(object);
-					} else {
-						hideSpacesLowLayer.addChild(object);
-					}
-				});
+			hideSpacesHighLayer.children.forEach((h) => {
+				if ((thisAnimal.pixiAnimal.x - h.x) ** 2 + (thisAnimal.pixiAnimal.y - h.y) ** 2 < Math.max(window.innerHeight, window.innerWidth) * zoom * 20) {
+					h.renderable = true;
+				} else {
+					h.renderable = false;
+				}
+			});
 		}
 	}
 }
