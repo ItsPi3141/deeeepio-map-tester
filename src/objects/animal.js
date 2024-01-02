@@ -1,8 +1,8 @@
-import { World, Box, Body, Vec2 } from "planck";
+import { Box, Vec2 } from "planck";
 import { calculateAssetSize } from "../game-utils/animal-sizing";
 import { linearDampingFactor, planckDownscaleFactor, speedRatio } from "./constants";
 import animals from "../game-utils/consts/animals.json";
-import { Container, Sprite, Texture } from "pixi.js";
+import { Sprite, Texture } from "pixi.js";
 
 export class Animal {
 	constructor(world, fishLevelId, pixiAnimalsLayer, x, y) {
