@@ -1,0 +1,48 @@
+{
+	"frames": {
+		"anemone.png": {
+			"frame": { "x": 824, "y": 1677, "w": 224, "h": 240 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 224, "h": 240 },
+			"sourceSize": { "w": 224, "h": 240 }
+		},
+		"boat.png": {
+			"frame": { "x": 1, "y": 1, "w": 1414, "h": 1673 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 1414, "h": 1673 },
+			"sourceSize": { "w": 1414, "h": 1673 }
+		},
+		"coral1.png": {
+			"frame": { "x": 1051, "y": 1677, "w": 248, "h": 218 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 248, "h": 218 },
+			"sourceSize": { "w": 248, "h": 218 }
+		},
+		"coral3.png": {
+			"frame": { "x": 510, "y": 1677, "w": 311, "h": 325 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 311, "h": 325 },
+			"sourceSize": { "w": 311, "h": 325 }
+		},
+		"coral4.png": {
+			"frame": { "x": 1, "y": 1677, "w": 506, "h": 327 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 506, "h": 327 },
+			"sourceSize": { "w": 506, "h": 327 }
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "2.png",
+		"format": "RGBA8888",
+		"size": { "w": 1416, "h": 2005 },
+		"scale": "1",
+		"smartupdate": "$TexturePacker:SmartUpdate:86fa38fe95b42a25f3f711530f85dc7a:0512110114c1b5023b4f288ced869075:a0e33eca061a53f402589a4f7c637ca2$"
+	}
+}

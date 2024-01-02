@@ -1,0 +1,98 @@
+{
+	"frames": {
+		"anemone.png": {
+			"frame": { "x": 641, "y": 1, "w": 256, "h": 219 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 219 },
+			"sourceSize": { "w": 256, "h": 219 }
+		},
+		"beaverdam.png": {
+			"frame": { "x": 1, "y": 459, "w": 256, "h": 247 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 247 },
+			"sourceSize": { "w": 256, "h": 247 }
+		},
+		"bigstalactite.png": {
+			"frame": { "x": 198, "y": 169, "w": 192, "h": 287 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 192, "h": 287 },
+			"sourceSize": { "w": 192, "h": 287 }
+		},
+		"bush.png": {
+			"frame": { "x": 1, "y": 1, "w": 197, "h": 121 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 197, "h": 121 },
+			"sourceSize": { "w": 197, "h": 121 }
+		},
+		"pineapple.png": {
+			"frame": { "x": 496, "y": 751, "w": 322, "h": 368 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 322, "h": 368 },
+			"sourceSize": { "w": 322, "h": 368 }
+		},
+		"stalactite4.png": {
+			"frame": { "x": 201, "y": 1, "w": 203, "h": 165 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 203, "h": 165 },
+			"sourceSize": { "w": 203, "h": 165 }
+		},
+		"stalactitehole1.png": {
+			"frame": { "x": 393, "y": 223, "w": 255, "h": 241 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 255, "h": 241 },
+			"sourceSize": { "w": 255, "h": 241 }
+		},
+		"stalactitehole2.png": {
+			"frame": { "x": 407, "y": 1, "w": 231, "h": 213 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 231, "h": 213 },
+			"sourceSize": { "w": 231, "h": 213 }
+		},
+		"swampbrokentree.png": {
+			"frame": { "x": 1, "y": 751, "w": 492, "h": 308 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 492, "h": 308 },
+			"sourceSize": { "w": 492, "h": 308 }
+		},
+		"swampbush.png": {
+			"frame": { "x": 260, "y": 472, "w": 700, "h": 276 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 700, "h": 276 },
+			"sourceSize": { "w": 700, "h": 276 }
+		},
+		"turbulentwater.png": {
+			"frame": { "x": 651, "y": 223, "w": 257, "h": 246 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 257, "h": 246 },
+			"sourceSize": { "w": 257, "h": 246 }
+		},
+		"volcano.png": {
+			"frame": { "x": 1, "y": 125, "w": 194, "h": 237 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 194, "h": 237 },
+			"sourceSize": { "w": 194, "h": 237 }
+		}
+	},
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "2.png",
+		"format": "RGBA8888",
+		"size": { "w": 961, "h": 1120 },
+		"scale": "1",
+		"related_multi_packs": ["1.json"],
+		"smartupdate": "$TexturePacker:SmartUpdate:d3d5c2eb2a8beafac1d1afe0d9ba5acc:cc513ab3d4138c20a59d5a0972fe958c:bd49c71d58b70d018da8866c20a11e63$"
+	}
+}

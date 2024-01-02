@@ -1,0 +1,20 @@
+{
+	"frames": {
+		"shipwreckb.png": {
+			"frame": { "x": 1, "y": 1, "w": 1018, "h": 763 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 1018, "h": 763 },
+			"sourceSize": { "w": 1018, "h": 763 }
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "3.png",
+		"format": "RGBA8888",
+		"size": { "w": 1020, "h": 765 },
+		"scale": "1",
+		"smartupdate": "$TexturePacker:SmartUpdate:86fa38fe95b42a25f3f711530f85dc7a:0512110114c1b5023b4f288ced869075:a0e33eca061a53f402589a4f7c637ca2$"
+	}
+}

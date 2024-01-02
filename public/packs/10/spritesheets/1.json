@@ -1,0 +1,56 @@
+{
+	"frames": {
+		"anchor.png": {
+			"frame": { "x": 1804, "y": 1, "w": 183, "h": 383 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 183, "h": 383 },
+			"sourceSize": { "w": 183, "h": 383 }
+		},
+		"cloudbig.png": {
+			"frame": { "x": 1, "y": 1, "w": 1800, "h": 595 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 1800, "h": 595 },
+			"sourceSize": { "w": 1800, "h": 595 }
+		},
+		"cloudnear.png": {
+			"frame": { "x": 1, "y": 599, "w": 1200, "h": 304 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 1200, "h": 304 },
+			"sourceSize": { "w": 1200, "h": 304 }
+		},
+		"cypressknob.png": {
+			"frame": { "x": 1493, "y": 599, "w": 99, "h": 176 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 99, "h": 176 },
+			"sourceSize": { "w": 99, "h": 176 }
+		},
+		"iciclea.png": {
+			"frame": { "x": 1804, "y": 387, "w": 109, "h": 246 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 109, "h": 246 },
+			"sourceSize": { "w": 109, "h": 246 }
+		},
+		"seaweed.png": {
+			"frame": { "x": 1204, "y": 599, "w": 286, "h": 187 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 286, "h": 187 },
+			"sourceSize": { "w": 286, "h": 187 }
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "1.png",
+		"format": "RGBA8888",
+		"size": { "w": 1988, "h": 904 },
+		"scale": "1",
+		"related_multi_packs": ["2.json", "3.json"],
+		"smartupdate": "$TexturePacker:SmartUpdate:91c498ab41a55a677a56d33e99addaec:9958e8eecfdc00c8c870b06dddd418aa:a0e33eca061a53f402589a4f7c637ca2$"
+	}
+}

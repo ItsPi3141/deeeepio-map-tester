@@ -1,0 +1,48 @@
+{
+	"frames": {
+		"baldcypressa.png": {
+			"frame": { "x": 576, "y": 553, "w": 566, "h": 1183 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 566, "h": 1183 },
+			"sourceSize": { "w": 566, "h": 1183 }
+		},
+		"baldcypressb.png": {
+			"frame": { "x": 1, "y": 553, "w": 572, "h": 1193 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 572, "h": 1193 },
+			"sourceSize": { "w": 572, "h": 1193 }
+		},
+		"cloudcirrus.png": {
+			"frame": { "x": 1, "y": 1, "w": 1700, "h": 549 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 1700, "h": 549 },
+			"sourceSize": { "w": 1700, "h": 549 }
+		},
+		"pinea.png": {
+			"frame": { "x": 1145, "y": 553, "w": 407, "h": 1142 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 407, "h": 1142 },
+			"sourceSize": { "w": 407, "h": 1142 }
+		},
+		"pineb.png": {
+			"frame": { "x": 1555, "y": 553, "w": 413, "h": 1136 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 413, "h": 1136 },
+			"sourceSize": { "w": 413, "h": 1136 }
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "3.png",
+		"format": "RGBA8888",
+		"size": { "w": 1969, "h": 1747 },
+		"scale": "1",
+		"smartupdate": "$TexturePacker:SmartUpdate:91c498ab41a55a677a56d33e99addaec:9958e8eecfdc00c8c870b06dddd418aa:a0e33eca061a53f402589a4f7c637ca2$"
+	}
+}
