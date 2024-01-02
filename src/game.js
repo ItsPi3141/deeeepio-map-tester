@@ -215,7 +215,6 @@ map.screenObjects.props?.forEach((prop) => {
 		});
 		text.anchor.set(0.5);
 		text.localTransform.setTransform(0, -350, 0, 0, 1, 1, 0, 0, 0);
-		console.log(text.localTransform);
 		object.addChild(text);
 	}
 
