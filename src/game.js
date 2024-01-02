@@ -49,7 +49,8 @@ const app = new PIXI.Application({
 document.querySelector("main > div.game").appendChild(app.view);
 
 // Layer order from top to bottom:
-// currents
+// *food
+// *shadow
 // ceilings
 // terrains
 // *top water border
@@ -57,6 +58,7 @@ document.querySelector("main > div.game").appendChild(app.view);
 // props
 // hide-spaces (above animals)
 // animals
+// currents
 // hide-spaces (below animals)
 // platforms
 // *bottom water border
@@ -86,6 +88,9 @@ app.stage.addChild(hideSpacesLowLayer);
 const platformsLayer = new PIXI.Container();
 app.stage.addChild(platformsLayer);
 
+const currentsLayer = new PIXI.Container();
+app.stage.addChild(currentsLayer);
+
 const animalsLayer = new PIXI.Container();
 app.stage.addChild(animalsLayer);
 
@@ -107,8 +112,11 @@ app.stage.addChild(terrainsLayer);
 const ceilingsLayer = new PIXI.Container();
 app.stage.addChild(ceilingsLayer);
 
-const currentsLayer = new PIXI.Container();
-app.stage.addChild(currentsLayer);
+const shadowLayer = new PIXI.Container();
+app.stage.addChild(shadowLayer);
+
+const foodLayer = new PIXI.Container();
+app.stage.addChild(foodLayer);
 
 app.ticker.add((dt) => {
 	update(dt);
@@ -173,7 +181,6 @@ map.screenObjects.ceilings?.forEach((ceiling) => {
 	shape.points = ceiling.points.map((p) => [p.x, p.y]);
 	ceilingsLayer.addChild(shape);
 });
-
 map.screenObjects["hide-spaces"]?.forEach((hidespace) => {
 	const hs = getHidespaceById(hidespace.hSType);
 	const object = new PIXI.Sprite(PIXI.Assets.get(hs.asset));
@@ -190,7 +197,6 @@ map.screenObjects["hide-spaces"]?.forEach((hidespace) => {
 		hideSpacesLowLayer.addChild(object);
 	}
 });
-
 map.screenObjects.props?.forEach((prop) => {
 	const p = getPropById(prop.pType);
 	const object = new PIXI.Sprite(PIXI.Assets.get(p.asset));
@@ -220,6 +226,9 @@ map.screenObjects.props?.forEach((prop) => {
 
 	propsLayer.addChild(object);
 });
+
+var showShadow = false;
+var oldShowShadow = false;
 
 // Get habitats
 const habitats = map.screenObjects.habitats?.map((h) => ({
@@ -351,21 +360,24 @@ document.addEventListener("mousemove", (event) => {
 
 myAnimals.forEach((animal) => {
 	const throttledBoost = throttle(
-		(event, animal, animalPixi, speedFac, inWater) => {
-			const centerX = (animalPixi.x - app.stage.pivot.x) * zoom;
-			const centerY = (animalPixi.y - app.stage.pivot.y) * zoom;
+		(event, animalInstance) => {
+			const centerX = (animalInstance.pixiAnimal.x - app.stage.pivot.x) * zoom;
+			const centerY = (animalInstance.pixiAnimal.y - app.stage.pivot.y) * zoom;
 			var angle = point2rad(event.clientX - window.innerWidth / 2, event.clientY - window.innerHeight / 2, centerX, centerY);
 
-			animal.applyLinearImpulse(
-				planck.Vec2(Math.cos(angle) * speedFac * (inWater ? boostPower.water : boostPower.air), Math.sin(angle) * speedFac * (inWater ? boostPower.water : boostPower.air)),
-				animal.getPosition()
+			animalInstance.animal.applyLinearImpulse(
+				planck.Vec2(
+					Math.cos(angle) * animalInstance.speedFac * (animalInstance.inWater ? boostPower.water : boostPower.air),
+					Math.sin(angle) * animalInstance.speedFac * (animalInstance.inWater ? boostPower.water : boostPower.air)
+				),
+				animalInstance.animal.getPosition()
 			);
 			var sf = { v: 0 };
 			const boostTween = new TWEEN.Tween(sf, false)
-				.to({ v: speedFac }, 300)
+				.to({ v: animalInstance.speedFac }, 300)
 				.easing(TWEEN.Easing.Quartic.In)
 				.onUpdate(() => {
-					speedFac = sf.v;
+					animalInstance.speedFac = sf.v;
 				})
 				.start();
 			function boost(time) {
@@ -378,12 +390,15 @@ myAnimals.forEach((animal) => {
 		{ trailing: false }
 	);
 	const throttledLandhop = throttle(
-		(event, animal, animalPixi, speedFac) => {
-			const centerX = (animalPixi.x - app.stage.pivot.x) * zoom;
-			const centerY = (animalPixi.y - app.stage.pivot.y) * zoom;
+		(event, animalInstance) => {
+			const centerX = (animalInstance.pixiAnimal.x - app.stage.pivot.x) * zoom;
+			const centerY = (animalInstance.pixiAnimal.y - app.stage.pivot.y) * zoom;
 			var angle = point2rad(event.clientX - window.innerWidth / 2, event.clientY - window.innerHeight / 2, centerX, centerY);
 
-			animal.applyLinearImpulse(planck.Vec2(Math.cos(angle) * speedFac * boostPower.land, Math.sin(angle) * speedFac * boostPower.land), animal.getPosition());
+			animalInstance.animal.applyLinearImpulse(
+				planck.Vec2(Math.cos(angle) * animalInstance.speedFac * boostPower.land, Math.sin(angle) * animalInstance.speedFac * boostPower.land),
+				animalInstance.animal.getPosition()
+			);
 		},
 		150,
 		{ trailing: false }
@@ -407,9 +422,9 @@ myAnimals.forEach((animal) => {
 		}
 
 		if (landhop) {
-			throttledLandhop(event, myAnimal.animal, myAnimal.pixiAnimal, myAnimal.speedFac);
+			throttledLandhop(event, myAnimal);
 		} else {
-			throttledBoost(event, myAnimal.animal, myAnimal.pixiAnimal, myAnimal.speedFac, myAnimal.inWater);
+			throttledBoost(event, myAnimal);
 		}
 	});
 });
