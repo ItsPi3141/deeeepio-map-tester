@@ -385,7 +385,7 @@ myAnimals.forEach((animal) => {
 
 			animal.applyLinearImpulse(planck.Vec2(Math.cos(angle) * speedFac * boostPower.land, Math.sin(angle) * speedFac * boostPower.land), animal.getPosition());
 		},
-		200,
+		150,
 		{ trailing: false }
 	);
 

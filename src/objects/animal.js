@@ -22,7 +22,7 @@ export class Animal {
 
 		this.animal.createFixture(Box(this.animalSize.planck.width / planckDownscaleFactor, this.animalSize.planck.height / planckDownscaleFactor), {
 			density: 0.1,
-			friction: 0.5,
+			friction: 0.7,
 			restitution: 0
 		});
 		this.animal.setMassData({ mass: 1, center: Vec2(0, 0) });
