@@ -45,7 +45,7 @@ export function renderGradientShape(points, gradientStart, gradientStop) {
 	} else {
 		shape.beginTextureFill({
 			texture: createGradient(gradientStart, gradientStop, shapeHeight),
-			matrix: new PIXI.Matrix(1, 0, 0, 1, points[0].x, points[0].y)
+			matrix: new PIXI.Matrix(1, 0, 0, 1, points[0].x, minY)
 		});
 	}
 	for (let i = 1; i < points.length; i++) {
