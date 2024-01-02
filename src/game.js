@@ -174,7 +174,7 @@ map.screenObjects.ceilings?.forEach((ceiling) => {
 	ceilingsLayer.addChild(shape);
 });
 
-map.screenObjects["hide-spaces"].forEach((hidespace) => {
+map.screenObjects["hide-spaces"]?.forEach((hidespace) => {
 	const hs = getHidespaceById(hidespace.hSType);
 	const object = new PIXI.Sprite(PIXI.Assets.get(hs.asset));
 	object.width = hs.width * 10;
@@ -191,7 +191,7 @@ map.screenObjects["hide-spaces"].forEach((hidespace) => {
 	}
 });
 
-map.screenObjects.props.forEach((prop) => {
+map.screenObjects.props?.forEach((prop) => {
 	const p = getPropById(prop.pType);
 	const object = new PIXI.Sprite(PIXI.Assets.get(p.asset));
 	object.width = p.width * 10;
@@ -223,7 +223,7 @@ map.screenObjects.props.forEach((prop) => {
 });
 
 // Get habitats
-const habitats = map.screenObjects.habitats.map((h) => ({
+const habitats = map.screenObjects.habitats?.map((h) => ({
 	...h,
 	points: h.points.map((p) => [p.x, p.y])
 }));
