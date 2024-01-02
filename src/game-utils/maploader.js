@@ -134,8 +134,9 @@ export function isClockwise(points) {
 	return total < 0;
 }
 
-export function getHabitat(n) {
+export function getBiomes(n) {
 	const habitats = [
+		"reef", // 64
 		"salt", // 32
 		"fresh", // 16
 		"deep", // 8
@@ -145,7 +146,8 @@ export function getHabitat(n) {
 	];
 	return n
 		.toString(2)
-		.substr(-6)
+		.substr(-7)
+		.padStart(7, "0")
 		.split("")
 		.map((e, i) => (e = parseInt(e) == 0 ? null : habitats[i]))
 		.reduce((p, c) => (c == null ? p : p.concat(c)), []);
