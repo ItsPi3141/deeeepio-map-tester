@@ -1,4 +1,5 @@
 import hideSpaces from "./consts/hidespaces.json";
+import animals from "./consts/animals.json";
 
 /**
  * Load the map from a JSON object.
@@ -151,4 +152,36 @@ export function getBiomes(n) {
 		.split("")
 		.map((e, i) => (e = parseInt(e) == 0 ? null : habitats[i]))
 		.reduce((p, c) => (c == null ? p : p.concat(c)), []);
+}
+
+export function getAnimalById(id) {
+	animals.find((a) => a.id == id);
+}
+
+// Doesn't account for octopus ink
+// Octopus ink has shadowSize of 350
+export function getShadowSize(animalId) {
+	const animal = getAnimalById(animalId);
+	const habitats = getBiomes(animal.habitat);
+
+	var livesInDeep = habitats.includes("deep");
+	var livesInShallow = habitats.includes("shallow");
+	var livesInFresh = habitats.includes("fresh");
+	var livesInWarmSalt = habitats.includes("warm") && habitats.includes("salt");
+
+	if (["blindcavefish", "olm"].includes(animal.name)) {
+		return 450;
+	} else if (animal.name == "ghost") {
+		return 1750;
+	} else if (livesInDeep) {
+		if (!livesInShallow) {
+			return 1750;
+		} else if (livesInFresh && !livesInWarmSalt) {
+			return 1750;
+		} else {
+			return 1200;
+		}
+	} else {
+		return 1200;
+	}
 }
