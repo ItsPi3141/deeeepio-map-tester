@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { clampCamera, renderGradientShape, renderTerrainShape, renderWaterBorder } from "./pixi-utils";
+import { clampCamera, createRadialGradient, renderGradientShape, renderTerrainShape, renderWaterBorder } from "./pixi-utils";
 
 import * as planck from "planck";
 import { addBoundaries, createTerrainCollider } from "./planck-utils";
@@ -13,7 +13,7 @@ import pointInPolygon from "robust-point-in-polygon";
 
 import { loadAssets } from "./assetsloader";
 
-import { getHidespaceById, getPropById, loadMap } from "./game-utils/maploader";
+import { getBiomes, getHidespaceById, getPropById, getShadowSize, loadMap } from "./game-utils/maploader";
 import { boostPower, linearDampingFactor, planckDownscaleFactor, speedRatio } from "./objects/constants";
 import { Animal } from "./objects/animal";
 const map = loadMap(require("./star_rain_ffa.json"));
@@ -227,8 +227,37 @@ map.screenObjects.props?.forEach((prop) => {
 	propsLayer.addChild(object);
 });
 
-var showShadow = false;
-var oldShowShadow = false;
+const shadowSettings = {
+	alpha: 0,
+	size: 0
+};
+function setShadowSize(size) {
+	shadowLayer.removeChildren();
+	if (size == 0) return;
+
+	var leftRightHeight = window.innerHeight;
+	var leftRightWidth = (window.innerWidth - size / zoom) / 2;
+
+	var topBottomHeight = (window.innerHeight - size / zoom) / 2;
+	var topBottomWidth = window.innerWidth - leftRightWidth * 2;
+	const shadow = new PIXI.Graphics();
+	shadow.transform.position.set(-window.innerWidth / 2, -window.innerHeight / 2);
+	shadow.beginFill(0x000000);
+	shadow.drawRect(0, 0, leftRightWidth, leftRightHeight);
+	shadow.drawRect(window.innerWidth - leftRightWidth, 0, leftRightWidth, leftRightHeight);
+	shadow.drawRect(leftRightWidth, 0, topBottomWidth, topBottomHeight);
+	shadow.drawRect(leftRightWidth, window.innerHeight - topBottomHeight, topBottomWidth, topBottomHeight);
+
+	shadow.beginTextureFill({
+		texture: createRadialGradient(size / zoom, "#00000000", "#000000ff"),
+		matrix: new PIXI.Matrix(1, 0, 0, 1, leftRightWidth, topBottomHeight)
+	});
+	shadow.drawRect(leftRightWidth, topBottomHeight, size / zoom, size / zoom);
+
+	shadowLayer.addChild(shadow);
+}
+shadowLayer.alpha = 0;
+setShadowSize(getShadowSize(0));
 
 // Get habitats
 const habitats = map.screenObjects.habitats?.map((h) => ({
@@ -325,7 +354,9 @@ function updateAnimal(animal, isMine, isMain = false) {
 		thisAnimal.pixiAnimal.rotation = point2rad(mouseData.clientX - window.innerWidth / 2, mouseData.clientY - window.innerHeight / 2, centerX, centerY) + Math.PI / 2;
 
 		if (isMain) {
-			app.stage.pivot.set(...clampCamera(thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y, zoom, map.worldSize.width * 10, map.worldSize.height * 10, window.innerWidth, window.innerHeight));
+			const viewportPos = clampCamera(thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y, zoom, map.worldSize.width * 10, map.worldSize.height * 10, window.innerWidth, window.innerHeight);
+			app.stage.pivot.set(...viewportPos);
+			shadowLayer.pivot.set(-thisAnimal.pixiAnimal.x, -thisAnimal.pixiAnimal.y);
 
 			ceilingsLayer.children.forEach((c) => {
 				if ([-1, 0].includes(pointInPolygon(c.points, [thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y - (thisAnimal.inWater ? 0 : 2)]))) {
@@ -349,6 +380,29 @@ function updateAnimal(animal, isMine, isMain = false) {
 					h.renderable = false;
 				}
 			});
+
+			var currentBiomes = 0;
+			habitats.forEach((h) => {
+				if (pointInPolygon(h.points, [thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y]) != 1) {
+					currentBiomes = currentBiomes | h.settings.area;
+				}
+			});
+			var currentBiomesList = getBiomes(currentBiomes);
+			if (currentBiomesList.includes("deep")) {
+				if (currentBiomesList.includes("shallow")) {
+					shadowSettings.alpha = 0.5;
+				} else {
+					shadowSettings.alpha = 1;
+				}
+			} else {
+				shadowSettings.alpha = 0;
+			}
+
+			if (shadowSettings.alpha > shadowLayer.alpha) {
+				shadowLayer.alpha = Math.round((shadowLayer.alpha + 0.02) * 100) / 100;
+			} else if (shadowSettings.alpha < shadowLayer.alpha) {
+				shadowLayer.alpha = Math.round((shadowLayer.alpha - 0.02) * 100) / 100;
+			}
 		}
 	}
 }

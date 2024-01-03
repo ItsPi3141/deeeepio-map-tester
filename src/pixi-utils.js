@@ -32,6 +32,27 @@ export function createGradient(startColor, endColor, quality = 256) {
 	return PIXI.Texture.from(canvas);
 }
 
+export function createRadialGradient(radius, startColor, endColor) {
+	const canvas = document.createElement("canvas");
+
+	canvas.width = radius;
+	canvas.height = radius;
+
+	const ctx = canvas.getContext("2d");
+
+	// use canvas2d API to create gradient
+	var hr = radius / 2;
+	const grd = ctx.createRadialGradient(hr, hr, 0, hr, hr, hr);
+
+	grd.addColorStop(0, startColor);
+	grd.addColorStop(1, endColor);
+
+	ctx.fillStyle = grd;
+	ctx.fillRect(0, 0, radius, radius);
+
+	return PIXI.Texture.from(canvas);
+}
+
 export function renderGradientShape(points, gradientStart, gradientStop) {
 	const shape = new PIXI.Graphics();
 	shape.moveTo(points[0].x, points[0].y);
