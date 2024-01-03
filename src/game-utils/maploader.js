@@ -181,7 +181,7 @@ export function getBiomes(n) {
 }
 
 export function getAnimalById(id) {
-	animals.find((a) => a.id == id);
+	return animals.find((a) => a.fishLevel == id);
 }
 
 // Doesn't account for octopus ink
