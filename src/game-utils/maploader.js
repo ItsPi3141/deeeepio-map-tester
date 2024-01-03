@@ -57,27 +57,27 @@ export function loadMap(json) {
 		tempObj[l.layerId].push(l);
 	});
 	data.screenObjects = tempObj;
-	["sky", "water", "air-pockets", "background-terrains", "platforms", "islands", "terrains", "ceilings"].forEach((l) => {
-		var newShapesList = [];
-		if (!data.screenObjects[l]) return;
-		data.screenObjects[l]?.forEach((shape) => {
-			const poly = {
-				type: "Feature",
-				geometry: {
-					type: "Polygon",
-					coordinates: [shape.points.map((p) => [p.x, p.y])]
-				}
-			};
-			const splitPoly = simplepolygon(poly);
-			splitPoly.features.forEach((feature) => {
-				newShapesList.push({
-					...shape,
-					points: feature.geometry.coordinates[0].map((p) => ({ x: p[0], y: p[1] }))
-				});
-			});
-		});
-		data.screenObjects[l] = newShapesList;
-	});
+	// ["sky", "water", "air-pockets", "background-terrains", "platforms", "islands", "terrains", "ceilings"].forEach((l) => {
+	// 	var newShapesList = [];
+	// 	if (!data.screenObjects[l]) return;
+	// 	data.screenObjects[l]?.forEach((shape) => {
+	// 		const poly = {
+	// 			type: "Feature",
+	// 			geometry: {
+	// 				type: "Polygon",
+	// 				coordinates: [shape.points.map((p) => [p.x, p.y])]
+	// 			}
+	// 		};
+	// 		const splitPoly = simplepolygon(poly);
+	// 		splitPoly.features.forEach((feature) => {
+	// 			newShapesList.push({
+	// 				...shape,
+	// 				points: feature.geometry.coordinates[0].map((p) => ({ x: p[0], y: p[1] }))
+	// 			});
+	// 		});
+	// 	});
+	// 	data.screenObjects[l] = newShapesList;
+	// });
 	return data;
 }
 
