@@ -25,7 +25,7 @@ const world = new planck.World({
 	gravity: planck.Vec2(0, map.settings.gravity * 3)
 });
 
-addBoundaries(world, map.worldSize.width * 10, map.worldSize.height * 10);
+addBoundaries(world, (map.worldSize.width * 10) / planckDownscaleFactor, (map.worldSize.height * 10) / planckDownscaleFactor);
 
 map.screenObjects.terrains?.forEach((terrain) => {
 	createTerrainCollider(world, terrain, planckDownscaleFactor);
