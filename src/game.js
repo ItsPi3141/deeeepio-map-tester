@@ -190,7 +190,10 @@ map.screenObjects["hide-spaces"]?.forEach((hidespace) => {
 	object.position.set(hidespace.x, hidespace.y);
 	object.alpha = hidespace.opacity || 1;
 	object.angle = hidespace.rotation;
-
+	if (hidespace.hSType == 21) {
+		object.animation = "whirlpool";
+		object.alpha /= 2;
+	}
 	if (hs.above) {
 		hideSpacesHighLayer.addChild(object);
 	} else {
@@ -265,6 +268,17 @@ const habitats = map.screenObjects.habitats?.map((h) => ({
 	points: h.points.map((p) => [p.x, p.y])
 }));
 
+// Whirlpool animation
+var whirlPool = { rotation: 0 };
+const whirlPoolTween = new TWEEN.Tween(whirlPool, false).to({ rotation: 360 }, 5000).easing(TWEEN.Easing.Sinusoidal.InOut).repeat(Infinity).start();
+(() => {
+	function animate(time) {
+		whirlPoolTween.update(time);
+		requestAnimationFrame(animate);
+	}
+	requestAnimationFrame(animate);
+})();
+
 // Render player.pixi
 const myAnimals = [];
 myAnimals.push(new Animal(world, 0, animalsLayer, 1, 1));
@@ -283,6 +297,11 @@ function update(dt) {
 	});
 
 	world.step((app.ticker.elapsedMS / 1000) * dt, 8, 5);
+
+	hideSpacesLowLayer.children.forEach((object) => {
+		if (object.animation != "whirlpool") return;
+		object.angle = whirlPool.rotation;
+	});
 }
 
 function updateAnimal(animal, isMine, isMain = false) {
