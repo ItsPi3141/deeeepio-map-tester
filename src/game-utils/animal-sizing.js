@@ -5,7 +5,6 @@ const baseScale = {
 };
 
 export function calculateAssetSize(animalId) {
-	console.log(animalConsts);
 	const animal = animalConsts.find((a) => a.fishLevel == animalId);
 	const sx = baseScale.x * animal.sizeScale.x * animal.sizeMultiplier;
 	const sy = baseScale.y * animal.sizeScale.y * animal.sizeMultiplier;
