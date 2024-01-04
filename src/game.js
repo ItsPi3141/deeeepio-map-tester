@@ -16,7 +16,7 @@ import { loadAssets } from "./assetsloader";
 import { getBiomes, getHidespaceById, getPropById, getShadowSize, loadMap } from "./game-utils/maploader";
 import { boostPower, linearDampingFactor, planckDownscaleFactor, speedRatio } from "./objects/constants";
 import { Animal } from "./objects/animal";
-const map = loadMap(require("./star_rain_ffa.json"));
+const map = loadMap(window.mapData);
 console.log(map);
 
 await loadAssets();
