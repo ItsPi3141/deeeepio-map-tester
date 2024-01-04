@@ -20,7 +20,7 @@ export default class Home extends React.Component {
 		});
 	}
 	async startGame() {
-		window.playerName = this.state.name;
+		window.playerName = this.state.name || "Unnamed";
 		window.mapId = this.state.mapId;
 
 		const map = await (await fetch("https://apibeta.deeeep.io/maps/s/" + this.state.mapId)).json();

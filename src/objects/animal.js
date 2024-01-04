@@ -2,10 +2,10 @@ import { Box, Vec2 } from "planck";
 import { calculateAssetSize } from "../game-utils/animal-sizing";
 import { linearDampingFactor, planckDownscaleFactor, speedRatio } from "./constants";
 import animals from "../game-utils/consts/animals.json";
-import { Sprite, Texture } from "pixi.js";
+import { Container, Sprite, Text, Texture } from "pixi.js";
 
 export class Animal {
-	constructor(world, fishLevelId, pixiAnimalsLayer, x, y) {
+	constructor(world, fishLevelId, pixiAnimalsLayer, pixiAnimalsUiLayer, x, y, name) {
 		// Create Planck.js body
 		this.animal = world.createBody({
 			type: "dynamic",
@@ -37,6 +37,22 @@ export class Animal {
 			this.animalSize.pixi.scale,
 			0
 		);
+
+		this.pixiAnimalUi = new Container();
+		// Add name
+		if (name) {
+			const nameText = new Text(name, {
+				fontFamily: "Quicksand",
+				fontSize: 20,
+				fill: 0xffffff,
+				align: "center"
+			});
+			nameText.anchor.set(0.5);
+			this.pixiAnimal.setTransform(this.animal.getPosition().x * planckDownscaleFactor, this.animal.getPosition().y * planckDownscaleFactor - 7, 0.1, 0.1, 0);
+			this.pixiAnimalUi.addChild(nameText);
+		}
+
+		pixiAnimalsUiLayer.addChild(this.pixiAnimalUi);
 		pixiAnimalsLayer.addChild(this.pixiAnimal);
 
 		this.inWater = false;

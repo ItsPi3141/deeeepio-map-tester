@@ -94,6 +94,9 @@ app.stage.addChild(currentsLayer);
 const animalsLayer = new PIXI.Container();
 app.stage.addChild(animalsLayer);
 
+const animalsUiLayer = new PIXI.Container();
+app.stage.addChild(animalsUiLayer);
+
 const hideSpacesHighLayer = new PIXI.Container();
 app.stage.addChild(hideSpacesHighLayer);
 
@@ -281,7 +284,7 @@ const whirlPoolTween = new TWEEN.Tween(whirlPool, false).to({ rotation: 360 }, 5
 
 // Render player.pixi
 const myAnimals = [];
-myAnimals.push(new Animal(world, 0, animalsLayer, 1, 1));
+myAnimals.push(new Animal(world, 0, animalsLayer, animalsUiLayer, 1, 1, window.playerName));
 
 const mouseData = {
 	clientX: 0,
@@ -366,6 +369,7 @@ function updateAnimal(animal, isMine, isMain = false) {
 		thisAnimal.animalSize.pixi.scale,
 		thisAnimal.pixiAnimal.rotation
 	);
+	thisAnimal.pixiAnimalUi.setTransform(thisAnimal.animal.getPosition().x * planckDownscaleFactor, thisAnimal.animal.getPosition().y * planckDownscaleFactor - 7, 0.1, 0.1, 0);
 
 	if (isMine) {
 		const centerX = (thisAnimal.pixiAnimal.x - app.stage.pivot.x) * zoom;
