@@ -104,7 +104,7 @@ export function renderTerrainShape(points, texture, isBackground) {
 	shape.moveTo(points[0].x, points[0].y);
 
 	shape.beginTextureFill({
-		texture: PIXI.Texture.from(`/textures/${getTextureById(texture)}.png`),
+		texture: typeof texture === "number" ? PIXI.Texture.from(`/textures/${getTextureById(texture)}.png`) : PIXI.Texture.from(texture.replace("assets/terrains", "/textures")),
 		color: "ffffff",
 		matrix: new PIXI.Matrix(0.1, 0, 0, 0.1, isBackground ? 2 : 0, isBackground ? 2 : 0)
 	});
