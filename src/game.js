@@ -60,6 +60,7 @@ document.querySelector("main > div.game").appendChild(app.view);
 // currents
 // props
 // hide-spaces (below animals)
+// hide-spaces (lowest, <=60% opacity)
 // platforms
 // *bottom water border
 // air-pockets
@@ -81,6 +82,9 @@ app.stage.addChild(airPocketsLayer);
 
 const waterBorderLowLayer = new PIXI.Container();
 app.stage.addChild(waterBorderLowLayer);
+
+const hideSpacesLowerLayer = new PIXI.Container();
+app.stage.addChild(hideSpacesLowerLayer);
 
 const hideSpacesLowLayer = new PIXI.Container();
 app.stage.addChild(hideSpacesLowLayer);
@@ -193,12 +197,15 @@ map.screenObjects["hide-spaces"]?.forEach((hidespace) => {
 	object.position.set(hidespace.x, hidespace.y);
 	object.alpha = hidespace.opacity || 1;
 	object.angle = hidespace.rotation;
+	object.zIndex = hidespace.id;
 	if (hidespace.hSType == 21) {
 		object.animation = "whirlpool";
 		object.alpha /= 2;
 	}
-	if (hs.above) {
+	if (hs.above && hs.opacity == 1) {
 		hideSpacesHighLayer.addChild(object);
+	} else if (hs.above && hs.opacity != 1) {
+		hideSpacesLowerLayer.addChild(object);
 	} else {
 		hideSpacesLowLayer.addChild(object);
 	}
