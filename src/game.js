@@ -55,10 +55,10 @@ document.querySelector("main > div.game").appendChild(app.view);
 // terrains
 // *top water border
 // islands
-// props
 // hide-spaces (above animals)
 // animals
 // currents
+// props
 // hide-spaces (below animals)
 // platforms
 // *bottom water border
@@ -85,6 +85,9 @@ app.stage.addChild(waterBorderLowLayer);
 const hideSpacesLowLayer = new PIXI.Container();
 app.stage.addChild(hideSpacesLowLayer);
 
+const propsLayer = new PIXI.Container();
+app.stage.addChild(propsLayer);
+
 const platformsLayer = new PIXI.Container();
 app.stage.addChild(platformsLayer);
 
@@ -99,9 +102,6 @@ app.stage.addChild(animalsUiLayer);
 
 const hideSpacesHighLayer = new PIXI.Container();
 app.stage.addChild(hideSpacesHighLayer);
-
-const propsLayer = new PIXI.Container();
-app.stage.addChild(propsLayer);
 
 const islandsLayer = new PIXI.Container();
 app.stage.addChild(islandsLayer);

@@ -1,20 +1,20 @@
 {
 	"frames": {
-		"anemone.png": {
+		"anemone2_1.png": {
 			"frame": { "x": 282, "y": 1621, "w": 199, "h": 240 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 199, "h": 240 },
 			"sourceSize": { "w": 199, "h": 240 }
 		},
-		"coral1.png": {
+		"coral2_1.png": {
 			"frame": { "x": 1, "y": 1, "w": 547, "h": 548 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 547, "h": 548 },
 			"sourceSize": { "w": 547, "h": 548 }
 		},
-		"coral2.png": {
+		"coral2_2.png": {
 			"frame": { "x": 1, "y": 1621, "w": 278, "h": 246 },
 			"rotated": false,
 			"trimmed": false,
@@ -28,21 +28,21 @@
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 76, "h": 110 },
 			"sourceSize": { "w": 76, "h": 110 }
 		},
-		"sponge1.png": {
+		"sponge2_1.png": {
 			"frame": { "x": 551, "y": 1, "w": 57, "h": 73 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 57, "h": 73 },
 			"sourceSize": { "w": 57, "h": 73 }
 		},
-		"sponge2.png": {
+		"sponge2_2.png": {
 			"frame": { "x": 484, "y": 1621, "w": 133, "h": 191 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 133, "h": 191 },
 			"sourceSize": { "w": 133, "h": 191 }
 		},
-		"tree.png": {
+		"tree2_1.png": {
 			"frame": { "x": 1, "y": 552, "w": 513, "h": 1066 },
 			"rotated": false,
 			"trimmed": false,

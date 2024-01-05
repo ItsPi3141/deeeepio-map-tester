@@ -1,10 +1,10 @@
-import * as PIXI from "pixi.js";
+import { Assets } from "pixi.js";
 
 const spritesheets = [1, 2, 3, 4, 5, 6, 10];
 export function loadAssets() {
 	return new Promise(async (resolve) => {
 		console.log("loading assets");
-		await PIXI.Assets.load([
+		await Assets.load([
 			"/textures/beach_underwater.png",
 			"/textures/beach.png",
 			"/textures/cenote1.png",

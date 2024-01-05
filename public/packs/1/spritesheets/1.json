@@ -210,21 +210,21 @@
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 1049, "h": 630 },
 			"sourceSize": { "w": 1049, "h": 630 }
 		},
-		"stalactite1.png": {
+		"stalactite1_1.png": {
 			"frame": { "x": 1355, "y": 1843, "w": 222, "h": 165 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 222, "h": 165 },
 			"sourceSize": { "w": 222, "h": 165 }
 		},
-		"stalactite2.png": {
+		"stalactite1_2.png": {
 			"frame": { "x": 1623, "y": 1686, "w": 228, "h": 160 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 228, "h": 160 },
 			"sourceSize": { "w": 228, "h": 160 }
 		},
-		"stalactite3.png": {
+		"stalactite1_3.png": {
 			"frame": { "x": 1580, "y": 1849, "w": 220, "h": 149 },
 			"rotated": false,
 			"trimmed": false,
@@ -280,7 +280,7 @@
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
 			"sourceSize": { "w": 64, "h": 64 }
 		},
-		"tree.png": {
+		"tree1_1.png": {
 			"frame": { "x": 1053, "y": 1004, "w": 304, "h": 775 },
 			"rotated": false,
 			"trimmed": false,

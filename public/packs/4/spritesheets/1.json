@@ -7,14 +7,14 @@
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 276, "h": 162 },
 			"sourceSize": { "w": 276, "h": 162 }
 		},
-		"coral1.png": {
+		"coral4_1.png": {
 			"frame": { "x": 1339, "y": 331, "w": 165, "h": 158 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 165, "h": 158 },
 			"sourceSize": { "w": 165, "h": 158 }
 		},
-		"coral2.png": {
+		"coral4_2.png": {
 			"frame": { "x": 801, "y": 1, "w": 309, "h": 257 },
 			"rotated": false,
 			"trimmed": false,
@@ -28,35 +28,35 @@
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 575, "h": 476 },
 			"sourceSize": { "w": 575, "h": 476 }
 		},
-		"sponge1.png": {
+		"sponge4_1.png": {
 			"frame": { "x": 1212, "y": 383, "w": 55, "h": 84 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 84 },
 			"sourceSize": { "w": 55, "h": 84 }
 		},
-		"sponge2.png": {
+		"sponge4_2.png": {
 			"frame": { "x": 1212, "y": 211, "w": 124, "h": 169 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 124, "h": 169 },
 			"sourceSize": { "w": 124, "h": 169 }
 		},
-		"stalactite1.png": {
+		"stalactite4_1.png": {
 			"frame": { "x": 1339, "y": 166, "w": 186, "h": 162 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 186, "h": 162 },
 			"sourceSize": { "w": 186, "h": 162 }
 		},
-		"stalactite2.png": {
+		"stalactite4_2.png": {
 			"frame": { "x": 579, "y": 286, "w": 264, "h": 218 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 264, "h": 218 },
 			"sourceSize": { "w": 264, "h": 218 }
 		},
-		"stalactite3.png": {
+		"stalactite4_3.png": {
 			"frame": { "x": 846, "y": 261, "w": 363, "h": 236 },
 			"rotated": false,
 			"trimmed": false,
@@ -70,7 +70,7 @@
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 172, "h": 207 },
 			"sourceSize": { "w": 172, "h": 207 }
 		},
-		"volcano.png": {
+		"volcano4_1.png": {
 			"frame": { "x": 579, "y": 1, "w": 219, "h": 282 },
 			"rotated": false,
 			"trimmed": false,

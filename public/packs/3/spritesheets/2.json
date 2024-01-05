@@ -1,6 +1,6 @@
 {
 	"frames": {
-		"anemone.png": {
+		"anemone3_1.png": {
 			"frame": { "x": 824, "y": 1677, "w": 224, "h": 240 },
 			"rotated": false,
 			"trimmed": false,
@@ -14,21 +14,21 @@
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 1414, "h": 1673 },
 			"sourceSize": { "w": 1414, "h": 1673 }
 		},
-		"coral1.png": {
+		"coral3_1.png": {
 			"frame": { "x": 1051, "y": 1677, "w": 248, "h": 218 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 248, "h": 218 },
 			"sourceSize": { "w": 248, "h": 218 }
 		},
-		"coral3.png": {
+		"coral3_3.png": {
 			"frame": { "x": 510, "y": 1677, "w": 311, "h": 325 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 311, "h": 325 },
 			"sourceSize": { "w": 311, "h": 325 }
 		},
-		"coral4.png": {
+		"coral3_4.png": {
 			"frame": { "x": 1, "y": 1677, "w": 506, "h": 327 },
 			"rotated": false,
 			"trimmed": false,
