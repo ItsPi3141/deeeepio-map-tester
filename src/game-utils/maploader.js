@@ -57,6 +57,12 @@ export function loadMap(json) {
 		tempObj[l.layerId].push(l);
 	});
 	data.screenObjects = tempObj;
+	if (!data.settings) {
+		data.settings = {};
+	}
+	if (!data.settings.gravity) {
+		data.settings.gravity = 9.8;
+	}
 	// ["sky", "water", "air-pockets", "background-terrains", "platforms", "islands", "terrains", "ceilings"].forEach((l) => {
 	// 	var newShapesList = [];
 	// 	if (!data.screenObjects[l]) return;
