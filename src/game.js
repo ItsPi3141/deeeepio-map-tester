@@ -202,9 +202,10 @@ map.screenObjects["hide-spaces"]?.forEach((hidespace) => {
 		object.animation = "whirlpool";
 		object.alpha /= 2;
 	}
-	if (hs.above && hs.opacity == 1) {
+
+	if (hs.above && (hidespace.opacity == 1 || hidespace.opacity == undefined)) {
 		hideSpacesHighLayer.addChild(object);
-	} else if (hs.above && hs.opacity != 1) {
+	} else if (hidespace.opacity != 1) {
 		hideSpacesLowerLayer.addChild(object);
 	} else {
 		hideSpacesLowLayer.addChild(object);
