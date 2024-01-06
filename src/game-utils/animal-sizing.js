@@ -14,7 +14,7 @@ export function calculateAssetSize(animalId) {
 			height: sy / 20
 		},
 		pixi: {
-			scale: sy / 3.5 / 680
+			scale: sy / 3.8 / 680
 		}
 	};
 }
