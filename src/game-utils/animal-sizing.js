@@ -14,7 +14,7 @@ export function calculateAssetSize(animalId) {
 			height: sy / 20
 		},
 		pixi: {
-			scale: sy / 3.8 / 680
+			scale: sy / 3.8 / 680 / (animal.sizeScale.y > animal.sizeScale.x ? animal.sizeScale.y : 1)
 		}
 	};
 }
