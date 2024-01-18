@@ -303,16 +303,20 @@ function update(dt) {
 	app.stage.position.set(window.innerWidth / 2, window.innerHeight / 2);
 	app.stage.scale.set(zoom);
 
+	hideSpacesLowLayer.children.forEach((object) => {
+		if (object.animation != "whirlpool") return;
+		object.angle = whirlPool.rotation;
+	});
+	hideSpacesLowerLayer.children.forEach((object) => {
+		if (object.animation != "whirlpool") return;
+		object.angle = whirlPool.rotation;
+	});
+
 	myAnimals.forEach((animal, index) => {
 		updateAnimal(animal, true, index == 0);
 	});
 
 	world.step((app.ticker.elapsedMS / 1000) * dt, 8, 5);
-
-	hideSpacesLowLayer.children.forEach((object) => {
-		if (object.animation != "whirlpool") return;
-		object.angle = whirlPool.rotation;
-	});
 }
 
 function updateAnimal(animal, isMine, isMain = false) {
