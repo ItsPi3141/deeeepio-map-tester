@@ -6,6 +6,8 @@ import { Container, Sprite, Text, Texture } from "pixi.js";
 
 export class Animal {
 	constructor(world, fishLevelId, pixiAnimalsLayer, pixiAnimalsUiLayer, x, y, name) {
+		this.animalData = animals.find((a) => a.fishLevel == fishLevelId);
+
 		// Create Planck.js body
 		this.animal = world.createBody({
 			type: "dynamic",
@@ -28,7 +30,7 @@ export class Animal {
 		this.animal.setMassData({ mass: 1, center: Vec2(0, 0) });
 
 		// Create instance in PIXI
-		this.pixiAnimal = new Sprite(Texture.from(`/animals/${animals.find((a) => a.fishLevel == fishLevelId).name}.png`));
+		this.pixiAnimal = new Sprite(Texture.from(`/animals/${this.animalData.name}.png`));
 		this.pixiAnimal.anchor.set(0.5);
 		this.pixiAnimal.setTransform(
 			this.animal.getPosition().x * planckDownscaleFactor,
@@ -60,6 +62,11 @@ export class Animal {
 
 		this.doApplyForce = true;
 		this.oldDoApplyForce = true;
+		this.direction = 0;
+
+		this.walking = false;
+		this.groundAnchorId = null;
+		this.groundJoints = [];
 
 		this.speedFac = linearDampingFactor * speedRatio;
 	}

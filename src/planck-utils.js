@@ -29,9 +29,6 @@ export function createTerrainCollider(world, terrain, pdf) {
 		terrain.points.reverse();
 	}
 	terrain.points.forEach((p, i) => {
-		const current = terrain.points[i];
-		const last = terrain.points[i > 0 ? i - 1 : terrain.points.length - 1];
-
 		var v0 = Vec2(p.x / pdf, p.y / pdf);
 		const pOld = terrain.points[(i + 1) % terrain.points.length];
 		var v1 = Vec2(pOld.x / pdf, pOld.y / pdf);
@@ -42,7 +39,14 @@ export function createTerrainCollider(world, terrain, pdf) {
 		var vnext = Vec2(pGhostNew.x / pdf, pGhostNew.y / pdf);
 
 		const edge = world.createBody({
-			userData: { type: isTopEdge(current, last) ? "terrainTop" : "terrainBottom" }
+			userData: {
+				type: "terrain",
+				vertices: [
+					{ x: p.x / pdf, y: p.y / pdf },
+					{ x: pOld.x / pdf, y: pOld.y / pdf }
+				],
+				id: terrain.id
+			}
 		});
 		edge.createFixture({
 			shape: Edge(v0, v1).setPrevVertex(vprev).setNextVertex(vnext),

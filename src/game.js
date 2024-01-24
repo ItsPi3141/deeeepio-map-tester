@@ -7,14 +7,14 @@ import { addBoundaries, createTerrainCollider } from "./planck-utils";
 import throttle from "lodash.throttle";
 import * as TWEEN from "@tweenjs/tween.js";
 
-import { clamp, point2rad } from "./math-utils";
+import { clamp, findNearestPointOnLine, point2rad } from "./math-utils";
 
 import pointInPolygon from "robust-point-in-polygon";
 
 import { loadAssets } from "./assetsloader";
 
 import { getBiomes, getHidespaceById, getPropById, getShadowSize, loadMap } from "./game-utils/maploader";
-import { boostPower, linearDampingFactor, planckDownscaleFactor, speedRatio } from "./objects/constants";
+import { boostPower, linearDampingFactor, planckDownscaleFactor } from "./objects/constants";
 import { Animal } from "./objects/animal";
 const map = loadMap(window.mapData);
 console.log(map);
@@ -352,9 +352,14 @@ function updateAnimal(animal, isMine, isMain = false) {
 		6 * zoom;
 
 	if (!thisAnimal.inWater) {
-		thisAnimal.doApplyForce = false;
-		thisAnimal.animal.setGravityScale(1);
-		thisAnimal.animal.setLinearDamping(0.1);
+		if (!thisAnimal.walking) {
+			thisAnimal.doApplyForce = false;
+			thisAnimal.animal.setLinearDamping(0.1);
+			thisAnimal.animal.setGravityScale(1);
+		} else {
+			thisAnimal.animal.setLinearDamping(linearDampingFactor);
+			thisAnimal.animal.setGravityScale(0);
+		}
 	} else {
 		thisAnimal.animal.setGravityScale(0);
 		thisAnimal.animal.setLinearDamping(linearDampingFactor);
@@ -369,9 +374,9 @@ function updateAnimal(animal, isMine, isMain = false) {
 		thisAnimal.animal.setLinearDamping(linearDampingFactor * 2);
 	}
 
-	const rotation = thisAnimal.pixiAnimal.rotation - Math.PI / 2;
+	const rotation = thisAnimal.direction - Math.PI / 2;
 
-	thisAnimal.animal.setAngle(thisAnimal.pixiAnimal.rotation);
+	thisAnimal.animal.setAngle(thisAnimal.direction);
 	thisAnimal.animal.applyForce(planck.Vec2(Math.cos(rotation) * spdf, Math.sin(rotation) * spdf), thisAnimal.animal.getPosition());
 
 	thisAnimal.pixiAnimal.setTransform(
@@ -383,10 +388,80 @@ function updateAnimal(animal, isMine, isMain = false) {
 	);
 	thisAnimal.pixiAnimalUi.setTransform(thisAnimal.animal.getPosition().x * planckDownscaleFactor, thisAnimal.animal.getPosition().y * planckDownscaleFactor - 7, 0.1, 0.1, 0);
 
+	if (thisAnimal.animalData.canStand) {
+		var contacts = [];
+		var distToGround = Infinity;
+		for (let ce = thisAnimal.animal.getContactList(); ce; ce = ce.next) {
+			let c = ce.contact;
+			contacts.push(c.getFixtureA().getBody());
+		}
+		contacts = contacts
+			.filter((d) => d.getUserData()?.type == "terrain")
+			.filter((d) => {
+				const v = d.getUserData()?.vertices;
+				const p = thisAnimal.animal.getPosition();
+				const nearestPoint = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
+				return nearestPoint.y - p.y > 0 && Math.abs((v[0].y - v[1].y) / (v[0].x - v[1].x)) < 3;
+			})
+			.reduce((prev, cur) => {
+				const v = cur.getUserData()?.vertices;
+				const p = thisAnimal.animal.getPosition();
+				const n = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
+				const dist = Math.sqrt((n.x - p.x) ** 2 + (n.y - p.y) ** 2);
+
+				if (prev != null && dist >= prev.dist) return;
+
+				const c = cur;
+				c.dist = dist;
+				distToGround = dist;
+				return c;
+			}, null);
+		if (contacts != null && distToGround < 1 && (thisAnimal.animalData.canWalkUnderwater || thisAnimal.inWater)) {
+			const data = contacts.getUserData();
+			const v = data?.vertices;
+			const rise = v[0].y - v[1].y;
+			const run = v[0].x - v[1].x;
+			const angle = Math.atan2(rise, run);
+			thisAnimal.pixiAnimal.rotation = angle + Math.PI;
+			thisAnimal.walking = true;
+			if (thisAnimal.groundAnchorId != data.id) {
+				thisAnimal.groundAnchorId = data.id;
+
+				thisAnimal.groundJoints.forEach((j) => {
+					world.destroyJoint(j);
+				});
+				thisAnimal.groundJoints = [];
+
+				var joint = world.createJoint(
+					new planck.PrismaticJoint(
+						{
+							collideConnected: true
+						},
+						contacts,
+						thisAnimal.animal,
+						thisAnimal.animal.getWorldCenter(),
+						new planck.Vec2(run, rise)
+					)
+				);
+				thisAnimal.groundJoints.push(joint);
+			}
+		} else {
+			thisAnimal.walking = false;
+			thisAnimal.groundAnchorId = null;
+			thisAnimal.groundJoints.forEach((j) => {
+				world.destroyJoint(j);
+			});
+			thisAnimal.groundJoints = [];
+		}
+	}
+
 	if (isMine) {
 		const centerX = (thisAnimal.pixiAnimal.x - app.stage.pivot.x) * zoom;
 		const centerY = (thisAnimal.pixiAnimal.y - app.stage.pivot.y) * zoom;
-		thisAnimal.pixiAnimal.rotation = point2rad(mouseData.clientX - window.innerWidth / 2, mouseData.clientY - window.innerHeight / 2, centerX, centerY) + Math.PI / 2;
+		thisAnimal.direction = point2rad(mouseData.clientX - window.innerWidth / 2, mouseData.clientY - window.innerHeight / 2, centerX, centerY) + Math.PI / 2;
+		if (!thisAnimal.walking) {
+			thisAnimal.pixiAnimal.rotation = thisAnimal.direction;
+		}
 
 		if (isMain) {
 			const viewportPos = clampCamera(thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y, zoom, map.worldSize.width * 10, map.worldSize.height * 10, window.innerWidth, window.innerHeight);

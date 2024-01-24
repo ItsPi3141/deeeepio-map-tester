@@ -19,16 +19,24 @@ export default class Home extends React.Component {
 			mapId: localStorage.getItem("mapId") || ""
 		});
 	}
-	async startGame() {
+	async startGame(builtInMap) {
 		window.playerName = this.state.name || "Unnamed";
 		window.mapId = this.state.mapId;
 
-		const map = await (await fetch("https://apibeta.deeeep.io/maps/s/" + this.state.mapId)).json();
-		if (map.statusCode) {
-			this.setState({ mapError: true });
-			return;
+		if (!builtInMap) {
+			const map = await (await fetch("https://apibeta.deeeep.io/maps/s/" + this.state.mapId)).json();
+			if (map.statusCode) {
+				this.setState({ mapError: true });
+				return;
+			} else {
+				window.mapData = map;
+			}
 		} else {
-			window.mapData = map;
+			switch (builtInMap) {
+				case "star_rain_ffa":
+					window.mapData = require("../src/star_rain_ffa.json");
+					break;
+			}
 		}
 
 		localStorage.setItem("name", this.state.name);
@@ -102,6 +110,14 @@ export default class Home extends React.Component {
 									Play
 								</button>
 							</div>
+							<button
+								className="w-72 bg-blue-500 border-blue-600 hover:bg-blue-600 hover:border-blue-700"
+								onClick={() => {
+									this.startGame("star_rain_ffa");
+								}}
+							>
+								Try star_rain_ffa
+							</button>
 						</div>
 					</div>
 				</div>
