@@ -365,7 +365,7 @@ function updateAnimal(animal, isMine, isMain = false) {
 		thisAnimal.animal.setLinearDamping(linearDampingFactor);
 	}
 
-	var spdf = thisAnimal.speedFac * (thisAnimal.doApplyForce ? 1 : 0);
+	var spdf = thisAnimal.speedFac * (thisAnimal.doApplyForce ? 1 : 0) * (thisAnimal.walking ? thisAnimal.animalData.walkSpeedMultiplier : thisAnimal.animalData.speedMultiplier);
 
 	if (thisAnimal.doApplyForce != thisAnimal.oldDoApplyForce && thisAnimal.oldDoApplyForce == true && thisAnimal.inWater) {
 		setTimeout(() => {
@@ -416,7 +416,7 @@ function updateAnimal(animal, isMine, isMain = false) {
 				distToGround = dist;
 				return c;
 			}, null);
-		if (contacts != null && distToGround < 1 && (thisAnimal.animalData.canWalkUnderwater || thisAnimal.inWater)) {
+		if (contacts != null && distToGround < 1.2 * thisAnimal.animalData.sizeScale.y && (thisAnimal.animalData.canWalkUnderwater || thisAnimal.inWater)) {
 			const data = contacts.getUserData();
 			const v = data?.vertices;
 			const rise = v[0].y - v[1].y;
