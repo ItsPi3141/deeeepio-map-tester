@@ -403,22 +403,22 @@ function updateAnimal(animal, isMine, isMain = false) {
 				const p = thisAnimal.animal.getPosition();
 				const nearestPoint = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
 				return nearestPoint.y - p.y > 0 && Math.abs((v[0].y - v[1].y) / (v[0].x - v[1].x)) < 3;
-			})
-			.reduce((prev, cur, i) => {
-				const v = cur.getUserData()?.vertices;
-				const p = thisAnimal.animal.getPosition();
-				const n = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
-				const dist = Math.sqrt((n.x - p.x) ** 2 + (n.y - p.y) ** 2);
+			});
+		var nearestContact = contacts.reduce((prev, cur, i) => {
+			const v = cur.getUserData()?.vertices;
+			const p = thisAnimal.animal.getPosition();
+			const n = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
+			const dist = Math.sqrt((n.x - p.x) ** 2 + (n.y - p.y) ** 2);
 
-				if (prev != null && dist >= prev.dist) return prev;
+			if (prev != null && dist >= prev.dist) return prev;
 
-				const c = cur;
-				c.dist = dist;
-				distToGround = dist;
-				return c;
-			}, null);
-		if (contacts != null && distToGround < 1.1 * thisAnimal.animalData.sizeScale.y && (thisAnimal.animalData.canWalkUnderwater || thisAnimal.inWater)) {
-			const data = contacts.getUserData();
+			const c = cur;
+			c.dist = dist;
+			distToGround = dist;
+			return c;
+		}, null);
+		if (nearestContact != null && distToGround < 1.1 * thisAnimal.animalData.sizeScale.y && (thisAnimal.animalData.canWalkUnderwater || thisAnimal.inWater)) {
+			const data = nearestContact.getUserData();
 			const v = data?.vertices;
 			const rise = v[0].y - v[1].y;
 			const run = v[0].x - v[1].x;
@@ -435,20 +435,25 @@ function updateAnimal(animal, isMine, isMain = false) {
 			});
 			thisAnimal.groundJoints = [];
 			let p = thisAnimal.animal.getPosition();
-			let joint = world.createJoint(
-				new planck.DistanceJoint(
-					{
-						frequencyHz: 4,
-						dampingRatio: 0.8,
-						collideConnected: true
-					},
-					contacts,
-					thisAnimal.animal,
-					findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y),
-					thisAnimal.animal.getWorldCenter()
-				)
-			);
-			thisAnimal.groundJoints.push(joint);
+			// Make the animal closer to the ground before creating a joint
+			// TODO: actually use math to do this instead of applying a force
+			thisAnimal.animal.applyForce(planck.Vec2(Math.cos(angle - Math.PI / 2) * 10, Math.sin(angle - Math.PI / 2) * 10), thisAnimal.animal.getPosition());
+			contacts.forEach((c) => {
+				let joint = world.createJoint(
+					new planck.DistanceJoint(
+						{
+							frequencyHz: 8,
+							dampingRatio: 0.9,
+							collideConnected: true
+						},
+						c,
+						thisAnimal.animal,
+						findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y),
+						thisAnimal.animal.getWorldCenter()
+					)
+				);
+				thisAnimal.groundJoints.push(joint);
+			});
 
 			// Walking using prismatic joint
 			// if (thisAnimal.groundAnchorId != data.id) {
