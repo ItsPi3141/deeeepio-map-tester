@@ -293,6 +293,13 @@ const whirlPoolTween = new TWEEN.Tween(whirlPool, false).to({ rotation: 360 }, 5
 // Render player.pixi
 const myAnimals = [];
 myAnimals.push(new Animal(world, 1, animalsLayer, animalsUiLayer, 1, 1, window.playerName));
+// for (var i = 0; i < 100; i++) {
+// 	setTimeout(() => {
+// 		var animal = new Animal(world, 11, animalsLayer, animalsUiLayer, 1, 1, window.playerName);
+// 		myAnimals.push(animal);
+// 		setupBoost(animal);
+// 	}, 500 * i);
+// }
 
 const mouseData = {
 	clientX: 0,
@@ -424,6 +431,7 @@ function updateAnimal(animal, isMine, isMain = false) {
 			const run = v[0].x - v[1].x;
 			const angle = Math.atan2(rise, run);
 			thisAnimal.pixiAnimal.rotation = angle + Math.PI;
+			thisAnimal.animal.setAngle(angle + Math.PI / 2);
 			thisAnimal.walking = true;
 
 			// Walking using apply force
@@ -452,6 +460,7 @@ function updateAnimal(animal, isMine, isMain = false) {
 						thisAnimal.animal.getWorldCenter()
 					)
 				);
+				joint.setLength(thisAnimal.animalSize.planck.height / 4);
 				thisAnimal.groundJoints.push(joint);
 			});
 
@@ -556,7 +565,7 @@ document.addEventListener("mousemove", (event) => {
 	mouseData.clientY = event.clientY;
 });
 
-myAnimals.forEach((animal) => {
+const setupBoost = (animal) => {
 	const throttledBoost = throttle(
 		(event, animalInstance) => {
 			const centerX = (animalInstance.pixiAnimal.x - app.stage.pivot.x) * zoom;
@@ -625,7 +634,9 @@ myAnimals.forEach((animal) => {
 			throttledBoost(event, myAnimal);
 		}
 	});
-});
+};
+myAnimals.forEach((a) => setupBoost(a));
+
 app.view.addEventListener("wheel", (event) => {
 	var newZoom = Math.sign(event.wheelDelta) == 1 ? zoom * 1.2 : zoom / 1.2;
 	newZoom = clamp(newZoom, 4, 16);
