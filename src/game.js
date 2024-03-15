@@ -1,5 +1,11 @@
 import * as PIXI from "pixi.js";
-import { clampCamera, createRadialGradient, renderGradientShape, renderTerrainShape, renderWaterBorder } from "./pixi-utils";
+import {
+	clampCamera,
+	createRadialGradient,
+	renderGradientShape,
+	renderTerrainShape,
+	renderWaterBorder,
+} from "./pixi-utils";
 
 import * as planck from "planck";
 import { addBoundaries, createTerrainCollider } from "./planck-utils";
@@ -7,14 +13,29 @@ import { addBoundaries, createTerrainCollider } from "./planck-utils";
 import throttle from "lodash.throttle";
 import * as TWEEN from "@tweenjs/tween.js";
 
-import { clamp, findNearestPointOnLine, point2rad, rad2deg } from "./math-utils";
+import {
+	clamp,
+	findNearestPointOnLine,
+	point2rad,
+	rad2deg,
+} from "./math-utils";
 
 import pointInPolygon from "robust-point-in-polygon";
 
 import { loadAssets } from "./assetsloader";
 
-import { getBiomes, getHidespaceById, getPropById, getShadowSize, loadMap } from "./game-utils/maploader";
-import { boostPower, linearDampingFactor, planckDownscaleFactor } from "./objects/constants";
+import {
+	getBiomes,
+	getHidespaceById,
+	getPropById,
+	getShadowSize,
+	loadMap,
+} from "./game-utils/maploader";
+import {
+	boostPower,
+	linearDampingFactor,
+	planckDownscaleFactor,
+} from "./objects/constants";
 import { Animal } from "./objects/animal";
 const map = loadMap(window.mapData);
 console.log(map);
@@ -22,10 +43,14 @@ console.log(map);
 await loadAssets();
 
 const world = new planck.World({
-	gravity: planck.Vec2(0, map.settings.gravity * 3)
+	gravity: planck.Vec2(0, map.settings.gravity * 3),
 });
 
-addBoundaries(world, (map.worldSize.width * 10) / planckDownscaleFactor, (map.worldSize.height * 10) / planckDownscaleFactor);
+addBoundaries(
+	world,
+	(map.worldSize.width * 10) / planckDownscaleFactor,
+	(map.worldSize.height * 10) / planckDownscaleFactor
+);
 
 map.screenObjects.terrains?.forEach((terrain) => {
 	createTerrainCollider(world, terrain, planckDownscaleFactor);
@@ -44,7 +69,7 @@ const app = new PIXI.Application({
 	resizeTo: document.querySelector("main > div.game"),
 	resolution: window.devicePixelRatio,
 	antialias: true,
-	clearBeforeRender: true
+	clearBeforeRender: true,
 });
 document.querySelector("main > div.game").appendChild(app.view);
 
@@ -138,7 +163,11 @@ map.screenObjects.sky?.forEach((sky) => {
 	skyLayer.addChild(shape);
 });
 map.screenObjects.water?.forEach((water) => {
-	const shape = renderGradientShape(water.points, water.colors[0], water.colors[1]);
+	const shape = renderGradientShape(
+		water.points,
+		water.colors[0],
+		water.colors[1]
+	);
 	waterLayer.addChild(shape);
 	waterObjects.push(water.points);
 
@@ -158,7 +187,11 @@ map.screenObjects["air-pockets"]?.forEach((airpocket) => {
 	airPocketsLayer.addChild(shape);
 	airPocketObjects.push(airpocket.points);
 
-	const border = renderWaterBorder(airpocket.points, airpocket.borderColor, true);
+	const border = renderWaterBorder(
+		airpocket.points,
+		airpocket.borderColor,
+		true
+	);
 	border.topBorder?.forEach((b) => {
 		waterBorderLowLayer.addChild(b);
 	});
@@ -203,7 +236,10 @@ map.screenObjects["hide-spaces"]?.forEach((hidespace) => {
 		object.alpha /= 2;
 	}
 
-	if (hs.above && (hidespace.opacity == 1 || hidespace.opacity == undefined)) {
+	if (
+		hs.above &&
+		(hidespace.opacity == 1 || hidespace.opacity == undefined)
+	) {
 		hideSpacesHighLayer.addChild(object);
 	} else if (hidespace.opacity != 1) {
 		hideSpacesLowerLayer.addChild(object);
@@ -231,7 +267,7 @@ map.screenObjects.props?.forEach((prop) => {
 			trim: true,
 			wordWrap: true,
 			breakWords: true,
-			fontWeight: "bolder"
+			fontWeight: "bolder",
 		});
 		text.anchor.set(0.5);
 		text.localTransform.setTransform(0, -350, 0, 0, 1, 1, 0, 0, 0);
@@ -243,7 +279,7 @@ map.screenObjects.props?.forEach((prop) => {
 
 const shadowSettings = {
 	alpha: 0,
-	size: 0
+	size: 0,
 };
 function setShadowSize(size) {
 	shadowLayer.removeChildren();
@@ -255,16 +291,29 @@ function setShadowSize(size) {
 	var topBottomHeight = (window.innerHeight - size / zoom) / 2;
 	var topBottomWidth = window.innerWidth - leftRightWidth * 2;
 	const shadow = new PIXI.Graphics();
-	shadow.transform.position.set(-window.innerWidth / 2, -window.innerHeight / 2);
+	shadow.transform.position.set(
+		-window.innerWidth / 2,
+		-window.innerHeight / 2
+	);
 	shadow.beginFill(0x000000);
 	shadow.drawRect(0, 0, leftRightWidth, leftRightHeight);
-	shadow.drawRect(window.innerWidth - leftRightWidth, 0, leftRightWidth, leftRightHeight);
+	shadow.drawRect(
+		window.innerWidth - leftRightWidth,
+		0,
+		leftRightWidth,
+		leftRightHeight
+	);
 	shadow.drawRect(leftRightWidth, 0, topBottomWidth, topBottomHeight);
-	shadow.drawRect(leftRightWidth, window.innerHeight - topBottomHeight, topBottomWidth, topBottomHeight);
+	shadow.drawRect(
+		leftRightWidth,
+		window.innerHeight - topBottomHeight,
+		topBottomWidth,
+		topBottomHeight
+	);
 
 	shadow.beginTextureFill({
 		texture: createRadialGradient(size / zoom, "#00000000", "#000000ff"),
-		matrix: new PIXI.Matrix(1, 0, 0, 1, leftRightWidth, topBottomHeight)
+		matrix: new PIXI.Matrix(1, 0, 0, 1, leftRightWidth, topBottomHeight),
 	});
 	shadow.drawRect(leftRightWidth, topBottomHeight, size / zoom, size / zoom);
 
@@ -276,12 +325,16 @@ setShadowSize(getShadowSize(0));
 // Get habitats
 const habitats = map.screenObjects.habitats?.map((h) => ({
 	...h,
-	points: h.points.map((p) => [p.x, p.y])
+	points: h.points.map((p) => [p.x, p.y]),
 }));
 
 // Whirlpool animation
 var whirlPool = { rotation: 0 };
-const whirlPoolTween = new TWEEN.Tween(whirlPool, false).to({ rotation: 360 }, 5000).easing(TWEEN.Easing.Sinusoidal.InOut).repeat(Infinity).start();
+const whirlPoolTween = new TWEEN.Tween(whirlPool, false)
+	.to({ rotation: 360 }, 5000)
+	.easing(TWEEN.Easing.Sinusoidal.InOut)
+	.repeat(Infinity)
+	.start();
 (() => {
 	function animate(time) {
 		whirlPoolTween.update(time);
@@ -292,7 +345,9 @@ const whirlPoolTween = new TWEEN.Tween(whirlPool, false).to({ rotation: 360 }, 5
 
 // Render player.pixi
 const myAnimals = [];
-myAnimals.push(new Animal(world, 1, animalsLayer, animalsUiLayer, 1, 1, window.playerName));
+myAnimals.push(
+	new Animal(world, 1, animalsLayer, animalsUiLayer, 1, 1, window.playerName)
+);
 // for (var i = 0; i < 100; i++) {
 // 	setTimeout(() => {
 // 		var animal = new Animal(world, 11, animalsLayer, animalsUiLayer, 1, 1, window.playerName);
@@ -303,7 +358,7 @@ myAnimals.push(new Animal(world, 1, animalsLayer, animalsUiLayer, 1, 1, window.p
 
 const mouseData = {
 	clientX: 0,
-	clientY: 0
+	clientY: 0,
 };
 
 function update(dt) {
@@ -336,7 +391,11 @@ function updateAnimal(animal, isMine, isMain = false) {
 				[-1, 0].includes(
 					pointInPolygon(
 						cur.map((p) => [p.x, p.y]),
-						[thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y - (thisAnimal.prevInWater ? 0 : 2)]
+						[
+							thisAnimal.pixiAnimal.x,
+							thisAnimal.pixiAnimal.y -
+								(thisAnimal.prevInWater ? 0 : 2),
+						]
 					)
 				),
 			false
@@ -346,7 +405,11 @@ function updateAnimal(animal, isMine, isMain = false) {
 				prev ||
 				pointInPolygon(
 					cur.map((p) => [p.x, p.y]),
-					[thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y - (thisAnimal.prevInWater ? 0 : 2)]
+					[
+						thisAnimal.pixiAnimal.x,
+						thisAnimal.pixiAnimal.y -
+							(thisAnimal.prevInWater ? 0 : 2),
+					]
 				) == -1,
 			false
 		);
@@ -354,8 +417,12 @@ function updateAnimal(animal, isMine, isMain = false) {
 
 	thisAnimal.doApplyForce =
 		Math.sqrt(
-			((thisAnimal.pixiAnimal.x - app.stage.pivot.x) * zoom - (mouseData.clientX - window.innerWidth / 2)) ** 2 +
-				((thisAnimal.pixiAnimal.y - app.stage.pivot.y) * zoom - (mouseData.clientY - window.innerHeight / 2)) ** 2
+			((thisAnimal.pixiAnimal.x - app.stage.pivot.x) * zoom -
+				(mouseData.clientX - window.innerWidth / 2)) **
+				2 +
+				((thisAnimal.pixiAnimal.y - app.stage.pivot.y) * zoom -
+					(mouseData.clientY - window.innerHeight / 2)) **
+					2
 		) >
 		6 * zoom;
 
@@ -373,9 +440,18 @@ function updateAnimal(animal, isMine, isMain = false) {
 		thisAnimal.animal.setLinearDamping(linearDampingFactor);
 	}
 
-	var spdf = thisAnimal.speedFac * (thisAnimal.doApplyForce ? 1 : 0) * (thisAnimal.walking ? thisAnimal.animalData.walkSpeedMultiplier : thisAnimal.animalData.speedMultiplier);
+	var spdf =
+		thisAnimal.speedFac *
+		(thisAnimal.doApplyForce ? 1 : 0) *
+		(thisAnimal.walking
+			? thisAnimal.animalData.walkSpeedMultiplier
+			: thisAnimal.animalData.speedMultiplier);
 
-	if (thisAnimal.doApplyForce != thisAnimal.oldDoApplyForce && thisAnimal.oldDoApplyForce == true && thisAnimal.inWater) {
+	if (
+		thisAnimal.doApplyForce != thisAnimal.oldDoApplyForce &&
+		thisAnimal.oldDoApplyForce == true &&
+		thisAnimal.inWater
+	) {
 		setTimeout(() => {
 			thisAnimal.animal.setLinearDamping(linearDampingFactor);
 		}, 100);
@@ -385,7 +461,10 @@ function updateAnimal(animal, isMine, isMain = false) {
 	const rotation = thisAnimal.direction - Math.PI / 2;
 
 	thisAnimal.animal.setAngle(thisAnimal.direction);
-	thisAnimal.animal.applyForce(planck.Vec2(Math.cos(rotation) * spdf, Math.sin(rotation) * spdf), thisAnimal.animal.getPosition());
+	thisAnimal.animal.applyForce(
+		planck.Vec2(Math.cos(rotation) * spdf, Math.sin(rotation) * spdf),
+		thisAnimal.animal.getPosition()
+	);
 
 	thisAnimal.pixiAnimal.setTransform(
 		thisAnimal.animal.getPosition().x * planckDownscaleFactor,
@@ -394,7 +473,13 @@ function updateAnimal(animal, isMine, isMain = false) {
 		thisAnimal.animalSize.pixi.scale,
 		thisAnimal.pixiAnimal.rotation
 	);
-	thisAnimal.pixiAnimalUi.setTransform(thisAnimal.animal.getPosition().x * planckDownscaleFactor, thisAnimal.animal.getPosition().y * planckDownscaleFactor - 7, 0.1, 0.1, 0);
+	thisAnimal.pixiAnimalUi.setTransform(
+		thisAnimal.animal.getPosition().x * planckDownscaleFactor,
+		thisAnimal.animal.getPosition().y * planckDownscaleFactor - 7,
+		0.1,
+		0.1,
+		0
+	);
 
 	if (thisAnimal.animalData.canStand) {
 		var contacts = [];
@@ -408,13 +493,30 @@ function updateAnimal(animal, isMine, isMain = false) {
 			.filter((d) => {
 				const v = d.getUserData()?.vertices;
 				const p = thisAnimal.animal.getPosition();
-				const nearestPoint = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
-				return nearestPoint.y - p.y > 0 && Math.abs((v[0].y - v[1].y) / (v[0].x - v[1].x)) < 3;
+				const nearestPoint = findNearestPointOnLine(
+					p.x,
+					p.y,
+					v[0].x,
+					v[0].y,
+					v[1].x,
+					v[1].y
+				);
+				return (
+					nearestPoint.y - p.y > 0 &&
+					Math.abs((v[0].y - v[1].y) / (v[0].x - v[1].x)) < 3
+				);
 			});
 		var nearestContact = contacts.reduce((prev, cur, i) => {
 			const v = cur.getUserData()?.vertices;
 			const p = thisAnimal.animal.getPosition();
-			const n = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
+			const n = findNearestPointOnLine(
+				p.x,
+				p.y,
+				v[0].x,
+				v[0].y,
+				v[1].x,
+				v[1].y
+			);
 			const dist = Math.sqrt((n.x - p.x) ** 2 + (n.y - p.y) ** 2);
 
 			if (prev != null && dist >= prev.dist) return prev;
@@ -424,7 +526,11 @@ function updateAnimal(animal, isMine, isMain = false) {
 			distToGround = dist;
 			return c;
 		}, null);
-		if (nearestContact != null && distToGround < 1.1 * thisAnimal.animalData.sizeScale.y && (thisAnimal.animalData.canWalkUnderwater || thisAnimal.inWater)) {
+		if (
+			nearestContact != null &&
+			distToGround < 1.1 * thisAnimal.animalData.sizeScale.y &&
+			(thisAnimal.animalData.canWalkUnderwater || thisAnimal.inWater)
+		) {
 			const data = nearestContact.getUserData();
 			const v = data?.vertices;
 			const rise = v[0].y - v[1].y;
@@ -445,18 +551,31 @@ function updateAnimal(animal, isMine, isMain = false) {
 			let p = thisAnimal.animal.getPosition();
 			// Make the animal closer to the ground before creating a joint
 			// TODO: actually use math to do this instead of applying a force
-			thisAnimal.animal.applyForce(planck.Vec2(Math.cos(angle - Math.PI / 2) * 10, Math.sin(angle - Math.PI / 2) * 10), thisAnimal.animal.getPosition());
+			thisAnimal.animal.applyForce(
+				planck.Vec2(
+					Math.cos(angle - Math.PI / 2) * 10,
+					Math.sin(angle - Math.PI / 2) * 10
+				),
+				thisAnimal.animal.getPosition()
+			);
 			contacts.forEach((c) => {
 				let joint = world.createJoint(
 					new planck.DistanceJoint(
 						{
 							frequencyHz: 8,
 							dampingRatio: 0.9,
-							collideConnected: true
+							collideConnected: true,
 						},
 						c,
 						thisAnimal.animal,
-						findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y),
+						findNearestPointOnLine(
+							p.x,
+							p.y,
+							v[0].x,
+							v[0].y,
+							v[1].x,
+							v[1].y
+						),
 						thisAnimal.animal.getWorldCenter()
 					)
 				);
@@ -501,18 +620,44 @@ function updateAnimal(animal, isMine, isMain = false) {
 	if (isMine) {
 		const centerX = (thisAnimal.pixiAnimal.x - app.stage.pivot.x) * zoom;
 		const centerY = (thisAnimal.pixiAnimal.y - app.stage.pivot.y) * zoom;
-		thisAnimal.direction = point2rad(mouseData.clientX - window.innerWidth / 2, mouseData.clientY - window.innerHeight / 2, centerX, centerY) + Math.PI / 2;
+		thisAnimal.direction =
+			point2rad(
+				mouseData.clientX - window.innerWidth / 2,
+				mouseData.clientY - window.innerHeight / 2,
+				centerX,
+				centerY
+			) +
+			Math.PI / 2;
 		if (!thisAnimal.walking) {
 			thisAnimal.pixiAnimal.rotation = thisAnimal.direction;
 		}
 
 		if (isMain) {
-			const viewportPos = clampCamera(thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y, zoom, map.worldSize.width * 10, map.worldSize.height * 10, window.innerWidth, window.innerHeight);
+			const viewportPos = clampCamera(
+				thisAnimal.pixiAnimal.x,
+				thisAnimal.pixiAnimal.y,
+				zoom,
+				map.worldSize.width * 10,
+				map.worldSize.height * 10,
+				window.innerWidth,
+				window.innerHeight
+			);
 			app.stage.pivot.set(...viewportPos);
-			shadowLayer.pivot.set(-thisAnimal.pixiAnimal.x, -thisAnimal.pixiAnimal.y);
+			shadowLayer.pivot.set(
+				-thisAnimal.pixiAnimal.x,
+				-thisAnimal.pixiAnimal.y
+			);
 
 			ceilingsLayer.children.forEach((c) => {
-				if ([-1, 0].includes(pointInPolygon(c.points, [thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y - (thisAnimal.inWater ? 0 : 2)]))) {
+				if (
+					[-1, 0].includes(
+						pointInPolygon(c.points, [
+							thisAnimal.pixiAnimal.x,
+							thisAnimal.pixiAnimal.y -
+								(thisAnimal.inWater ? 0 : 2),
+						])
+					)
+				) {
 					c.alpha = 0.4;
 				} else {
 					c.alpha = 1;
@@ -520,14 +665,22 @@ function updateAnimal(animal, isMine, isMain = false) {
 			});
 
 			hideSpacesHighLayer.children.forEach((h) => {
-				if ((thisAnimal.pixiAnimal.x - h.x) ** 2 + (thisAnimal.pixiAnimal.y - h.y) ** 2 < Math.max(window.innerHeight, window.innerWidth) * zoom * 20) {
+				if (
+					(thisAnimal.pixiAnimal.x - h.x) ** 2 +
+						(thisAnimal.pixiAnimal.y - h.y) ** 2 <
+					Math.max(window.innerHeight, window.innerWidth) * zoom * 20
+				) {
 					h.renderable = true;
 				} else {
 					h.renderable = false;
 				}
 			});
 			hideSpacesLowLayer.children.forEach((h) => {
-				if ((thisAnimal.pixiAnimal.x - h.x) ** 2 + (thisAnimal.pixiAnimal.y - h.y) ** 2 < Math.max(window.innerHeight, window.innerWidth) * zoom * 20) {
+				if (
+					(thisAnimal.pixiAnimal.x - h.x) ** 2 +
+						(thisAnimal.pixiAnimal.y - h.y) ** 2 <
+					Math.max(window.innerHeight, window.innerWidth) * zoom * 20
+				) {
 					h.renderable = true;
 				} else {
 					h.renderable = false;
@@ -536,7 +689,12 @@ function updateAnimal(animal, isMine, isMain = false) {
 
 			var currentBiomes = 0;
 			habitats.forEach((h) => {
-				if (pointInPolygon(h.points, [thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y]) != 1) {
+				if (
+					pointInPolygon(h.points, [
+						thisAnimal.pixiAnimal.x,
+						thisAnimal.pixiAnimal.y,
+					]) != 1
+				) {
 					currentBiomes = currentBiomes | h.settings.area;
 				}
 			});
@@ -552,9 +710,11 @@ function updateAnimal(animal, isMine, isMain = false) {
 			}
 
 			if (shadowSettings.alpha > shadowLayer.alpha) {
-				shadowLayer.alpha = Math.round((shadowLayer.alpha + 0.02) * 100) / 100;
+				shadowLayer.alpha =
+					Math.round((shadowLayer.alpha + 0.02) * 100) / 100;
 			} else if (shadowSettings.alpha < shadowLayer.alpha) {
-				shadowLayer.alpha = Math.round((shadowLayer.alpha - 0.02) * 100) / 100;
+				shadowLayer.alpha =
+					Math.round((shadowLayer.alpha - 0.02) * 100) / 100;
 			}
 		}
 	}
@@ -568,14 +728,29 @@ document.addEventListener("mousemove", (event) => {
 const setupBoost = (animal) => {
 	const throttledBoost = throttle(
 		(event, animalInstance) => {
-			const centerX = (animalInstance.pixiAnimal.x - app.stage.pivot.x) * zoom;
-			const centerY = (animalInstance.pixiAnimal.y - app.stage.pivot.y) * zoom;
-			var angle = point2rad(event.clientX - window.innerWidth / 2, event.clientY - window.innerHeight / 2, centerX, centerY);
+			const centerX =
+				(animalInstance.pixiAnimal.x - app.stage.pivot.x) * zoom;
+			const centerY =
+				(animalInstance.pixiAnimal.y - app.stage.pivot.y) * zoom;
+			var angle = point2rad(
+				event.clientX - window.innerWidth / 2,
+				event.clientY - window.innerHeight / 2,
+				centerX,
+				centerY
+			);
 
 			animalInstance.animal.applyLinearImpulse(
 				planck.Vec2(
-					Math.cos(angle) * animalInstance.speedFac * (animalInstance.inWater ? boostPower.water : boostPower.air),
-					Math.sin(angle) * animalInstance.speedFac * (animalInstance.inWater ? boostPower.water : boostPower.air)
+					Math.cos(angle) *
+						animalInstance.speedFac *
+						(animalInstance.inWater
+							? boostPower.water
+							: boostPower.air),
+					Math.sin(angle) *
+						animalInstance.speedFac *
+						(animalInstance.inWater
+							? boostPower.water
+							: boostPower.air)
 				),
 				animalInstance.animal.getPosition()
 			);
@@ -598,12 +773,22 @@ const setupBoost = (animal) => {
 	);
 	const throttledLandhop = throttle(
 		(event, animalInstance) => {
-			const centerX = (animalInstance.pixiAnimal.x - app.stage.pivot.x) * zoom;
-			const centerY = (animalInstance.pixiAnimal.y - app.stage.pivot.y) * zoom;
-			var angle = point2rad(event.clientX - window.innerWidth / 2, event.clientY - window.innerHeight / 2, centerX, centerY);
+			const centerX =
+				(animalInstance.pixiAnimal.x - app.stage.pivot.x) * zoom;
+			const centerY =
+				(animalInstance.pixiAnimal.y - app.stage.pivot.y) * zoom;
+			var angle = point2rad(
+				event.clientX - window.innerWidth / 2,
+				event.clientY - window.innerHeight / 2,
+				centerX,
+				centerY
+			);
 
 			animalInstance.animal.applyLinearImpulse(
-				planck.Vec2(Math.cos(angle) * animalInstance.speedFac * boostPower.land, Math.sin(angle) * animalInstance.speedFac * boostPower.land),
+				planck.Vec2(
+					Math.cos(angle) * animalInstance.speedFac * boostPower.land,
+					Math.sin(angle) * animalInstance.speedFac * boostPower.land
+				),
 				animalInstance.animal.getPosition()
 			);
 		},
@@ -622,7 +807,11 @@ const setupBoost = (animal) => {
 				contact.push(ce);
 			}
 			try {
-				if (contact.filter((c) => c.other.getUserData().type == "terrainTop").length > 0) {
+				if (
+					contact.filter(
+						(c) => c.other.getUserData().type == "terrainTop"
+					).length > 0
+				) {
 					landhop = true;
 				}
 			} catch {}
