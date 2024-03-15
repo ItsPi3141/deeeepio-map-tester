@@ -5,22 +5,22 @@ export function addBoundaries(world, width, height) {
 	const bottom = world.createBody();
 	bottom.createFixture({
 		shape: Edge(Vec2(0, height), Vec2(width, height)),
-		restitution: 0.1
+		restitution: 0.1,
 	});
 	const top = world.createBody();
 	top.createFixture({
 		shape: Edge(Vec2(0, 0), Vec2(width, 0)),
-		restitution: 0.1
+		restitution: 0.1,
 	});
 	const left = world.createBody();
 	left.createFixture({
 		shape: Edge(Vec2(0, 0), Vec2(0, height)),
-		restitution: 0.1
+		restitution: 0.1,
 	});
 	const right = world.createBody();
 	right.createFixture({
 		shape: Edge(Vec2(width, 0), Vec2(width, height)),
-		restitution: 0.1
+		restitution: 0.1,
 	});
 }
 
@@ -33,7 +33,10 @@ export function createTerrainCollider(world, terrain, pdf) {
 		const pOld = terrain.points[(i + 1) % terrain.points.length];
 		var v1 = Vec2(pOld.x / pdf, pOld.y / pdf);
 
-		var pGhostOld = terrain.points[(terrain.points.length + i - 1) % terrain.points.length];
+		var pGhostOld =
+			terrain.points[
+				(terrain.points.length + i - 1) % terrain.points.length
+			];
 		var vprev = Vec2(pGhostOld.x / pdf, pGhostOld.y / pdf);
 		var pGhostNew = terrain.points[(i + 2) % terrain.points.length];
 		var vnext = Vec2(pGhostNew.x / pdf, pGhostNew.y / pdf);
@@ -43,15 +46,15 @@ export function createTerrainCollider(world, terrain, pdf) {
 				type: "terrain",
 				vertices: [
 					{ x: p.x / pdf, y: p.y / pdf },
-					{ x: pOld.x / pdf, y: pOld.y / pdf }
+					{ x: pOld.x / pdf, y: pOld.y / pdf },
 				],
-				id: terrain.id
-			}
+				id: terrain.id,
+			},
 		});
 		edge.createFixture({
 			shape: Edge(v0, v1).setPrevVertex(vprev).setNextVertex(vnext),
 			friction: 1,
-			restitution: 0
+			restitution: 0,
 		});
 	});
 }

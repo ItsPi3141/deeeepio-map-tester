@@ -1,7 +1,7 @@
 import animalConsts from "./consts/animals.json";
 const baseScale = {
 	x: 48,
-	y: 68
+	y: 68,
 };
 
 export function calculateAssetSize(animalId) {
@@ -11,10 +11,16 @@ export function calculateAssetSize(animalId) {
 	return {
 		planck: {
 			width: sx / 20,
-			height: sy / 20
+			height: sy / 20,
 		},
 		pixi: {
-			scale: sy / 3.8 / 680 / (animal.sizeScale.y > animal.sizeScale.x ? animal.sizeScale.y : 1)
-		}
+			scale:
+				sy /
+				3.8 /
+				680 /
+				(animal.sizeScale.y > animal.sizeScale.x
+					? animal.sizeScale.y
+					: 1),
+		},
 	};
 }

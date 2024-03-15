@@ -66,7 +66,7 @@ export function renderGradientShape(points, gradientStart, gradientStop) {
 	} else {
 		shape.beginTextureFill({
 			texture: createGradient(gradientStart, gradientStop, shapeHeight),
-			matrix: new PIXI.Matrix(1, 0, 0, 1, points[0].x, minY)
+			matrix: new PIXI.Matrix(1, 0, 0, 1, points[0].x, minY),
 		});
 	}
 	for (let i = 1; i < points.length; i++) {
@@ -96,7 +96,7 @@ function getTextureById(id) {
 		16: "limestone",
 		17: "rustymetal",
 		18: "shallowglacier",
-		19: "volcanicsand"
+		19: "volcanicsand",
 	}[id];
 }
 export function renderTerrainShape(points, texture, isBackground) {
@@ -104,9 +104,21 @@ export function renderTerrainShape(points, texture, isBackground) {
 	shape.moveTo(points[0].x, points[0].y);
 
 	shape.beginTextureFill({
-		texture: typeof texture === "number" ? PIXI.Texture.from(`/textures/${getTextureById(texture)}.png`) : PIXI.Texture.from(texture.replace("assets/terrains", "/textures")),
+		texture:
+			typeof texture === "number"
+				? PIXI.Texture.from(`/textures/${getTextureById(texture)}.png`)
+				: PIXI.Texture.from(
+						texture.replace("assets/terrains", "/textures")
+				  ),
 		color: "ffffff",
-		matrix: new PIXI.Matrix(0.1, 0, 0, 0.1, isBackground ? 2 : 0, isBackground ? 2 : 0)
+		matrix: new PIXI.Matrix(
+			0.1,
+			0,
+			0,
+			0.1,
+			isBackground ? 2 : 0,
+			isBackground ? 2 : 0
+		),
 	});
 	for (let i = 1; i < points.length; i++) {
 		shape.lineTo(points[i].x, points[i].y);
@@ -156,12 +168,15 @@ export function renderWaterBorder(points, color, isAirPocket = false) {
 
 	return {
 		topBorder: topBorders,
-		bottomBorder: bottomBorders
+		bottomBorder: bottomBorders,
 	};
 }
 
 export function clampCamera(x, y, zoom, mapW, mapH, width, height) {
 	var hvw = width / 2 / zoom;
 	var hvh = height / 2 / zoom;
-	return [Math.max(hvw, Math.min(x, mapW - hvw)), Math.max(hvh, Math.min(y, mapH - hvh))];
+	return [
+		Math.max(hvw, Math.min(x, mapW - hvw)),
+		Math.max(hvh, Math.min(y, mapH - hvh)),
+	];
 }

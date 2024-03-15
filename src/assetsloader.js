@@ -24,7 +24,7 @@ export function loadAssets() {
 			"/textures/terrain_back.png",
 			"/textures/terrain.png",
 			"/textures/volcanicsand.png",
-			...spritesheets.map((e) => `/packs/${e}/spritesheets/1.json`)
+			...spritesheets.map((e) => `/packs/${e}/spritesheets/1.json`),
 		]);
 		resolve();
 	});

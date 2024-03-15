@@ -1,11 +1,15 @@
 import { Quicksand } from "next/font/google";
 import "./globals.css";
 
-const quicksand = Quicksand({ subsets: ["latin", "latin-ext", "vietnamese"], fallback: ["sans-serif"], preload: true });
+const quicksand = Quicksand({
+	subsets: ["latin", "latin-ext", "vietnamese"],
+	fallback: ["sans-serif"],
+	preload: true,
+});
 
 export const metadata = {
 	title: "Deeeep.io Map Preview",
-	description: "Try playing your own Deeeep.io map"
+	description: "Try playing your own Deeeep.io map",
 };
 
 export default function RootLayout({ children }) {

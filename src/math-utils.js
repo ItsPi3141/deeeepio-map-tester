@@ -16,11 +16,11 @@ export function clamp(number, min, max) {
 export function findNearestPointOnLine(px, py, x1, y1, x2, y2) {
 	var atob = {
 		x: x2 - x1,
-		y: y2 - y1
+		y: y2 - y1,
 	};
 	var atop = {
 		x: px - x1,
-		y: py - y1
+		y: py - y1,
 	};
 	var len = atob.x * atob.x + atob.y * atob.y;
 	var dot = atop.x * atob.x + atop.y * atob.y;
@@ -28,6 +28,6 @@ export function findNearestPointOnLine(px, py, x1, y1, x2, y2) {
 	dot = (x2 - x1) * (py - y1) - (y2 - y1) * (px - x1);
 	return {
 		x: x1 + atob.x * t,
-		y: y1 + atob.y * t
+		y: y1 + atob.y * t,
 	};
 }

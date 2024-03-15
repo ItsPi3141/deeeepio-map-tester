@@ -10,13 +10,13 @@ export default class Home extends React.Component {
 			gameStarted: false,
 			name: "",
 			mapId: "",
-			mapError: false
+			mapError: false,
 		};
 	}
 	componentDidMount() {
 		this.setState({
 			name: localStorage.getItem("name") || "",
-			mapId: localStorage.getItem("mapId") || ""
+			mapId: localStorage.getItem("mapId") || "",
 		});
 	}
 	async startGame(builtInMap) {
@@ -24,7 +24,11 @@ export default class Home extends React.Component {
 		window.mapId = this.state.mapId;
 
 		if (!builtInMap) {
-			const map = await (await fetch("https://apibeta.deeeep.io/maps/s/" + this.state.mapId)).json();
+			const map = await (
+				await fetch(
+					"https://apibeta.deeeep.io/maps/s/" + this.state.mapId
+				)
+			).json();
 			if (map.statusCode) {
 				this.setState({ mapError: true });
 				return;
@@ -46,8 +50,11 @@ export default class Home extends React.Component {
 		document.querySelector("div.menu-screen").addEventListener(
 			"animationend",
 			() => {
-				document.querySelector("div.menu-screen").style.display = "none";
-				document.querySelector("div.menu-screen").classList.remove("slide-up-out");
+				document.querySelector("div.menu-screen").style.display =
+					"none";
+				document
+					.querySelector("div.menu-screen")
+					.classList.remove("slide-up-out");
 			},
 			{ once: true }
 		);
@@ -56,30 +63,36 @@ export default class Home extends React.Component {
 	}
 	render() {
 		return (
-			<main className="w-screen h-[100dvh] bg-gray-800 text-white grid grid-cols-1 grid-rows-1">
-				<div className="game w-full h-full col-[1/1] row-[1/1]"></div>
+			<main className="grid grid-cols-1 grid-rows-1 bg-gray-800 w-screen h-[100dvh] text-white">
+				<div className="row-[1/1] w-full h-full col-[1/1] game"></div>
 
-				<div className="menu-screen w-full h-full col-[1/1] row-[1/1] grid grid-cols-1 grid-rows-1">
+				<div className="grid grid-cols-1 grid-rows-1 row-[1/1] w-full h-full col-[1/1] menu-screen">
 					<div
-						className="w-full h-full col-[1/1] row-[1/1] bg-cover bg-bottom"
+						className="bg-cover bg-bottom row-[1/1] w-full h-full col-[1/1]"
 						style={{
-							backgroundImage: this.state.gameStarted ? "" : "url('/assets/dpbg3.png')",
-							filter: this.state.gameStarted ? "" : "brightness(0.6)",
-							backgroundColor: "rgba(0,0,0,0.5)"
+							backgroundImage: this.state.gameStarted
+								? ""
+								: "url('/assets/dpbg3.png')",
+							filter: this.state.gameStarted
+								? ""
+								: "brightness(0.6)",
+							backgroundColor: "rgba(0,0,0,0.5)",
 						}}
 					></div>
-					<div className="w-full h-full col-[1/1] row-[1/1] flex items-center justify-center z-20">
-						<div className="flex flex-col gap-3 justify-center items-stretch w-72 select-none">
+					<div className="z-20 flex justify-center items-center row-[1/1] w-full h-full col-[1/1]">
+						<div className="flex flex-col justify-center items-stretch gap-3 w-72 select-none">
 							<div className="relative">
 								<img
-									className="w-full -mb-7"
+									className="-mb-7 w-full"
 									src="/assets/logov1.png"
 									draggable="false"
 								/>
-								<p className="text-sm bg-red-500 absolute -top-3 -right-6 rotate-[8deg] px-2 rounded-full shadow-md shadow-[#0003]">Map tester</p>
+								<p className="-top-3 -right-6 absolute bg-red-500 shadow-[#0003] shadow-md px-2 rounded-full text-sm rotate-[8deg]">
+									Map tester
+								</p>
 							</div>
 							<input
-								className="bg-gray-800 z-10 outline-none py-1.5 px-3 rounded [line-height:1] border border-gray-700 focus:border-blue-500"
+								className="z-10 border-gray-700 bg-gray-800 px-3 py-1.5 border focus:border-blue-500 rounded outline-none [line-height:1]"
 								placeholder="Enter a name"
 								type="text"
 								value={this.state.name}
@@ -89,20 +102,24 @@ export default class Home extends React.Component {
 							/>
 							<div className="flex gap-2">
 								<input
-									className="bg-gray-800 z-10 outline-none py-1.5 px-3 rounded [line-height:1] border border-gray-700 focus:border-blue-500"
+									className="z-10 border-gray-700 bg-gray-800 px-3 py-1.5 border focus:border-blue-500 rounded outline-none [line-height:1]"
 									placeholder="Enter map string ID"
 									type="text"
 									value={this.state.mapId}
 									onChange={(e) => {
-										this.setState({ mapId: e.target.value });
+										this.setState({
+											mapId: e.target.value,
+										});
 										this.setState({ mapError: false });
 									}}
 									style={{
-										borderColor: this.state.mapError ? "#ef4444" : ""
+										borderColor: this.state.mapError
+											? "#ef4444"
+											: "",
 									}}
 								/>
 								<button
-									className="w-24 bg-emerald-500 border-emerald-600 hover:bg-emerald-600 hover:border-emerald-700"
+									className="border-emerald-600 hover:border-emerald-700 bg-emerald-500 hover:bg-emerald-600 w-24"
 									onClick={() => {
 										this.startGame();
 									}}
@@ -111,7 +128,7 @@ export default class Home extends React.Component {
 								</button>
 							</div>
 							<button
-								className="w-72 bg-blue-500 border-blue-600 hover:bg-blue-600 hover:border-blue-700"
+								className="bg-blue-500 hover:bg-blue-600 border-blue-600 hover:border-blue-700 w-72"
 								onClick={() => {
 									this.startGame("star_rain_ffa");
 								}}

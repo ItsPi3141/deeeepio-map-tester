@@ -1,11 +1,23 @@
 import { Box, Vec2 } from "planck";
 import { calculateAssetSize } from "../game-utils/animal-sizing";
-import { linearDampingFactor, planckDownscaleFactor, speedRatio } from "./constants";
+import {
+	linearDampingFactor,
+	planckDownscaleFactor,
+	speedRatio,
+} from "./constants";
 import animals from "../game-utils/consts/animals.json";
 import { Container, Sprite, Text, Texture } from "pixi.js";
 
 export class Animal {
-	constructor(world, fishLevelId, pixiAnimalsLayer, pixiAnimalsUiLayer, x, y, name) {
+	constructor(
+		world,
+		fishLevelId,
+		pixiAnimalsLayer,
+		pixiAnimalsUiLayer,
+		x,
+		y,
+		name
+	) {
 		this.animalData = animals.find((a) => a.fishLevel == fishLevelId);
 
 		// Create Planck.js body
@@ -18,19 +30,27 @@ export class Animal {
 			allowSleep: false,
 			awake: true,
 			gravityScale: 0,
-			bullet: true
+			bullet: true,
 		});
 		this.animalSize = calculateAssetSize(fishLevelId);
 
-		this.animal.createFixture(Box(this.animalSize.planck.width / planckDownscaleFactor, this.animalSize.planck.height / planckDownscaleFactor), {
-			density: 0.1,
-			friction: 0.7,
-			restitution: 0
-		});
+		this.animal.createFixture(
+			Box(
+				this.animalSize.planck.width / planckDownscaleFactor,
+				this.animalSize.planck.height / planckDownscaleFactor
+			),
+			{
+				density: 0.1,
+				friction: 0.7,
+				restitution: 0,
+			}
+		);
 		this.animal.setMassData({ mass: 1, center: Vec2(0, 0) });
 
 		// Create instance in PIXI
-		this.pixiAnimal = new Sprite(Texture.from(`/animals/${this.animalData.name}.png`));
+		this.pixiAnimal = new Sprite(
+			Texture.from(`/animals/${this.animalData.name}.png`)
+		);
 		this.pixiAnimal.anchor.set(0.5);
 		this.pixiAnimal.setTransform(
 			this.animal.getPosition().x * planckDownscaleFactor,
@@ -47,10 +67,16 @@ export class Animal {
 				fontFamily: "Quicksand",
 				fontSize: 20,
 				fill: 0xffffff,
-				align: "center"
+				align: "center",
 			});
 			nameText.anchor.set(0.5);
-			this.pixiAnimal.setTransform(this.animal.getPosition().x * planckDownscaleFactor, this.animal.getPosition().y * planckDownscaleFactor - 7, 0.1, 0.1, 0);
+			this.pixiAnimal.setTransform(
+				this.animal.getPosition().x * planckDownscaleFactor,
+				this.animal.getPosition().y * planckDownscaleFactor - 7,
+				0.1,
+				0.1,
+				0
+			);
 			this.pixiAnimalUi.addChild(nameText);
 		}
 
