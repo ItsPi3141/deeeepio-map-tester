@@ -33,10 +33,7 @@ export function createTerrainCollider(world, terrain, pdf) {
 		const pOld = terrain.points[(i + 1) % terrain.points.length];
 		var v1 = Vec2(pOld.x / pdf, pOld.y / pdf);
 
-		var pGhostOld =
-			terrain.points[
-				(terrain.points.length + i - 1) % terrain.points.length
-			];
+		var pGhostOld = terrain.points[(terrain.points.length + i - 1) % terrain.points.length];
 		var vprev = Vec2(pGhostOld.x / pdf, pGhostOld.y / pdf);
 		var pGhostNew = terrain.points[(i + 2) % terrain.points.length];
 		var vnext = Vec2(pGhostNew.x / pdf, pGhostNew.y / pdf);

@@ -50,16 +50,7 @@ import simplepolygon from "simplepolygon";
 export function loadMap(json) {
 	if (!json.data) return false;
 	const data = JSON.parse(json.data);
-	data.screenObjects = data.screenObjects.filter(
-		(l) =>
-			![
-				"animals",
-				"food-spawns",
-				"npc-spawns",
-				"triggers",
-				"currents",
-			].includes(l.layerId)
-	);
+	data.screenObjects = data.screenObjects.filter((l) => !["animals", "food-spawns", "npc-spawns", "triggers", "currents"].includes(l.layerId));
 	var tempObj = {};
 	data.screenObjects.forEach((l) => {
 		if (!tempObj[l.layerId]) tempObj[l.layerId] = [];
@@ -161,11 +152,7 @@ function redistributeRgb(red, green, blue) {
 	const ratio = (3 * maxColorValue - sum) / (3 * maxColor - sum);
 	const offset = maxColorValue - ratio * maxColor;
 
-	return [
-		offset + ratio * red,
-		offset + ratio * green,
-		offset + ratio * blue,
-	];
+	return [offset + ratio * red, offset + ratio * green, offset + ratio * blue];
 }
 function stringColorToHex(color) {
 	return typeof color === "string" ? parseInt(color.slice(1), 16) : color;
@@ -179,8 +166,7 @@ export function isClockwise(points) {
 		let nextPoint = points[(i + 1) % points.length];
 
 		// Calculate the cross product of the points
-		total +=
-			(nextPoint.x - currentPoint.x) * (nextPoint.y + currentPoint.y);
+		total += (nextPoint.x - currentPoint.x) * (nextPoint.y + currentPoint.y);
 	}
 	return total < 0;
 }
@@ -217,8 +203,7 @@ export function getShadowSize(animalId) {
 	var livesInDeep = habitats.includes("deep");
 	var livesInShallow = habitats.includes("shallow");
 	var livesInFresh = habitats.includes("fresh");
-	var livesInWarmSalt =
-		habitats.includes("warm") && habitats.includes("salt");
+	var livesInWarmSalt = habitats.includes("warm") && habitats.includes("salt");
 
 	if (["blindcavefish", "olm"].includes(animal.name)) {
 		return 450;

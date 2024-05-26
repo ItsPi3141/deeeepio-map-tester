@@ -38,13 +38,5 @@
 		"verified": true,
 		"beta": false
 	},
-	"tags": [
-		{ "id": "complete" },
-		{ "id": "ffa" },
-		{ "id": "fjord" },
-		{ "id": "night" },
-		{ "id": "stars" },
-		{ "id": "tffa" },
-		{ "id": "waterfall" }
-	]
+	"tags": [{ "id": "complete" }, { "id": "ffa" }, { "id": "fjord" }, { "id": "night" }, { "id": "stars" }, { "id": "tffa" }, { "id": "waterfall" }]
 }

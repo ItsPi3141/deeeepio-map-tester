@@ -107,18 +107,9 @@ export function renderTerrainShape(points, texture, isBackground) {
 		texture:
 			typeof texture === "number"
 				? PIXI.Texture.from(`/textures/${getTextureById(texture)}.png`)
-				: PIXI.Texture.from(
-						texture.replace("assets/terrains", "/textures")
-				  ),
+				: PIXI.Texture.from(texture.replace("assets/terrains", "/textures")),
 		color: "ffffff",
-		matrix: new PIXI.Matrix(
-			0.1,
-			0,
-			0,
-			0.1,
-			isBackground ? 2 : 0,
-			isBackground ? 2 : 0
-		),
+		matrix: new PIXI.Matrix(0.1, 0, 0, 0.1, isBackground ? 2 : 0, isBackground ? 2 : 0),
 	});
 	for (let i = 1; i < points.length; i++) {
 		shape.lineTo(points[i].x, points[i].y);
@@ -175,8 +166,5 @@ export function renderWaterBorder(points, color, isAirPocket = false) {
 export function clampCamera(x, y, zoom, mapW, mapH, width, height) {
 	var hvw = width / 2 / zoom;
 	var hvh = height / 2 / zoom;
-	return [
-		Math.max(hvw, Math.min(x, mapW - hvw)),
-		Math.max(hvh, Math.min(y, mapH - hvh)),
-	];
+	return [Math.max(hvw, Math.min(x, mapW - hvw)), Math.max(hvh, Math.min(y, mapH - hvh))];
 }
