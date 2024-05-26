@@ -551,14 +551,27 @@ function updateAnimal(animal, isMine, isMain = false) {
 			let p = thisAnimal.animal.getPosition();
 			// Make the animal closer to the ground before creating a joint
 			// TODO: actually use math to do this instead of applying a force
-			thisAnimal.animal.applyForce(
-				planck.Vec2(
-					Math.cos(angle - Math.PI / 2) * 10,
-					Math.sin(angle - Math.PI / 2) * 10
-				),
-				thisAnimal.animal.getPosition()
-			);
+			// thisAnimal.animal.applyForce(
+			// 	planck.Vec2(
+			// 		Math.cos(angle - Math.PI / 2) * 10,
+			// 		Math.sin(angle - Math.PI / 2) * 10
+			// 	),
+			// 	thisAnimal.animal.getPosition()
+			// );
 			contacts.forEach((c) => {
+				let s = thisAnimal.animalSize.planck.height / 5;
+				let animalX =
+					thisAnimal.animal.getWorldCenter().x +
+					planck.Vec2(
+						Math.cos(angle - Math.PI / 2) * s,
+						Math.sin(angle - Math.PI / 2) * s
+					).x;
+				let animalY =
+					thisAnimal.animal.getWorldCenter().y +
+					planck.Vec2(
+						Math.cos(angle - Math.PI / 2) * s,
+						Math.sin(angle - Math.PI / 2) * s
+					).y;
 				let joint = world.createJoint(
 					new planck.DistanceJoint(
 						{
@@ -576,10 +589,10 @@ function updateAnimal(animal, isMine, isMain = false) {
 							v[1].x,
 							v[1].y
 						),
-						thisAnimal.animal.getWorldCenter()
+						planck.Vec2(animalX, animalY)
 					)
 				);
-				joint.setLength(thisAnimal.animalSize.planck.height / 4);
+				joint.setLength(thisAnimal.animalSize.planck.height / 4 - s);
 				thisAnimal.groundJoints.push(joint);
 			});
 
