@@ -1,11 +1,26 @@
-import { Assets, Container, Sprite, Texture } from "pixi.js";
+import { Assets, Container, DisplayObject, Sprite, Texture } from "pixi.js";
 import { Body, Circle, Vec2, World } from "planck";
 import foods from "../game-utils/consts/foods.json";
 import { planckDownscaleFactor } from "./constants";
+import robustPointInPolygon from "robust-point-in-polygon";
 
 const foodScale = 0.32;
 
 export class Food {
+	data: {
+		type: "ground" | "water";
+		respawnDelay: number;
+		onlyOnWater: boolean;
+		spawner: {
+			ground?: { x: number; y: number }[];
+			water?: {
+				x: number;
+				y: number;
+				width: number;
+				height: number;
+			};
+		} | null;
+	};
 	food: Body;
 	foodData: {
 		id: number;
@@ -28,17 +43,67 @@ export class Food {
 	};
 	pixiFood: Sprite;
 
-	constructor(world: World, foodId: number, pixiFoodLayer: Container, x: number, y: number) {
+	constructor(
+		world: World,
+		foodId: number,
+		pixiFoodLayer: Container,
+		x: number,
+		y: number,
+		data: {
+			type: "ground" | "water";
+			respawnDelay: number;
+			onlyOnWater: boolean;
+			spawner: {
+				ground?: { x: number; y: number }[];
+				water?: {
+					x: number;
+					y: number;
+					width: number;
+					height: number;
+				};
+			} | null;
+		},
+		terrains: DisplayObject[]
+	) {
 		this.foodData = foods.find((f) => f.id === foodId) || foods[13];
 
+		this.data = data;
+
+		// determine spawn location
+		// TODO: implement ground food
+		let spawnX = x;
+		let spawnY = y;
+		if (data?.type === "water" && data?.spawner?.water) {
+			spawnX = data.spawner.water.x + Math.random() * data.spawner.water.width;
+			spawnY = data.spawner.water.y + Math.random() * data.spawner.water.height;
+			let validLocation = false;
+			while (!validLocation) {
+				let allValid: boolean[] = [];
+				for (let i = 0; i < terrains.length; i++) {
+					const t = terrains[i] as DisplayObject & { points?: [number, number][] };
+					// 1 is outside, 0 is on the line, -1 is inside
+					if (t.points && [-1, 0].includes(robustPointInPolygon(t.points, [spawnX, spawnY]))) {
+						allValid.push(false);
+					} else {
+						allValid.push(true);
+					}
+				}
+				if (allValid.every((v) => v === true)) {
+					validLocation = true;
+				} else {
+					spawnX = data.spawner.water.x + Math.random() * data.spawner.water.width;
+					spawnY = data.spawner.water.y + Math.random() * data.spawner.water.height;
+				}
+			}
+		}
 		this.food = world.createBody({
 			type: "static", // TODO: add exception for coconut, volcanofood, and meat
-			position: Vec2(x, y),
+			position: Vec2(spawnX / planckDownscaleFactor, spawnY / planckDownscaleFactor),
 			awake: true,
 			gravityScale: 0,
 			bullet: true,
 		});
-		this.food.createFixture(Circle((this.foodData.width / planckDownscaleFactor / 2) * foodScale), {
+		this.food.createFixture(Circle((this.foodData.width / planckDownscaleFactor / 2.5) * foodScale), {
 			isSensor: true,
 		});
 

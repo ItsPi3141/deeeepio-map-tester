@@ -184,11 +184,13 @@ map.screenObjects.platforms?.forEach((platform: DeeeepioMapScreenObject) => {
 	platformsLayer.addChild(shape);
 });
 map.screenObjects.islands?.forEach((island: DeeeepioMapScreenObject) => {
-	const shape = renderTerrainShape(island.points, island.texture, false);
+	const shape: PIXI.Graphics & { points?: number[][] } = renderTerrainShape(island.points, island.texture, false);
+	shape.points = island.points.map((p) => [p.x, p.y]);
 	islandsLayer.addChild(shape);
 });
 map.screenObjects.terrains?.forEach((terrain: DeeeepioMapScreenObject) => {
-	const shape = renderTerrainShape(terrain.points, terrain.texture, false);
+	const shape: PIXI.Graphics & { points?: number[][] } = renderTerrainShape(terrain.points, terrain.texture, false);
+	shape.points = terrain.points.map((p) => [p.x, p.y]);
 	terrainsLayer.addChild(shape);
 });
 map.screenObjects.ceilings?.forEach((ceiling: DeeeepioMapScreenObject) => {
@@ -319,13 +321,33 @@ myAnimals.push(new Animal(world, 0, animalsLayer, animalsUiLayer, 1, 1, window.p
 const foods: Food[] = [];
 map.screenObjects["food-spawns"]?.forEach((f: DeeeepioMapScreenObject) => {
 	for (let i = 0; i < f.settings.count; i++) {
-		const x = f.position.x + Math.random() * f.size.width;
-		const y = f.position.y + Math.random() * f.size.height;
 		const foodId = f.settings.foodIds[Math.floor(Math.random() * f.settings.foodIds.length)];
-		foods.push(new Food(world, foodId, foodLayer, x / planckDownscaleFactor, y / planckDownscaleFactor));
+		foods.push(
+			new Food(
+				world,
+				foodId,
+				foodLayer,
+				0,
+				0,
+				{
+					type: "water",
+					respawnDelay: f.settings.reSpawnMs || 0,
+					onlyOnWater: f.settings.onlyOnWater,
+					spawner: {
+						water: {
+							x: f.position.x,
+							y: f.position.y,
+							width: f.size.width,
+							height: f.size.height,
+						},
+					},
+				},
+				[...terrainsLayer.children, ...islandsLayer.children]
+			)
+		);
 	}
 });
-// foods.push(new Food(world, 3, foodLayer, 35, 35));
+// foods.push(new Food(world, 3, foodLayer, 35, 35, null));
 
 const mouseData = {
 	clientX: 0,
@@ -349,9 +371,11 @@ function update(dt: number) {
 		updateAnimal(animal, true, index === 0);
 	});
 
-	foods.forEach((food) => {
-		updateFood(food);
-	});
+	foods
+		.map((food) => {
+			updateFood(food);
+		})
+		.filter((food) => food !== null);
 
 	world.step((app.ticker.elapsedMS / 1000) * dt, 8, 5);
 	world.clearForces();
@@ -597,6 +621,13 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 					h.renderable = false;
 				}
 			});
+			foodLayer.children.forEach((f) => {
+				if ((thisAnimal.pixiAnimal.x - f.x) ** 2 + (thisAnimal.pixiAnimal.y - f.y) ** 2 < Math.max(window.innerHeight, window.innerWidth) * zoom * 20) {
+					f.renderable = true;
+				} else {
+					f.renderable = false;
+				}
+			});
 
 			let currentBiomes = 0;
 			habitats.forEach((h: DeeeepioMapScreenObject & { points: [number, number][] }) => {
@@ -627,15 +658,18 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 function updateFood(food: Food) {
 	const thisFood = food.getState;
 
-	// get a list of animals touching this food
-	// TODO: filter animals that cannot eat this food out
-	let contacts = [];
 	for (let ce = thisFood.food.getContactList(); ce; ce = ce.next) {
-		if (typeof (ce.other?.getUserData() as Record<string, any>).increaseXp !== "undefined") contacts.push(ce.other);
+		const data = ce.other?.getUserData() as Record<string, any>;
+
+		if (typeof data.increaseXp !== "undefined") {
+			data.increaseXp(thisFood.foodData.xp);
+			world.destroyBody(thisFood.food);
+			thisFood.pixiFood.destroy();
+			return null;
+		}
 	}
-	if (contacts.length > 0) {
-		(contacts[0]?.getUserData() as Record<string, any>).increaseXp(thisFood.foodData.xp);
-	}
+
+	return food;
 }
 
 document.addEventListener("mousemove", (event) => {
