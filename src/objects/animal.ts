@@ -77,7 +77,7 @@ export class Animal {
 	speedFac: number;
 
 	xp: number;
-	xpText: Text;
+	xpText: Text | undefined;
 
 	constructor(world: World, fishLevelId: number, pixiAnimalsLayer: Container, pixiAnimalsUiLayer: Container, x: number, y: number, name: string) {
 		this.animalData = animals.find((a) => a.fishLevel === fishLevelId) || animals[0];
@@ -178,6 +178,6 @@ export class Animal {
 
 	increaseXp(amount: number) {
 		this.xp += amount;
-		this.xpText.text = makeHumanReadableNumber(this.xp);
+		if (this.xpText) this.xpText.text = makeHumanReadableNumber(this.xp);
 	}
 }
