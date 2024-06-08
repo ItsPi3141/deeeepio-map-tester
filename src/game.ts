@@ -16,6 +16,7 @@ import { loadAssets } from "./assetsloader";
 import { getBiomes, getHidespaceById, getPropById, getShadowSize, loadMap } from "./game-utils/maploader";
 import { boostPower, linearDampingFactor, planckDownscaleFactor } from "./objects/constants";
 import { Animal } from "./objects/animal";
+import { Food } from "./objects/food";
 import type { DeeeepioMapScreenObject } from "./types";
 
 const map = loadMap(window.mapData);
@@ -314,6 +315,10 @@ myAnimals.push(new Animal(world, 0, animalsLayer, animalsUiLayer, 1, 1, window.p
 // 	}, 500 * i);
 // }
 
+// Render foods
+const foods: Food[] = [];
+foods.push(new Food(world, 3, foodLayer, 35, 35));
+
 const mouseData = {
 	clientX: 0,
 	clientY: 0,
@@ -334,6 +339,10 @@ function update(dt: number) {
 
 	myAnimals.forEach((animal, index) => {
 		updateAnimal(animal, true, index === 0);
+	});
+
+	foods.forEach((food) => {
+		updateFood(food);
 	});
 
 	world.step((app.ticker.elapsedMS / 1000) * dt, 8, 5);
@@ -604,6 +613,20 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				shadowLayer.alpha = Math.round((shadowLayer.alpha - 0.02) * 100) / 100;
 			}
 		}
+	}
+}
+
+function updateFood(food: Food) {
+	const thisFood = food.getState;
+
+	// get a list of animals touching this food
+	// TODO: filter animals that cannot eat this food out
+	let contacts = [];
+	for (let ce = thisFood.food.getContactList(); ce; ce = ce.next) {
+		if (typeof (ce.other?.getUserData() as Record<string, any>).increaseXp !== "undefined") contacts.push(ce.other);
+	}
+	if (contacts.length > 0) {
+		(contacts[0]?.getUserData() as Record<string, any>).increaseXp(thisFood.foodData.xp);
 	}
 }
 

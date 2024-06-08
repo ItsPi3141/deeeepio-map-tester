@@ -3,6 +3,7 @@ import { calculateAssetSize } from "../game-utils/animal-sizing";
 import { linearDampingFactor, planckDownscaleFactor, speedRatio } from "./constants";
 import animals from "../game-utils/consts/animals.json";
 import { Container, Sprite, Text, Texture } from "pixi.js";
+import { makeHumanReadableNumber } from "../math-utils";
 
 export class Animal {
 	animalData: {
@@ -75,8 +76,14 @@ export class Animal {
 	groundJoints: DistanceJoint[];
 	speedFac: number;
 
+	xp: number;
+	xpText: Text;
+
 	constructor(world: World, fishLevelId: number, pixiAnimalsLayer: Container, pixiAnimalsUiLayer: Container, x: number, y: number, name: string) {
 		this.animalData = animals.find((a) => a.fishLevel === fishLevelId) || animals[0];
+
+		// initialize values
+		this.xp = 0;
 
 		// Create Planck.js body
 		this.animal = world.createBody({
@@ -102,6 +109,9 @@ export class Animal {
 			center: Vec2(0, 0),
 			I: 0,
 		});
+		this.animal.setUserData({
+			increaseXp: this.increaseXp.bind(this),
+		});
 
 		// Create instance in PIXI
 		this.pixiAnimal = new Sprite(Texture.from(`/animals/${this.animalData.name}.png`));
@@ -124,6 +134,18 @@ export class Animal {
 				align: "center",
 			});
 			nameText.anchor.set(0.5);
+			this.pixiAnimalUi.addChild(nameText);
+
+			this.xpText = new Text(makeHumanReadableNumber(this.xp), {
+				fontFamily: "Quicksand",
+				fontSize: 14,
+				fill: 0xffffff,
+				align: "center",
+			});
+			this.xpText.position.set(0, 20);
+			this.xpText.anchor.set(0.5);
+			this.pixiAnimalUi.addChild(this.xpText);
+
 			this.pixiAnimal.setTransform(
 				this.animal.getPosition().x * planckDownscaleFactor,
 				this.animal.getPosition().y * planckDownscaleFactor - 7,
@@ -131,7 +153,6 @@ export class Animal {
 				0.1,
 				0
 			);
-			this.pixiAnimalUi.addChild(nameText);
 		}
 
 		pixiAnimalsUiLayer.addChild(this.pixiAnimalUi);
@@ -153,5 +174,10 @@ export class Animal {
 
 	get getState() {
 		return this;
+	}
+
+	increaseXp(amount: number) {
+		this.xp += amount;
+		this.xpText.text = makeHumanReadableNumber(this.xp);
 	}
 }
