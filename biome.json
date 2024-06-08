@@ -1,8 +1,11 @@
 {
 	"linter": {
 		"rules": {
+			"a11y": {
+				"useAltText": "off"
+			},
 			"complexity": {
-				"noForEach": false
+				"noForEach": "off"
 			}
 		}
 	}

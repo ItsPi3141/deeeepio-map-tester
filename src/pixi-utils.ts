@@ -1,30 +1,24 @@
 import * as PIXI from "pixi.js";
 import { isClockwise, makeBrighter } from "./game-utils/maploader";
 
-/**
- * Generates a gradient texture using the provided start and end colors.
- *
- * @param {string} startColor - The starting color of the gradient in decimal format.
- * @param {string} endColor - The ending color of the gradient in decimal format.
- * @param {number} [quality=256] - The quality of the gradient image. Defaults to 256.
- * @return {Texture} The generated gradient image as a Texture object.
- */
-export function createGradient(startColor, endColor, quality = 256) {
-	const canvas = document.createElement("canvas");
+export function createGradient(startColor: number, endColor: number, quality = 256): PIXI.Texture {
+	const canvas: HTMLCanvasElement = document.createElement("canvas");
 
 	canvas.width = 1;
 	canvas.height = quality;
 
-	startColor = "#" + startColor.toString(16).padStart(6, "0");
-	endColor = "#" + endColor.toString(16).padStart(6, "0");
+	const hexStartColor: string = "#" + startColor.toString(16).padStart(6, "0");
+	const hexEndColor: string = "#" + endColor.toString(16).padStart(6, "0");
 
-	const ctx = canvas.getContext("2d");
+	const ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
+
+	if (!ctx) return PIXI.Texture.EMPTY;
 
 	// use canvas2d API to create gradient
-	const grd = ctx.createLinearGradient(0, 0, 0, quality);
+	const grd: CanvasGradient = ctx.createLinearGradient(0, 0, 0, quality);
 
-	grd.addColorStop(0, startColor);
-	grd.addColorStop(1, endColor);
+	grd.addColorStop(0, hexStartColor);
+	grd.addColorStop(1, hexEndColor);
 
 	ctx.fillStyle = grd;
 	ctx.fillRect(0, 0, 1, quality);
@@ -32,17 +26,19 @@ export function createGradient(startColor, endColor, quality = 256) {
 	return PIXI.Texture.from(canvas);
 }
 
-export function createRadialGradient(radius, startColor, endColor) {
-	const canvas = document.createElement("canvas");
+export function createRadialGradient(radius: number, startColor: string, endColor: string): PIXI.Texture {
+	const canvas: HTMLCanvasElement = document.createElement("canvas");
 
 	canvas.width = radius;
 	canvas.height = radius;
 
-	const ctx = canvas.getContext("2d");
+	const ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
+
+	if (!ctx) return PIXI.Texture.EMPTY;
 
 	// use canvas2d API to create gradient
-	var hr = radius / 2;
-	const grd = ctx.createRadialGradient(hr, hr, 0, hr, hr, hr);
+	const hr = radius / 2;
+	const grd: CanvasGradient = ctx.createRadialGradient(hr, hr, 0, hr, hr, hr);
 
 	grd.addColorStop(0, startColor);
 	grd.addColorStop(1, endColor);
@@ -53,13 +49,13 @@ export function createRadialGradient(radius, startColor, endColor) {
 	return PIXI.Texture.from(canvas);
 }
 
-export function renderGradientShape(points, gradientStart, gradientStop) {
-	const shape = new PIXI.Graphics();
+export function renderGradientShape(points: Array<{ x: number; y: number }>, gradientStart: number, gradientStop: number): PIXI.Graphics {
+	const shape: PIXI.Graphics = new PIXI.Graphics();
 	shape.moveTo(points[0].x, points[0].y);
 
-	var minY = points.reduce((a, b) => (a = b.y < a ? b.y : a), Infinity);
-	var maxY = points.reduce((a, b) => (a = b.y > a ? b.y : a), -Infinity);
-	var shapeHeight = maxY - minY;
+	const minY: number = points.reduce((a, b) => (a = b.y < a ? b.y : a), Infinity);
+	const maxY: number = points.reduce((a, b) => (a = b.y > a ? b.y : a), -Infinity);
+	const shapeHeight: number = maxY - minY;
 
 	if (gradientStart == gradientStop) {
 		shape.beginFill(gradientStart, 1);
@@ -76,7 +72,7 @@ export function renderGradientShape(points, gradientStart, gradientStop) {
 	return shape;
 }
 
-function getTextureById(id) {
+function getTextureById(id: number) {
 	return {
 		1: "terrain",
 		2: "terrain_back",
@@ -99,8 +95,8 @@ function getTextureById(id) {
 		19: "volcanicsand",
 	}[id];
 }
-export function renderTerrainShape(points, texture, isBackground) {
-	const shape = new PIXI.Graphics();
+export function renderTerrainShape(points: Array<{ x: number; y: number }>, texture: number | string, isBackground: boolean) {
+	const shape: PIXI.Graphics = new PIXI.Graphics();
 	shape.moveTo(points[0].x, points[0].y);
 
 	shape.beginTextureFill({
@@ -120,7 +116,14 @@ export function renderTerrainShape(points, texture, isBackground) {
 
 // top means the top half of the water border
 // top does NOT mean the higher layer/zIndex
-export function renderWaterBorder(points, color, isAirPocket = false) {
+export function renderWaterBorder(
+	points: Array<{ x: number; y: number }>,
+	color: number,
+	isAirPocket = false
+): {
+	topBorder: Array<PIXI.Graphics>;
+	bottomBorder: Array<PIXI.Graphics>;
+} {
 	const borderColor = makeBrighter(color, 1.75);
 	if (isAirPocket) {
 		if (isClockwise(points)) points.reverse();
@@ -128,8 +131,8 @@ export function renderWaterBorder(points, color, isAirPocket = false) {
 		if (!isClockwise(points)) points.reverse();
 	}
 
-	const topBorders = [];
-	const bottomBorders = [];
+	const topBorders: Array<PIXI.Graphics> = [];
+	const bottomBorders: Array<PIXI.Graphics> = [];
 
 	for (let i = 0; i < points.length; i++) {
 		const current = points[i];
@@ -163,8 +166,8 @@ export function renderWaterBorder(points, color, isAirPocket = false) {
 	};
 }
 
-export function clampCamera(x, y, zoom, mapW, mapH, width, height) {
-	var hvw = width / 2 / zoom;
-	var hvh = height / 2 / zoom;
+export function clampCamera(x: number, y: number, zoom: number, mapW: number, mapH: number, width: number, height: number) {
+	const hvw: number = width / 2 / zoom;
+	const hvh: number = height / 2 / zoom;
 	return [Math.max(hvw, Math.min(x, mapW - hvw)), Math.max(hvh, Math.min(y, mapH - hvh))];
 }

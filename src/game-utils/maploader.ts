@@ -1,7 +1,6 @@
 import hideSpaces from "./consts/hidespaces.json";
 import props from "./consts/props.json";
 import animals from "./consts/animals.json";
-import simplepolygon from "simplepolygon";
 
 /**
  * Load the map from a JSON object.
@@ -47,14 +46,16 @@ import simplepolygon from "simplepolygon";
  *
  * @returns {{screenObjects: screenObjects, settings: settings, worldSize: worldSize}} The parsed map data.
  */
-export function loadMap(json) {
+export function loadMap(json: Record<string, string | number | object>) {
 	if (!json.data) return false;
-	const data = JSON.parse(json.data);
-	data.screenObjects = data.screenObjects.filter((l) => !["animals", "food-spawns", "npc-spawns", "triggers", "currents"].includes(l.layerId));
-	var tempObj = {};
-	data.screenObjects.forEach((l) => {
+	const data = JSON.parse(json.data as string);
+	data.screenObjects = data.screenObjects.filter(
+		(l: Record<string, string>) => !["animals", "food-spawns", "npc-spawns", "triggers", "currents"].includes(l.layerId)
+	);
+	const tempObj: Record<string, string | number | object> = {};
+	data.screenObjects.forEach((l: Record<string, string | number>) => {
 		if (!tempObj[l.layerId]) tempObj[l.layerId] = [];
-		tempObj[l.layerId].push(l);
+		(tempObj[l.layerId] as Record<string, string | number>[]).push(l);
 	});
 	data.screenObjects = tempObj;
 	if (!data.settings) {
@@ -87,35 +88,35 @@ export function loadMap(json) {
 	return data;
 }
 
-export function getHidespaceById(id) {
-	return hideSpaces.find((h) => h.id == id);
+export function getHidespaceById(id: number) {
+	return hideSpaces.find((h) => h.id === id);
 }
-export function getPropById(id) {
-	return props.find((p) => p.id == id);
+export function getPropById(id: number) {
+	return props.find((p) => p.id === id);
 }
 
-export function makeBrighter(t, i) {
-	const hexString = ("00000" + (0 | t).toString(16)).slice(-6);
-	const r = parseInt(hexString.slice(0, 2), 16);
-	const o = parseInt(hexString.slice(2, 4), 16);
-	const l = parseInt(hexString.slice(4, 6), 16);
-	let c = i;
+export function makeBrighter(color: number, brightnessFactor: number) {
+	const hexString = `00000${(0 | color).toString(16)}`.slice(-6);
+	const r = Number.parseInt(hexString.slice(0, 2), 16);
+	const o = Number.parseInt(hexString.slice(2, 4), 16);
+	const l = Number.parseInt(hexString.slice(4, 6), 16);
+	let c = brightnessFactor;
 
-	if (r * i > 280) {
+	if (r * brightnessFactor > 280) {
 		const a = 280 / r;
 		if (a < c) {
 			c = a;
 		}
 	}
 
-	if (o * i > 280) {
+	if (o * brightnessFactor > 280) {
 		const a = 280 / o;
 		if (a < c) {
 			c = a;
 		}
 	}
 
-	if (l * i > 280) {
+	if (l * brightnessFactor > 280) {
 		const a = 280 / l;
 		if (a < c) {
 			c = a;
@@ -127,15 +128,13 @@ export function makeBrighter(t, i) {
 	const newL = l * c;
 	const [red, green, blue] = redistributeRgb(newR, newO, newL);
 
-	const newHexString =
-		"#" +
-		("0" + Math.floor(red).toString(16)).slice(-2) +
-		("0" + Math.floor(green).toString(16)).slice(-2) +
-		("0" + Math.floor(blue).toString(16)).slice(-2);
+	const newHexString = `#${`0${Math.floor(red).toString(16)}`.slice(-2)}${`0${Math.floor(green).toString(16)}`.slice(-2)}${`0${Math.floor(blue).toString(
+		16
+	)}`.slice(-2)}`;
 
 	return stringColorToHex(newHexString);
 }
-function redistributeRgb(red, green, blue) {
+function redistributeRgb(red: number, green: number, blue: number) {
 	const maxColorValue = 255.999;
 	const maxColor = Math.max(red, green, blue);
 
@@ -154,16 +153,16 @@ function redistributeRgb(red, green, blue) {
 
 	return [offset + ratio * red, offset + ratio * green, offset + ratio * blue];
 }
-function stringColorToHex(color) {
-	return typeof color === "string" ? parseInt(color.slice(1), 16) : color;
+function stringColorToHex(color: string | number) {
+	return typeof color === "string" ? Number.parseInt(color.slice(1), 16) : color;
 }
 
-export function isClockwise(points) {
+export function isClockwise(points: { x: number; y: number }[]) {
 	let total = 0;
 	for (let i = 0; i < points.length; i++) {
 		// Get the current and next point
-		let currentPoint = points[i];
-		let nextPoint = points[(i + 1) % points.length];
+		const currentPoint = points[i];
+		const nextPoint = points[(i + 1) % points.length];
 
 		// Calculate the cross product of the points
 		total += (nextPoint.x - currentPoint.x) * (nextPoint.y + currentPoint.y);
@@ -171,7 +170,7 @@ export function isClockwise(points) {
 	return total < 0;
 }
 
-export function getBiomes(n) {
+export function getBiomes(n: number) {
 	const habitats = [
 		"reef", // 64
 		"salt", // 32
@@ -186,38 +185,40 @@ export function getBiomes(n) {
 		.substr(-7)
 		.padStart(7, "0")
 		.split("")
-		.map((e, i) => (e = parseInt(e) == 0 ? null : habitats[i]))
-		.reduce((p, c) => (c == null ? p : p.concat(c)), []);
+		.map((e: string, i: number) => (Number.parseInt(e) === 0 ? null : habitats[i]))
+		.reduce((p: string[], c: string | null) => (c == null ? p : p.concat(c)), []);
 }
 
-export function getAnimalById(id) {
-	return animals.find((a) => a.fishLevel == id);
+export function getAnimalById(id: number) {
+	return animals.find((a) => a.fishLevel === id);
 }
 
 // Doesn't account for octopus ink
 // Octopus ink has shadowSize of 350
-export function getShadowSize(animalId) {
+export function getShadowSize(animalId: number) {
 	const animal = getAnimalById(animalId);
+	if (!animal) return 1200;
 	const habitats = getBiomes(animal.habitat);
 
-	var livesInDeep = habitats.includes("deep");
-	var livesInShallow = habitats.includes("shallow");
-	var livesInFresh = habitats.includes("fresh");
-	var livesInWarmSalt = habitats.includes("warm") && habitats.includes("salt");
+	const livesInDeep = habitats.includes("deep");
+	const livesInShallow = habitats.includes("shallow");
+	const livesInFresh = habitats.includes("fresh");
+	const livesInWarmSalt = habitats.includes("warm") && habitats.includes("salt");
 
 	if (["blindcavefish", "olm"].includes(animal.name)) {
 		return 450;
-	} else if (animal.name == "ghost") {
+	}
+	if (animal.name === "ghost") {
 		return 1750;
-	} else if (livesInDeep) {
+	}
+	if (livesInDeep) {
 		if (!livesInShallow) {
 			return 1750;
-		} else if (livesInFresh && !livesInWarmSalt) {
-			return 1750;
-		} else {
-			return 1200;
 		}
-	} else {
+		if (livesInFresh && !livesInWarmSalt) {
+			return 1750;
+		}
 		return 1200;
 	}
+	return 1200;
 }

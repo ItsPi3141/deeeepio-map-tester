@@ -1,7 +1,8 @@
-import { Edge, Vec2 } from "planck";
+import { Edge, Vec2, type World } from "planck";
 import { isClockwise } from "./game-utils/maploader";
+import { DeeeepioMapScreenObject } from "./types";
 
-export function addBoundaries(world, width, height) {
+export function addBoundaries(world: World, width: number, height: number) {
 	const bottom = world.createBody();
 	bottom.createFixture({
 		shape: Edge(Vec2(0, height), Vec2(width, height)),
@@ -24,7 +25,7 @@ export function addBoundaries(world, width, height) {
 	});
 }
 
-export function createTerrainCollider(world, terrain, pdf) {
+export function createTerrainCollider(world: World, terrain: DeeeepioMapScreenObject, pdf: number) {
 	if (!isClockwise(terrain.points)) {
 		terrain.points.reverse();
 	}
@@ -56,6 +57,6 @@ export function createTerrainCollider(world, terrain, pdf) {
 	});
 }
 
-function isTopEdge(current, last) {
+function isTopEdge(current: { x: number; y: number }, last: { x: number; y: number }) {
 	return current.x > last.x && current.x - last.x > 10;
 }

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
 
@@ -12,7 +13,11 @@ export const metadata = {
 	description: "Try playing your own Deeeep.io map",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+	children,
+}: Readonly<{
+	children: React.ReactNode;
+}>) {
 	return (
 		<html lang="en">
 			<body className={quicksand.className}>{children}</body>

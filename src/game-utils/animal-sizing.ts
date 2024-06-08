@@ -4,8 +4,11 @@ const baseScale = {
 	y: 68,
 };
 
-export function calculateAssetSize(animalId) {
-	const animal = animalConsts.find((a) => a.fishLevel == animalId);
+export function calculateAssetSize(animalId: number) {
+	const animal = animalConsts.find((a) => a.fishLevel === animalId);
+	if (!animal) {
+		throw new Error(`Could not find animal with id ${animalId}`);
+	}
 	const sx = baseScale.x * animal.sizeScale.x * animal.sizeMultiplier;
 	const sy = baseScale.y * animal.sizeScale.y * animal.sizeMultiplier;
 	return {

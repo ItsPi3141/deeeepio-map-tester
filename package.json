@@ -1,28 +1,33 @@
 {
-  "name": "deeeepio-map-preview",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@pixi/loaders": "^6.5.10",
-    "@tweenjs/tween.js": "^21.0.0",
-    "lodash.throttle": "^4.1.1",
-    "next": "14.0.4",
-    "pixi.js": "^7.3.2",
-    "planck": "^1.0.0-beta.20",
-    "react": "^18",
-    "react-dom": "^18",
-    "robust-point-in-polygon": "^1.0.3",
-    "simplepolygon": "^1.2.3"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.0.1",
-    "postcss": "^8",
-    "tailwindcss": "^3.3.0"
-  }
+	"name": "deeeepio-map-preview",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"@pixi/loaders": "^6.5.10",
+		"@tweenjs/tween.js": "^21.1.1",
+		"lodash.throttle": "^4.1.1",
+		"next": "14.2.3",
+		"pixi.js": "^7.4.2",
+		"planck": "^1.0.2",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"robust-point-in-polygon": "^1.0.3",
+		"simplepolygon": "^1.2.3"
+	},
+	"devDependencies": {
+		"@types/lodash.throttle": "^4.1.9",
+		"@types/node": "20.13.0",
+		"@types/react": "18.3.3",
+		"@types/robust-point-in-polygon": "^1.0.4",
+		"autoprefixer": "^10.4.19",
+		"postcss": "^8.4.38",
+		"tailwindcss": "^3.4.3",
+		"typescript": "5.4.5"
+	}
 }

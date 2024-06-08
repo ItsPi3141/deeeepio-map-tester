@@ -1,12 +1,82 @@
-import { Box, Vec2 } from "planck";
+import { type Body, Box, type DistanceJoint, Vec2, type World } from "planck";
 import { calculateAssetSize } from "../game-utils/animal-sizing";
 import { linearDampingFactor, planckDownscaleFactor, speedRatio } from "./constants";
 import animals from "../game-utils/consts/animals.json";
 import { Container, Sprite, Text, Texture } from "pixi.js";
 
 export class Animal {
-	constructor(world, fishLevelId, pixiAnimalsLayer, pixiAnimalsUiLayer, x, y, name) {
-		this.animalData = animals.find((a) => a.fishLevel == fishLevelId);
+	animalData: {
+		name: string;
+		size?: { x: number; y: number };
+		mass: number;
+		boosts: number;
+		level: number;
+		fishLevel: number;
+		oxygenTime: number;
+		oxygenTimeMs: number;
+		temperatureTime: number;
+		temperatureTimeMs: number;
+		pressureTime: number;
+		pressureTimeMs: number;
+		salinityTime: number;
+		salinityTimeMs: number;
+		speedMultiplier: number;
+		walkSpeedMultiplier: number;
+		jumpForceMultiplier: number;
+		sizeMultiplier: number;
+		sizeScale: { x: number; y: number };
+		damageMultiplier: number;
+		healthMultiplier: number;
+		damageBlock: number;
+		damageReflection: number;
+		bleedReduction: number;
+		armorPenetration: number;
+		poisonResistance: number;
+		permanentEffects: number;
+		canFly: boolean;
+		canSwim: boolean;
+		canStand: boolean;
+		needsAir: boolean;
+		canClimb: boolean;
+		poisonResistant: boolean;
+		habitat: number;
+		biomes: number[];
+		collisionCategory: number;
+		collisionMask: number;
+		chooseable: boolean;
+		hasSecondaryAbility: boolean;
+		secondaryAbilityLoadTime: number;
+		hasScalingBoost: boolean;
+		ungrabbable: boolean;
+		canDig: boolean;
+		canWalkUnderwater: boolean;
+		hasWalkingAbility: boolean;
+		walkingAbilityLoadTime: number;
+	};
+	animal: Body;
+	animalSize: {
+		planck: {
+			width: number;
+			height: number;
+		};
+		pixi: {
+			scale: number;
+		};
+	};
+	pixiAnimal: Sprite;
+	pixiAnimalUi: Container;
+	inWater: boolean;
+	prevInWater: boolean;
+	doApplyForce: boolean;
+	oldDoApplyForce: boolean;
+	direction: number;
+	walking: boolean;
+	groundAnchorId: number | null;
+	groundJoints: DistanceJoint[];
+	speedFac: number;
+
+	constructor(world: World, fishLevelId: number, pixiAnimalsLayer: Container, pixiAnimalsUiLayer: Container, x: number, y: number, name: string) {
+		this.animalData = animals.find((a) => a.fishLevel === fishLevelId) || animals[0];
 
 		// Create Planck.js body
 		this.animal = world.createBody({
@@ -27,7 +97,11 @@ export class Animal {
 			friction: 0.7,
 			restitution: 0,
 		});
-		this.animal.setMassData({ mass: 1, center: Vec2(0, 0) });
+		this.animal.setMassData({
+			mass: 1,
+			center: Vec2(0, 0),
+			I: 0,
+		});
 
 		// Create instance in PIXI
 		this.pixiAnimal = new Sprite(Texture.from(`/animals/${this.animalData.name}.png`));
