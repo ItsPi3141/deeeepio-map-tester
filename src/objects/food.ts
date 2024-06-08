@@ -3,7 +3,7 @@ import { Body, Circle, Vec2, World } from "planck";
 import foods from "../game-utils/consts/foods.json";
 import { planckDownscaleFactor } from "./constants";
 
-const foodScale = 0.35;
+const foodScale = 0.32;
 
 export class Food {
 	food: Body;
