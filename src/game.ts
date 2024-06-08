@@ -317,7 +317,15 @@ myAnimals.push(new Animal(world, 0, animalsLayer, animalsUiLayer, 1, 1, window.p
 
 // Render foods
 const foods: Food[] = [];
-foods.push(new Food(world, 3, foodLayer, 35, 35));
+map.screenObjects["food-spawns"]?.forEach((f: DeeeepioMapScreenObject) => {
+	for (let i = 0; i < f.settings.count; i++) {
+		const x = f.position.x + Math.random() * f.size.width;
+		const y = f.position.y + Math.random() * f.size.height;
+		const foodId = f.settings.foodIds[Math.floor(Math.random() * f.settings.foodIds.length)];
+		foods.push(new Food(world, foodId, foodLayer, x / planckDownscaleFactor, y / planckDownscaleFactor));
+	}
+});
+// foods.push(new Food(world, 3, foodLayer, 35, 35));
 
 const mouseData = {
 	clientX: 0,

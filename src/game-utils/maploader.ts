@@ -49,9 +49,7 @@ import animals from "./consts/animals.json";
 export function loadMap(json: Record<string, string | number | object>) {
 	if (!json.data) return false;
 	const data = JSON.parse(json.data as string);
-	data.screenObjects = data.screenObjects.filter(
-		(l: Record<string, string>) => !["animals", "food-spawns", "npc-spawns", "triggers", "currents"].includes(l.layerId)
-	);
+	data.screenObjects = data.screenObjects.filter((l: Record<string, string>) => !["animals", "npc-spawns", "triggers", "currents"].includes(l.layerId));
 	const tempObj: Record<string, string | number | object> = {};
 	data.screenObjects.forEach((l: Record<string, string | number>) => {
 		if (!tempObj[l.layerId]) tempObj[l.layerId] = [];
