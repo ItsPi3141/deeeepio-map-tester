@@ -60,22 +60,23 @@ export class Food {
 			spawnY = data.spawner.water.y + Math.random() * data.spawner.water.height;
 			let validLocation = false;
 			while (!validLocation) {
-				let allValid: boolean[] = [];
+				let interrupt = false;
 				for (let i = 0; i < terrains.length; i++) {
 					const t = terrains[i] as DisplayObject & { points?: [number, number][] };
 					// 1 is outside, 0 is on the line, -1 is inside
 					if (t.points && [-1, 0].includes(robustPointInPolygon(t.points, [spawnX, spawnY]))) {
-						allValid.push(false);
-					} else {
-						allValid.push(true);
+						interrupt = true;
+						break;
 					}
 				}
-				if (allValid.every((v) => v === true)) {
-					validLocation = true;
-				} else {
+				if (interrupt) {
 					spawnX = data.spawner.water.x + Math.random() * data.spawner.water.width;
 					spawnY = data.spawner.water.y + Math.random() * data.spawner.water.height;
+					continue;
+				} else {
+					validLocation = true;
 				}
+				// TODO: make food not spawn in the air
 			}
 		}
 		this.food = world.createBody({
