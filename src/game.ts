@@ -286,10 +286,11 @@ shadowLayer.alpha = 0;
 setShadowSize(getShadowSize(0));
 
 // Get habitats
-const habitats = map.screenObjects.habitats?.map((h: DeeeepioMapScreenObject) => ({
-	...h,
-	points: h.points.map((p) => [p.x, p.y]),
-}));
+const habitats =
+	map.screenObjects.habitats?.map((h: DeeeepioMapScreenObject) => ({
+		...h,
+		points: h.points.map((p) => [p.x, p.y]),
+	})) || [];
 
 // Whirlpool animation
 const whirlPool = { rotation: 0 };

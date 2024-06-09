@@ -1,5 +1,5 @@
 import { Assets, Container, DisplayObject, Sprite, Texture } from "pixi.js";
-import { Body, Circle, Vec2, World } from "planck";
+import { Body, Box, Circle, Vec2, World } from "planck";
 import foods from "../game-utils/consts/foods.json";
 import { planckDownscaleFactor } from "./constants";
 import robustPointInPolygon from "robust-point-in-polygon";
@@ -103,18 +103,23 @@ export class Food {
 			gravityScale: 0,
 			bullet: true,
 		});
-		this.food.createFixture(Circle((this.foodData.width / planckDownscaleFactor / 2.5) * foodScale), {
-			isSensor: true,
-		});
+		this.food.createFixture(
+			Box((this.foodData.width / planckDownscaleFactor / 2) * foodScale, (this.foodData.height / planckDownscaleFactor / 2) * foodScale),
+			{
+				isSensor: true,
+			}
+		);
 
 		// create instance in PIXI
 		this.pixiFood = new Sprite(Assets.get(this.foodData.asset));
 		this.pixiFood.anchor.set(0.5);
+		this.pixiFood.width = this.foodData.width;
+		this.pixiFood.height = this.foodData.height;
 		this.pixiFood.setTransform(
 			this.food.getPosition().x * planckDownscaleFactor,
 			this.food.getPosition().y * planckDownscaleFactor,
 			this.foodData.width * foodScale,
-			this.foodData.height * foodScale,
+			this.foodData.width * foodScale,
 			0
 		);
 
