@@ -332,7 +332,8 @@ map.screenObjects["food-spawns"]?.forEach((f: DeeeepioMapScreenObject) => {
 				0,
 				{
 					type: "water",
-					respawnDelay: f.settings.reSpawnMs || 0,
+					id: foodId,
+					respawnDelay: typeof f.settings.reSpawnMs === "string" ? parseInt(f.settings.reSpawnMs) : f.settings.reSpawnMs || 1000,
 					onlyOnWater: f.settings.onlyOnWater,
 					spawner: {
 						water: {
@@ -663,6 +664,9 @@ function updateFood(food: Food) {
 		const data = ce.other?.getUserData() as Record<string, any>;
 
 		if (typeof data.increaseXp !== "undefined") {
+			setTimeout(() => {
+				foods.push(new Food(world, food.data.id, foodLayer, 0, 0, food.data, [...terrainsLayer.children, ...islandsLayer.children]));
+			}, food.data.respawnDelay || 1000);
 			data.increaseXp(thisFood.foodData.xp);
 			world.destroyBody(thisFood.food);
 			thisFood.pixiFood.destroy();

@@ -6,21 +6,24 @@ import robustPointInPolygon from "robust-point-in-polygon";
 
 const foodScale = 0.32;
 
+export type FoodData = {
+	type: "ground" | "water";
+	id: number;
+	respawnDelay: number;
+	onlyOnWater: boolean;
+	spawner: {
+		ground?: { x: number; y: number }[];
+		water?: {
+			x: number;
+			y: number;
+			width: number;
+			height: number;
+		};
+	} | null;
+};
+
 export class Food {
-	data: {
-		type: "ground" | "water";
-		respawnDelay: number;
-		onlyOnWater: boolean;
-		spawner: {
-			ground?: { x: number; y: number }[];
-			water?: {
-				x: number;
-				y: number;
-				width: number;
-				height: number;
-			};
-		} | null;
-	};
+	data: FoodData;
 	food: Body;
 	foodData: {
 		id: number;
@@ -43,28 +46,7 @@ export class Food {
 	};
 	pixiFood: Sprite;
 
-	constructor(
-		world: World,
-		foodId: number,
-		pixiFoodLayer: Container,
-		x: number,
-		y: number,
-		data: {
-			type: "ground" | "water";
-			respawnDelay: number;
-			onlyOnWater: boolean;
-			spawner: {
-				ground?: { x: number; y: number }[];
-				water?: {
-					x: number;
-					y: number;
-					width: number;
-					height: number;
-				};
-			} | null;
-		},
-		terrains: DisplayObject[]
-	) {
+	constructor(world: World, foodId: number, pixiFoodLayer: Container, x: number, y: number, data: FoodData, terrains: DisplayObject[]) {
 		this.foodData = foods.find((f) => f.id === foodId) || foods[13];
 
 		this.data = data;

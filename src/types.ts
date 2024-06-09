@@ -78,8 +78,8 @@ export interface DeeeepioMapScreenObject {
 		strength: number;
 		foodIds: number[];
 		count: number;
-		firstSpawnMs: number | null;
-		reSpawnMs: number | null;
+		firstSpawnMs: string | number | null;
+		reSpawnMs: string | number | null;
 		area: number;
 		onlyOnWater: boolean;
 		fishLevels: number[];
