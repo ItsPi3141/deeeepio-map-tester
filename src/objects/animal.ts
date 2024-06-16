@@ -1,4 +1,4 @@
-import { type Body, Box, type DistanceJoint, Vec2, type World } from "planck";
+import { type Body, Box, type DistanceJoint, Vec2, type World, Fixture, FixtureDef, BoxShape } from "planck";
 import { calculateAssetSize } from "../game-utils/animal-sizing";
 import { linearDampingFactor, planckDownscaleFactor, speedRatio } from "./constants";
 import animals from "../game-utils/consts/animals.json";
@@ -64,6 +64,8 @@ export class Animal {
 			scale: number;
 		};
 	};
+	fixture: Fixture;
+	scale: 1;
 	pixiAnimal: Sprite;
 	pixiAnimalUi: Container;
 	inWater: boolean;
@@ -99,11 +101,15 @@ export class Animal {
 		});
 		this.animalSize = calculateAssetSize(fishLevelId);
 
-		this.animal.createFixture(Box(this.animalSize.planck.width / planckDownscaleFactor, this.animalSize.planck.height / planckDownscaleFactor), {
-			density: 0.1,
-			friction: 0.7,
-			restitution: 0,
-		});
+		this.scale = 1;
+		this.fixture = this.animal.createFixture(
+			Box(this.animalSize.planck.width / planckDownscaleFactor, this.animalSize.planck.height / planckDownscaleFactor),
+			{
+				density: 0.1,
+				friction: 0.7,
+				restitution: 0,
+			}
+		);
 		this.animal.setMassData({
 			mass: 1,
 			center: Vec2(0, 0),
@@ -145,14 +151,6 @@ export class Animal {
 			this.xpText.position.set(0, 20);
 			this.xpText.anchor.set(0.5);
 			this.pixiAnimalUi.addChild(this.xpText);
-
-			this.pixiAnimal.setTransform(
-				this.animal.getPosition().x * planckDownscaleFactor,
-				this.animal.getPosition().y * planckDownscaleFactor - 7,
-				0.1,
-				0.1,
-				0
-			);
 		}
 
 		pixiAnimalsUiLayer.addChild(this.pixiAnimalUi);
@@ -179,5 +177,17 @@ export class Animal {
 	increaseXp(amount: number) {
 		this.xp += amount;
 		if (this.xpText) this.xpText.text = makeHumanReadableNumber(this.xp);
+	}
+
+	updateScale() {
+		this.animal.destroyFixture(this.fixture);
+		this.fixture = this.animal.createFixture(
+			Box((this.animalSize.planck.width / planckDownscaleFactor) * this.scale, (this.animalSize.planck.height / planckDownscaleFactor) * this.scale),
+			{
+				density: 0.1,
+				friction: 0.7,
+				restitution: 0,
+			}
+		);
 	}
 }

@@ -452,13 +452,13 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 	thisAnimal.pixiAnimal.setTransform(
 		thisAnimal.animal.getPosition().x * planckDownscaleFactor,
 		thisAnimal.animal.getPosition().y * planckDownscaleFactor,
-		thisAnimal.animalSize.pixi.scale,
-		thisAnimal.animalSize.pixi.scale,
+		thisAnimal.animalSize.pixi.scale * thisAnimal.scale,
+		thisAnimal.animalSize.pixi.scale * thisAnimal.scale,
 		thisAnimal.pixiAnimal.rotation
 	);
 	thisAnimal.pixiAnimalUi.setTransform(
 		thisAnimal.animal.getPosition().x * planckDownscaleFactor,
-		thisAnimal.animal.getPosition().y * planckDownscaleFactor - 7,
+		thisAnimal.animal.getPosition().y * planckDownscaleFactor - 7 - 4 * (thisAnimal.animalData.sizeMultiplier - 1),
 		0.1,
 		0.1,
 		0
