@@ -104,6 +104,7 @@ export class Food {
 			gravityScale: 0,
 			bullet: true,
 		});
+
 		this.food.createFixture(
 			Box((this.foodData.width / planckDownscaleFactor / 2) * foodScale, (this.foodData.height / planckDownscaleFactor / 2) * foodScale),
 			{

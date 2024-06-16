@@ -5,4 +5,4 @@ export const boostPower = {
 	air: 1.4,
 	land: 0.1,
 };
-export const planckDownscaleFactor = 4;
+export const planckDownscaleFactor = 3.8;
