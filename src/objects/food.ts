@@ -46,7 +46,16 @@ export class Food {
 	};
 	pixiFood: Sprite;
 
-	constructor(world: World, foodId: number, pixiFoodLayer: Container, x: number, y: number, data: FoodData, terrains: DisplayObject[]) {
+	constructor(
+		world: World,
+		foodId: number,
+		pixiFoodLayer: Container,
+		x: number,
+		y: number,
+		data: FoodData,
+		terrains: DisplayObject[],
+		waters: DisplayObject[]
+	) {
 		this.foodData = foods.find((f) => f.id === foodId) || foods[13];
 
 		this.data = data;
@@ -56,10 +65,11 @@ export class Food {
 		let spawnX = x;
 		let spawnY = y;
 		if (data?.type === "water" && data?.spawner?.water) {
-			spawnX = data.spawner.water.x + Math.random() * data.spawner.water.width;
-			spawnY = data.spawner.water.y + Math.random() * data.spawner.water.height;
 			let validLocation = false;
 			while (!validLocation) {
+				spawnX = data.spawner.water.x + Math.random() * data.spawner.water.width;
+				spawnY = data.spawner.water.y + Math.random() * data.spawner.water.height;
+
 				let interrupt = false;
 				for (let i = 0; i < terrains.length; i++) {
 					const t = terrains[i] as DisplayObject & { points?: [number, number][] };
@@ -70,13 +80,21 @@ export class Food {
 					}
 				}
 				if (interrupt) {
-					spawnX = data.spawner.water.x + Math.random() * data.spawner.water.width;
-					spawnY = data.spawner.water.y + Math.random() * data.spawner.water.height;
 					continue;
+				}
+
+				if (data.onlyOnWater) {
+					for (let i = 0; i < waters.length; i++) {
+						const w = waters[i] as DisplayObject & { points?: [number, number][] };
+						// 1 is outside, 0 is on the line, -1 is inside
+						if (w.points && [-1, 0].includes(robustPointInPolygon(w.points, [spawnX, spawnY]))) {
+							validLocation = true;
+							break;
+						}
+					}
 				} else {
 					validLocation = true;
 				}
-				// TODO: make food not spawn in the air
 			}
 		}
 		this.food = world.createBody({

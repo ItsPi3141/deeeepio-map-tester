@@ -146,7 +146,8 @@ map.screenObjects.sky?.forEach((sky: DeeeepioMapScreenObject) => {
 	skyLayer.addChild(shape);
 });
 map.screenObjects.water?.forEach((water: DeeeepioMapScreenObject) => {
-	const shape = renderGradientShape(water.points, water.colors[0], water.colors[1]);
+	const shape: PIXI.Graphics & { points?: number[][] } = renderGradientShape(water.points, water.colors[0], water.colors[1]);
+	shape.points = water.points.map((p) => [p.x, p.y]);
 	waterLayer.addChild(shape);
 	waterObjects.push(water.points);
 
@@ -161,7 +162,8 @@ map.screenObjects.water?.forEach((water: DeeeepioMapScreenObject) => {
 	}
 });
 map.screenObjects["air-pockets"]?.forEach((airpocket: DeeeepioMapScreenObject) => {
-	const shape = renderTerrainShape(airpocket.points, airpocket.texture, true);
+	const shape: PIXI.Graphics & { points?: number[][] } = renderTerrainShape(airpocket.points, airpocket.texture, true);
+	shape.points = airpocket.points.map((p) => [p.x, p.y]);
 	shape.tint = 0xaaaaaa; // Hex color code #AAAAAA
 	airPocketsLayer.addChild(shape);
 	airPocketObjects.push(airpocket.points);
@@ -344,7 +346,8 @@ map.screenObjects["food-spawns"]?.forEach((f: DeeeepioMapScreenObject) => {
 						},
 					},
 				},
-				[...terrainsLayer.children, ...islandsLayer.children]
+				[...terrainsLayer.children, ...islandsLayer.children],
+				waterLayer.children
 			)
 		);
 	}
@@ -665,7 +668,9 @@ function updateFood(food: Food) {
 
 		if (typeof data.increaseXp !== "undefined") {
 			setTimeout(() => {
-				foods.push(new Food(world, food.data.id, foodLayer, 0, 0, food.data, [...terrainsLayer.children, ...islandsLayer.children]));
+				foods.push(
+					new Food(world, food.data.id, foodLayer, 0, 0, food.data, [...terrainsLayer.children, ...islandsLayer.children], waterLayer.children)
+				);
 			}, food.data.respawnDelay || 1000);
 			data.increaseXp(thisFood.foodData.xp);
 			world.destroyBody(thisFood.food);
