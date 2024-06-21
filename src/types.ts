@@ -1,3 +1,5 @@
+import type { Animal } from "./objects/animal";
+
 export interface DeeeepioMap {
 	id: number;
 	user_id: number;
@@ -120,4 +122,8 @@ export interface DeeeepioMapScreenObject {
 	borderColor: number;
 	colors: number[];
 	hasBorder: boolean;
+}
+
+export interface AnimalAbilities {
+	chargedBoost: (animal: Animal, throttledBoost: () => void) => void;
 }

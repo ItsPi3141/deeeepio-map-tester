@@ -1,6 +1,7 @@
 import { Assets } from "pixi.js";
 
-const spritesheets = [1, 2, 3, 4, 5, 6, 10];
+const mapSpritesheets = [1, 2, 3, 4, 5, 6, 10];
+const animalSpritesheets = ["assets", "assets-1", "assets-2", "assets-3", "assets-4"];
 export function loadAssets() {
 	return new Promise<void>((resolve) => {
 		console.log("Loading assets...");
@@ -25,7 +26,8 @@ export function loadAssets() {
 				"/textures/terrain_back.png",
 				"/textures/terrain.png",
 				"/textures/volcanicsand.png",
-				...spritesheets.map((e) => `/packs/${e}/spritesheets/1.json`),
+				...mapSpritesheets.map((e) => `/packs/${e}/spritesheets/1.json`),
+				...animalSpritesheets.map((e) => `/animals/spritesheets/${e}.json`),
 			]);
 			resolve();
 		})();

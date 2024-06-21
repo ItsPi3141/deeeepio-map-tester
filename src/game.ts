@@ -311,7 +311,7 @@ const whirlPoolTween = new TWEEN.Tween(whirlPool, false)
 
 // Render player.pixi
 const myAnimals: Animal[] = [];
-myAnimals.push(new Animal(world, 0, animalsLayer, animalsUiLayer, 1, 1, window.playerName));
+myAnimals.push(new Animal(world, 11, animalsLayer, animalsUiLayer, 1, 1, window.playerName));
 // for (var i = 0; i < 100; i++) {
 // 	setTimeout(() => {
 // 		var animal = new Animal(world, 11, animalsLayer, animalsUiLayer, 1, 1, window.playerName);
@@ -335,7 +335,7 @@ map.screenObjects["food-spawns"]?.forEach((f: DeeeepioMapScreenObject) => {
 				{
 					type: "water",
 					id: foodId,
-					respawnDelay: typeof f.settings.reSpawnMs === "string" ? parseInt(f.settings.reSpawnMs) : f.settings.reSpawnMs || 1000,
+					respawnDelay: typeof f.settings.reSpawnMs === "string" ? Number.parseInt(f.settings.reSpawnMs) : f.settings.reSpawnMs || 1000,
 					onlyOnWater: f.settings.onlyOnWater,
 					spawner: {
 						water: {
@@ -456,6 +456,7 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 		thisAnimal.animalSize.pixi.scale * thisAnimal.scale,
 		thisAnimal.pixiAnimal.rotation
 	);
+	thisAnimal.grabHook.rotation = -thisAnimal.pixiAnimal.rotation;
 	thisAnimal.pixiAnimalUi.setTransform(
 		thisAnimal.animal.getPosition().x * planckDownscaleFactor,
 		thisAnimal.animal.getPosition().y * planckDownscaleFactor - 7 - 4 * (thisAnimal.animalData.sizeMultiplier - 1),
@@ -656,6 +657,10 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 			} else if (shadowSettings.alpha < shadowLayer.alpha) {
 				shadowLayer.alpha = Math.round((shadowLayer.alpha - 0.02) * 100) / 100;
 			}
+
+			thisAnimal.updateChargedBoostPercent(
+				Math.min(1, (Date.now() - (thisAnimal.chargedBoostStartTime || Date.now())) / thisAnimal.animalData.secondaryAbilityLoadTime)
+			);
 		}
 	}
 }
@@ -714,6 +719,7 @@ const setupBoost = (animal: Animal) => {
 				requestAnimationFrame(boost);
 			}
 			requestAnimationFrame(boost);
+			return true;
 		},
 		850,
 		{ trailing: false }
@@ -733,28 +739,65 @@ const setupBoost = (animal: Animal) => {
 		{ trailing: false }
 	);
 
-	app.view.addEventListener?.("click", (event: Event) => {
+	app.view.addEventListener?.("mousedown", (event: Event) => {
+		// left click
+		if ((event as MouseEvent).which === 1) {
+			const myAnimal = animal.getState;
+
+			if (myAnimal.animalData.hasSecondaryAbility) {
+				myAnimal.chargedBoostStartTime = Date.now();
+			}
+		}
+	});
+	app.view.addEventListener?.("mouseup", (event: Event) => {
 		const myAnimal = animal.getState;
 
-		let landhop = false;
+		// right click
+		if ((event as MouseEvent).which === 3) {
+			myAnimal.chargedBoostStartTime = null;
+			return;
+		}
 
-		if (!myAnimal.inWater) {
-			const contact = [];
-			for (let ce = myAnimal.animal.getContactList(); ce; ce = ce.next) {
-				contact.push(ce);
-			}
-			try {
-				if (contact.filter((c: planck.ContactEdge) => ((c.other as planck.Body).getUserData() as { type: string }).type === "terrainTop").length > 0) {
-					landhop = true;
+		if (
+			myAnimal.animalData.hasSecondaryAbility &&
+			typeof myAnimal.chargedBoostStartTime === "number" &&
+			Date.now() - myAnimal.chargedBoostStartTime > myAnimal.animalData.secondaryAbilityLoadTime
+		) {
+			myAnimal.useSecondaryAbility(throttledBoost.bind(null, event, myAnimal));
+		} else if (
+			(myAnimal.animalData.hasSecondaryAbility &&
+				typeof myAnimal.chargedBoostStartTime === "number" &&
+				Date.now() - myAnimal.chargedBoostStartTime < myAnimal.animalData.secondaryAbilityLoadTime) ||
+			!myAnimal.animalData.hasSecondaryAbility
+		) {
+			let landhop = false;
+
+			if (!myAnimal.inWater) {
+				const contact = [];
+				for (let ce = myAnimal.animal.getContactList(); ce; ce = ce.next) {
+					contact.push(ce);
 				}
-			} catch {}
-		}
+				try {
+					if (
+						contact.filter((c: planck.ContactEdge) => ((c.other as planck.Body).getUserData() as { type: string }).type === "terrainTop").length > 0
+					) {
+						landhop = true;
+					}
+				} catch {}
+			}
 
-		if (landhop) {
-			throttledLandhop(event, myAnimal);
-		} else {
-			throttledBoost(event, myAnimal);
+			if (landhop) {
+				throttledLandhop(event, myAnimal);
+			} else {
+				throttledBoost(event, myAnimal);
+			}
 		}
+		myAnimal.chargedBoostStartTime = null;
+	});
+	app.view.addEventListener?.("contextmenu", (event: Event) => {
+		event.preventDefault();
+		const myAnimal = animal.getState;
+		myAnimal.chargedBoostStartTime = null;
 	});
 };
 myAnimals.forEach((a: Animal) => setupBoost(a));

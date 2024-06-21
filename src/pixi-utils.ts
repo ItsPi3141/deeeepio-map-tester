@@ -7,8 +7,8 @@ export function createGradient(startColor: number, endColor: number, quality = 2
 	canvas.width = 1;
 	canvas.height = quality;
 
-	const hexStartColor: string = "#" + startColor.toString(16).padStart(6, "0");
-	const hexEndColor: string = "#" + endColor.toString(16).padStart(6, "0");
+	const hexStartColor: string = `#${startColor.toString(16).padStart(6, "0")}`;
+	const hexEndColor: string = `#${endColor.toString(16).padStart(6, "0")}`;
 
 	const ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
 
@@ -53,11 +53,11 @@ export function renderGradientShape(points: Array<{ x: number; y: number }>, gra
 	const shape: PIXI.Graphics = new PIXI.Graphics();
 	shape.moveTo(points[0].x, points[0].y);
 
-	const minY: number = points.reduce((a, b) => (a = b.y < a ? b.y : a), Infinity);
-	const maxY: number = points.reduce((a, b) => (a = b.y > a ? b.y : a), -Infinity);
+	const minY: number = points.reduce((a, b) => (b.y < a ? b.y : a), Number.POSITIVE_INFINITY);
+	const maxY: number = points.reduce((a, b) => (b.y > a ? b.y : a), Number.NEGATIVE_INFINITY);
 	const shapeHeight: number = maxY - minY;
 
-	if (gradientStart == gradientStop) {
+	if (gradientStart === gradientStop) {
 		shape.beginFill(gradientStart, 1);
 	} else {
 		shape.beginTextureFill({

@@ -1,0 +1,148 @@
+{"frames": {
+
+"capybara.png":
+{
+	"frame": {"x":622,"y":163,"w":196,"h":297},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":196,"h":297},
+	"sourceSize": {"w":196,"h":297}
+},
+"capybarashield.png":
+{
+	"frame": {"x":695,"y":775,"w":180,"h":231},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":180,"h":231},
+	"sourceSize": {"w":180,"h":231}
+},
+"cb_cattletyrant.png":
+{
+	"frame": {"x":821,"y":247,"w":56,"h":77},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":56,"h":77},
+	"sourceSize": {"w":56,"h":77}
+},
+"cb_cattletyrant2.png":
+{
+	"frame": {"x":751,"y":1140,"w":120,"h":77},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":120,"h":77},
+	"sourceSize": {"w":120,"h":77}
+},
+"cb_dartfrog.png":
+{
+	"frame": {"x":588,"y":775,"w":98,"h":64},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":98,"h":64},
+	"sourceSize": {"w":98,"h":64}
+},
+"cb_mudturtle.png":
+{
+	"frame": {"x":588,"y":842,"w":94,"h":61},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":94,"h":61},
+	"sourceSize": {"w":94,"h":61}
+},
+"cb_wateranole.png":
+{
+	"frame": {"x":821,"y":163,"w":63,"h":81},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":63,"h":81},
+	"sourceSize": {"w":63,"h":81}
+},
+"fiddlercrab.png":
+{
+	"frame": {"x":360,"y":1248,"w":332,"h":423},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":332,"h":423},
+	"sourceSize": {"w":332,"h":423}
+},
+"fiddlercrab1.png":
+{
+	"frame": {"x":1,"y":1248,"w":356,"h":423},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":356,"h":423},
+	"sourceSize": {"w":356,"h":423}
+},
+"fiddlercrab2.png":
+{
+	"frame": {"x":1,"y":628,"w":584,"h":617},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":584,"h":617},
+	"sourceSize": {"w":584,"h":617}
+},
+"fiddlercrab3.png":
+{
+	"frame": {"x":1,"y":1,"w":618,"h":624},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":618,"h":624},
+	"sourceSize": {"w":618,"h":624}
+},
+"fiddlertarget.png":
+{
+	"frame": {"x":751,"y":1009,"w":128,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+	"sourceSize": {"w":128,"h":128}
+},
+"lungfish.png":
+{
+	"frame": {"x":695,"y":1242,"w":166,"h":296},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":166,"h":296},
+	"sourceSize": {"w":166,"h":296}
+},
+"lungfishcocoon.png":
+{
+	"frame": {"x":588,"y":1009,"w":160,"h":230},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":160,"h":230},
+	"sourceSize": {"w":160,"h":230}
+},
+"lungfishcocoonshard.png":
+{
+	"frame": {"x":807,"y":463,"w":64,"h":233},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":233},
+	"sourceSize": {"w":64,"h":233}
+},
+"platypus.png":
+{
+	"frame": {"x":622,"y":463,"w":182,"h":309},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":182,"h":309},
+	"sourceSize": {"w":182,"h":309}
+},
+"platypuswave.png":
+{
+	"frame": {"x":622,"y":1,"w":256,"h":159},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":159},
+	"sourceSize": {"w":256,"h":159}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "assets-4.png",
+	"format": "RGBA8888",
+	"size": {"w":885,"h":1672},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b7c7219921c92070cc0a5a933ec323f8:cca8cc241ebef116c26ff87ce9b557f6:da2c7f32f20f5fe2594212c8a65e7340$"
+}
+}
