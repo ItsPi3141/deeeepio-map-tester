@@ -5,22 +5,22 @@ import { DeeeepioMapScreenObject } from "./types";
 export function addBoundaries(world: World, width: number, height: number) {
 	const bottom = world.createBody();
 	bottom.createFixture({
-		shape: Edge(Vec2(0, height), Vec2(width, height)),
+		shape: new Edge(new Vec2(0, height), new Vec2(width, height)),
 		restitution: 0.1,
 	});
 	const top = world.createBody();
 	top.createFixture({
-		shape: Edge(Vec2(0, 0), Vec2(width, 0)),
+		shape: new Edge(new Vec2(0, 0), new Vec2(width, 0)),
 		restitution: 0.1,
 	});
 	const left = world.createBody();
 	left.createFixture({
-		shape: Edge(Vec2(0, 0), Vec2(0, height)),
+		shape: new Edge(new Vec2(0, 0), new Vec2(0, height)),
 		restitution: 0.1,
 	});
 	const right = world.createBody();
 	right.createFixture({
-		shape: Edge(Vec2(width, 0), Vec2(width, height)),
+		shape: new Edge(new Vec2(width, 0), new Vec2(width, height)),
 		restitution: 0.1,
 	});
 }

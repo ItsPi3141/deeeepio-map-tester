@@ -1,5 +1,11 @@
 import * as PIXI from "pixi.js";
-import { clampCamera, createRadialGradient, renderGradientShape, renderTerrainShape, renderWaterBorder } from "./pixi-utils";
+import {
+	clampCamera,
+	createRadialGradient,
+	renderGradientShape,
+	renderTerrainShape,
+	renderWaterBorder,
+} from "./pixi-utils";
 
 import * as planck from "planck";
 import { addBoundaries, createTerrainCollider } from "./planck-utils";
@@ -25,10 +31,14 @@ console.log(map);
 await loadAssets();
 
 const world = new planck.World({
-	gravity: planck.Vec2(0, map.settings.gravity * 3),
+	gravity: new planck.Vec2(0, map.settings.gravity * 3),
 });
 
-addBoundaries(world, (map.worldSize.width * 10) / planckDownscaleFactor, (map.worldSize.height * 10) / planckDownscaleFactor);
+addBoundaries(
+	world,
+	(map.worldSize.width * 10) / planckDownscaleFactor,
+	(map.worldSize.height * 10) / planckDownscaleFactor,
+);
 
 map.screenObjects.terrains?.forEach((terrain: DeeeepioMapScreenObject) => {
 	createTerrainCollider(world, terrain, planckDownscaleFactor);
@@ -40,7 +50,8 @@ map.screenObjects.islands?.forEach((island: DeeeepioMapScreenObject) => {
 let zoom = 8;
 
 // Create game canvas
-const app = new PIXI.Application({
+const app = new PIXI.Application();
+await app.init({
 	backgroundColor: 0x1f2937,
 	backgroundAlpha: 0,
 	resizeTo: document.querySelector("main > div.game") as HTMLDivElement,
@@ -146,7 +157,11 @@ map.screenObjects.sky?.forEach((sky: DeeeepioMapScreenObject) => {
 	skyLayer.addChild(shape);
 });
 map.screenObjects.water?.forEach((water: DeeeepioMapScreenObject) => {
-	const shape: PIXI.Graphics & { points?: number[][] } = renderGradientShape(water.points, water.colors[0], water.colors[1]);
+	const shape: PIXI.Graphics & { points?: number[][] } = renderGradientShape(
+		water.points,
+		water.colors[0],
+		water.colors[1],
+	);
 	shape.points = water.points.map((p) => [p.x, p.y]);
 	waterLayer.addChild(shape);
 	waterObjects.push(water.points);
@@ -269,18 +284,17 @@ function setShadowSize(size: number) {
 	const topBottomHeight = (window.innerHeight - size / zoom) / 2;
 	const topBottomWidth = window.innerWidth - leftRightWidth * 2;
 	const shadow = new PIXI.Graphics();
-	shadow.transform.position.set(-window.innerWidth / 2, -window.innerHeight / 2);
-	shadow.beginFill(0x000000);
-	shadow.drawRect(0, 0, leftRightWidth, leftRightHeight);
-	shadow.drawRect(window.innerWidth - leftRightWidth, 0, leftRightWidth, leftRightHeight);
-	shadow.drawRect(leftRightWidth, 0, topBottomWidth, topBottomHeight);
-	shadow.drawRect(leftRightWidth, window.innerHeight - topBottomHeight, topBottomWidth, topBottomHeight);
+	shadow.position.set(-window.innerWidth / 2, -window.innerHeight / 2);
+	shadow
+		.rect(0, 0, leftRightWidth, leftRightHeight)
+		.rect(window.innerWidth - leftRightWidth, 0, leftRightWidth, leftRightHeight)
+		.rect(leftRightWidth, 0, topBottomWidth, topBottomHeight)
+		.rect(leftRightWidth, window.innerHeight - topBottomHeight, topBottomWidth, topBottomHeight)
+		.fill(0x000000);
 
-	shadow.beginTextureFill({
+	shadow.rect(leftRightWidth, topBottomHeight, size / zoom, size / zoom).fill({
 		texture: createRadialGradient(size / zoom, "#00000000", "#000000ff"),
-		matrix: new PIXI.Matrix(1, 0, 0, 1, leftRightWidth, topBottomHeight),
 	});
-	shadow.drawRect(leftRightWidth, topBottomHeight, size / zoom, size / zoom);
 
 	shadowLayer.addChild(shadow);
 }
@@ -296,7 +310,7 @@ const habitats =
 
 // Whirlpool animation
 const whirlPool = { rotation: 0 };
-const whirlPoolTween = new TWEEN.Tween(whirlPool, false)
+const whirlPoolTween = new TWEEN.Tween(whirlPool)
 	.to({ rotation: 360 }, 5000)
 	.easing(TWEEN.Easing.Sinusoidal.InOut)
 	.repeat(Number.POSITIVE_INFINITY)
@@ -335,7 +349,10 @@ map.screenObjects["food-spawns"]?.forEach((f: DeeeepioMapScreenObject) => {
 				{
 					type: "water",
 					id: foodId,
-					respawnDelay: typeof f.settings.reSpawnMs === "string" ? Number.parseInt(f.settings.reSpawnMs) : f.settings.reSpawnMs || 1000,
+					respawnDelay:
+						typeof f.settings.reSpawnMs === "string"
+							? Number.parseInt(f.settings.reSpawnMs)
+							: f.settings.reSpawnMs || 1000,
 					onlyOnWater: f.settings.onlyOnWater,
 					spawner: {
 						water: {
@@ -347,8 +364,8 @@ map.screenObjects["food-spawns"]?.forEach((f: DeeeepioMapScreenObject) => {
 					},
 				},
 				[...terrainsLayer.children, ...islandsLayer.children],
-				waterLayer.children
-			)
+				waterLayer.children,
+			),
 		);
 	}
 });
@@ -359,15 +376,15 @@ const mouseData = {
 	clientY: 0,
 };
 
-function update(dt: number) {
+function update({ deltaTime: dt }: PIXI.Ticker) {
 	app.stage.position.set(window.innerWidth / 2, window.innerHeight / 2);
 	app.stage.scale.set(zoom);
 
-	hideSpacesLowLayer.children.forEach((object: PIXI.DisplayObject & { animation?: string }) => {
+	hideSpacesLowLayer.children.forEach((object: PIXI.ContainerChild & { animation?: string }) => {
 		if (object.animation !== "whirlpool") return;
 		object.angle = whirlPool.rotation;
 	});
-	hideSpacesLowerLayer.children.forEach((object: PIXI.DisplayObject & { animation?: string }) => {
+	hideSpacesLowerLayer.children.forEach((object: PIXI.ContainerChild & { animation?: string }) => {
 		if (object.animation !== "whirlpool") return;
 		object.angle = whirlPool.rotation;
 	});
@@ -395,26 +412,26 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				[-1, 0].includes(
 					pointInPolygon(
 						cur.map((p) => [p.x, p.y]),
-						[thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y - (thisAnimal.prevInWater ? 0 : 2)]
-					)
+						[thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y - (thisAnimal.prevInWater ? 0 : 2)],
+					),
 				),
-			false
+			false,
 		) &&
 		!airPocketObjects.reduce(
 			(prev, cur) =>
 				prev ||
 				pointInPolygon(
 					cur.map((p) => [p.x, p.y]),
-					[thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y - (thisAnimal.prevInWater ? 0 : 2)]
+					[thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y - (thisAnimal.prevInWater ? 0 : 2)],
 				) === -1,
-			false
+			false,
 		);
 	thisAnimal.prevInWater = thisAnimal.inWater;
 
 	thisAnimal.doApplyForce =
 		Math.sqrt(
 			((thisAnimal.pixiAnimal.x - app.stage.pivot.x) * zoom - (mouseData.clientX - window.innerWidth / 2)) ** 2 +
-				((thisAnimal.pixiAnimal.y - app.stage.pivot.y) * zoom - (mouseData.clientY - window.innerHeight / 2)) ** 2
+				((thisAnimal.pixiAnimal.y - app.stage.pivot.y) * zoom - (mouseData.clientY - window.innerHeight / 2)) ** 2,
 		) >
 		6 * zoom;
 
@@ -437,7 +454,11 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 		(thisAnimal.doApplyForce ? 1 : 0) *
 		(thisAnimal.walking ? thisAnimal.animalData.walkSpeedMultiplier : thisAnimal.animalData.speedMultiplier);
 
-	if (thisAnimal.doApplyForce !== thisAnimal.oldDoApplyForce && thisAnimal.oldDoApplyForce === true && thisAnimal.inWater) {
+	if (
+		thisAnimal.doApplyForce !== thisAnimal.oldDoApplyForce &&
+		thisAnimal.oldDoApplyForce === true &&
+		thisAnimal.inWater
+	) {
 		setTimeout(() => {
 			thisAnimal.animal.setLinearDamping(linearDampingFactor);
 		}, 100);
@@ -447,23 +468,24 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 	const rotation = thisAnimal.direction - Math.PI / 2;
 
 	thisAnimal.animal.setAngle(thisAnimal.direction);
-	thisAnimal.animal.applyForce(planck.Vec2(Math.cos(rotation) * spdf, Math.sin(rotation) * spdf), thisAnimal.animal.getPosition());
+	thisAnimal.animal.applyForce(
+		new planck.Vec2(Math.cos(rotation) * spdf, Math.sin(rotation) * spdf),
+		thisAnimal.animal.getPosition(),
+	);
 
-	thisAnimal.pixiAnimal.setTransform(
+	thisAnimal.pixiAnimal.position.set(
 		thisAnimal.animal.getPosition().x * planckDownscaleFactor,
 		thisAnimal.animal.getPosition().y * planckDownscaleFactor,
-		thisAnimal.animalSize.pixi.scale * thisAnimal.scale,
-		thisAnimal.animalSize.pixi.scale * thisAnimal.scale,
-		thisAnimal.pixiAnimal.rotation
 	);
+	thisAnimal.pixiAnimal.scale.set(thisAnimal.animalSize.pixi.scale * thisAnimal.scale);
+
 	thisAnimal.grabHook.rotation = -thisAnimal.pixiAnimal.rotation;
-	thisAnimal.pixiAnimalUi.setTransform(
+
+	thisAnimal.pixiAnimalUi.position.set(
 		thisAnimal.animal.getPosition().x * planckDownscaleFactor,
 		thisAnimal.animal.getPosition().y * planckDownscaleFactor - 7 - 4 * (thisAnimal.animalData.sizeMultiplier - 1),
-		0.1,
-		0.1,
-		0
 	);
+	thisAnimal.pixiAnimalUi.scale.set(0.1);
 
 	if (thisAnimal.animalData.canStand) {
 		let contacts = [];
@@ -481,20 +503,23 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				const nearestPoint = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
 				return nearestPoint.y - p.y > 0 && Math.abs((v[0].y - v[1].y) / (v[0].x - v[1].x)) < 3;
 			});
-		const nearestContact = contacts.reduce((prev: (planck.Body & { dist?: number }) | null, cur: planck.Body): (planck.Body & { dist?: number }) | null => {
-			const v = (cur.getUserData() as { vertices?: { x: number; y: number }[] })?.vertices;
-			const p = thisAnimal.animal.getPosition();
-			if (!v || !p) return prev;
-			const n = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
-			const dist = Math.sqrt((n.x - p.x) ** 2 + (n.y - p.y) ** 2);
+		const nearestContact = contacts.reduce(
+			(prev: (planck.Body & { dist?: number }) | null, cur: planck.Body): (planck.Body & { dist?: number }) | null => {
+				const v = (cur.getUserData() as { vertices?: { x: number; y: number }[] })?.vertices;
+				const p = thisAnimal.animal.getPosition();
+				if (!v || !p) return prev;
+				const n = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
+				const dist = Math.sqrt((n.x - p.x) ** 2 + (n.y - p.y) ** 2);
 
-			if (prev != null && dist >= (prev.dist || Number.POSITIVE_INFINITY)) return prev;
+				if (prev != null && dist >= (prev.dist || Number.POSITIVE_INFINITY)) return prev;
 
-			distToGround = dist;
-			const c: planck.Body & { dist?: number } = cur;
-			c.dist = dist;
-			return c;
-		}, null);
+				distToGround = dist;
+				const c: planck.Body & { dist?: number } = cur;
+				c.dist = dist;
+				return c;
+			},
+			null,
+		);
 		if (
 			nearestContact != null &&
 			distToGround < 1.1 * thisAnimal.animalData.sizeScale.y &&
@@ -511,7 +536,7 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				thisAnimal.walking = true;
 
 				// Walking using apply force
-				// thisAnimal.animal.applyForce(planck.Vec2(Math.cos(angle - Math.PI / 2) * 10, Math.sin(angle - Math.PI / 2) * 10), thisAnimal.animal.getPosition());
+				// thisAnimal.animal.applyForce(new planck.Vec2(Math.cos(angle - Math.PI / 2) * 10, Math.sin(angle - Math.PI / 2) * 10), thisAnimal.animal.getPosition());
 
 				// Walking using distance joint
 				thisAnimal.groundJoints.forEach((j) => {
@@ -522,7 +547,7 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				// Make the animal closer to the ground before creating a joint
 				// TODO: actually use math to do this instead of applying a force
 				// thisAnimal.animal.applyForce(
-				// 	planck.Vec2(
+				// 	new planck.Vec2(
 				// 		Math.cos(angle - Math.PI / 2) * 10,
 				// 		Math.sin(angle - Math.PI / 2) * 10
 				// 	),
@@ -530,8 +555,12 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				// );
 				contacts.forEach((c) => {
 					const s = thisAnimal.animalSize.planck.height / 5;
-					const animalX = thisAnimal.animal.getWorldCenter().x + planck.Vec2(Math.cos(angle - Math.PI / 2) * s, Math.sin(angle - Math.PI / 2) * s).x;
-					const animalY = thisAnimal.animal.getWorldCenter().y + planck.Vec2(Math.cos(angle - Math.PI / 2) * s, Math.sin(angle - Math.PI / 2) * s).y;
+					const animalX =
+						thisAnimal.animal.getWorldCenter().x +
+						new planck.Vec2(Math.cos(angle - Math.PI / 2) * s, Math.sin(angle - Math.PI / 2) * s).x;
+					const animalY =
+						thisAnimal.animal.getWorldCenter().y +
+						new planck.Vec2(Math.cos(angle - Math.PI / 2) * s, Math.sin(angle - Math.PI / 2) * s).y;
 					const joint = world.createJoint(
 						new planck.DistanceJoint(
 							{
@@ -542,8 +571,8 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 							c,
 							thisAnimal.animal,
 							findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y),
-							planck.Vec2(animalX, animalY)
-						)
+							new planck.Vec2(animalX, animalY),
+						),
 					);
 					joint?.setLength(thisAnimal.animalSize.planck.height / 4 - s);
 					if (joint) thisAnimal.groundJoints.push(joint);
@@ -587,7 +616,14 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 	if (isMine) {
 		const centerX = (thisAnimal.pixiAnimal.x - app.stage.pivot.x) * zoom;
 		const centerY = (thisAnimal.pixiAnimal.y - app.stage.pivot.y) * zoom;
-		thisAnimal.direction = point2rad(mouseData.clientX - window.innerWidth / 2, mouseData.clientY - window.innerHeight / 2, centerX, centerY) + Math.PI / 2;
+		thisAnimal.direction =
+			point2rad(
+				mouseData.clientX - window.innerWidth / 2,
+				mouseData.clientY - window.innerHeight / 2,
+				centerX,
+				centerY,
+			) +
+			Math.PI / 2;
 		if (!thisAnimal.walking) {
 			thisAnimal.pixiAnimal.rotation = thisAnimal.direction;
 		}
@@ -600,13 +636,18 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				map.worldSize.width * 10,
 				map.worldSize.height * 10,
 				window.innerWidth,
-				window.innerHeight
+				window.innerHeight,
 			);
 			app.stage.pivot.set(...viewportPos);
 			shadowLayer.pivot.set(-thisAnimal.pixiAnimal.x, -thisAnimal.pixiAnimal.y);
 
-			ceilingsLayer.children.forEach((c: PIXI.DisplayObject & { points?: [number, number][] }) => {
-				if (c.points && [-1, 0].includes(pointInPolygon(c.points, [thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y - (thisAnimal.inWater ? 0 : 2)]))) {
+			ceilingsLayer.children.forEach((c: PIXI.ContainerChild & { points?: [number, number][] }) => {
+				if (
+					c.points &&
+					[-1, 0].includes(
+						pointInPolygon(c.points, [thisAnimal.pixiAnimal.x, thisAnimal.pixiAnimal.y - (thisAnimal.inWater ? 0 : 2)]),
+					)
+				) {
 					c.alpha = 0.4;
 				} else {
 					c.alpha = 1;
@@ -614,21 +655,30 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 			});
 
 			hideSpacesHighLayer.children.forEach((h) => {
-				if ((thisAnimal.pixiAnimal.x - h.x) ** 2 + (thisAnimal.pixiAnimal.y - h.y) ** 2 < Math.max(window.innerHeight, window.innerWidth) * zoom * 20) {
+				if (
+					(thisAnimal.pixiAnimal.x - h.x) ** 2 + (thisAnimal.pixiAnimal.y - h.y) ** 2 <
+					Math.max(window.innerHeight, window.innerWidth) * zoom * 20
+				) {
 					h.renderable = true;
 				} else {
 					h.renderable = false;
 				}
 			});
 			hideSpacesLowLayer.children.forEach((h) => {
-				if ((thisAnimal.pixiAnimal.x - h.x) ** 2 + (thisAnimal.pixiAnimal.y - h.y) ** 2 < Math.max(window.innerHeight, window.innerWidth) * zoom * 20) {
+				if (
+					(thisAnimal.pixiAnimal.x - h.x) ** 2 + (thisAnimal.pixiAnimal.y - h.y) ** 2 <
+					Math.max(window.innerHeight, window.innerWidth) * zoom * 20
+				) {
 					h.renderable = true;
 				} else {
 					h.renderable = false;
 				}
 			});
 			foodLayer.children.forEach((f) => {
-				if ((thisAnimal.pixiAnimal.x - f.x) ** 2 + (thisAnimal.pixiAnimal.y - f.y) ** 2 < Math.max(window.innerHeight, window.innerWidth) * zoom * 20) {
+				if (
+					(thisAnimal.pixiAnimal.x - f.x) ** 2 + (thisAnimal.pixiAnimal.y - f.y) ** 2 <
+					Math.max(window.innerHeight, window.innerWidth) * zoom * 20
+				) {
 					f.renderable = true;
 				} else {
 					f.renderable = false;
@@ -659,7 +709,11 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 			}
 
 			thisAnimal.updateChargedBoostPercent(
-				Math.min(1, (Date.now() - (thisAnimal.chargedBoostStartTime || Date.now())) / thisAnimal.animalData.secondaryAbilityLoadTime)
+				Math.min(
+					1,
+					(Date.now() - (thisAnimal.chargedBoostStartTime || Date.now())) /
+						thisAnimal.animalData.secondaryAbilityLoadTime,
+				),
 			);
 		}
 	}
@@ -674,7 +728,16 @@ function updateFood(food: Food) {
 		if (typeof data.increaseXp !== "undefined") {
 			setTimeout(() => {
 				foods.push(
-					new Food(world, food.data.id, foodLayer, 0, 0, food.data, [...terrainsLayer.children, ...islandsLayer.children], waterLayer.children)
+					new Food(
+						world,
+						food.data.id,
+						foodLayer,
+						0,
+						0,
+						food.data,
+						[...terrainsLayer.children, ...islandsLayer.children],
+						waterLayer.children,
+					),
 				);
 			}, food.data.respawnDelay || 1000);
 			data.increaseXp(thisFood.foodData.xp);
@@ -697,17 +760,22 @@ const setupBoost = (animal: Animal) => {
 		(event, animalInstance) => {
 			const centerX = (animalInstance.pixiAnimal.x - app.stage.pivot.x) * zoom;
 			const centerY = (animalInstance.pixiAnimal.y - app.stage.pivot.y) * zoom;
-			const angle = point2rad(event.clientX - window.innerWidth / 2, event.clientY - window.innerHeight / 2, centerX, centerY);
+			const angle = point2rad(
+				event.clientX - window.innerWidth / 2,
+				event.clientY - window.innerHeight / 2,
+				centerX,
+				centerY,
+			);
 
 			animalInstance.animal.applyLinearImpulse(
-				planck.Vec2(
+				new planck.Vec2(
 					Math.cos(angle) * animalInstance.speedFac * (animalInstance.inWater ? boostPower.water : boostPower.air),
-					Math.sin(angle) * animalInstance.speedFac * (animalInstance.inWater ? boostPower.water : boostPower.air)
+					Math.sin(angle) * animalInstance.speedFac * (animalInstance.inWater ? boostPower.water : boostPower.air),
 				),
-				animalInstance.animal.getPosition()
+				animalInstance.animal.getPosition(),
 			);
 			const sf = { v: 0 };
-			const boostTween = new TWEEN.Tween(sf, false)
+			const boostTween = new TWEEN.Tween(sf)
 				.to({ v: animalInstance.speedFac }, 300)
 				.easing(TWEEN.Easing.Quartic.In)
 				.onUpdate(() => {
@@ -722,21 +790,29 @@ const setupBoost = (animal: Animal) => {
 			return true;
 		},
 		850,
-		{ trailing: false }
+		{ trailing: false },
 	);
 	const throttledLandhop = throttle(
 		(event, animalInstance) => {
 			const centerX = (animalInstance.pixiAnimal.x - app.stage.pivot.x) * zoom;
 			const centerY = (animalInstance.pixiAnimal.y - app.stage.pivot.y) * zoom;
-			const angle = point2rad(event.clientX - window.innerWidth / 2, event.clientY - window.innerHeight / 2, centerX, centerY);
+			const angle = point2rad(
+				event.clientX - window.innerWidth / 2,
+				event.clientY - window.innerHeight / 2,
+				centerX,
+				centerY,
+			);
 
 			animalInstance.animal.applyLinearImpulse(
-				planck.Vec2(Math.cos(angle) * animalInstance.speedFac * boostPower.land, Math.sin(angle) * animalInstance.speedFac * boostPower.land),
-				animalInstance.animal.getPosition()
+				new planck.Vec2(
+					Math.cos(angle) * animalInstance.speedFac * boostPower.land,
+					Math.sin(angle) * animalInstance.speedFac * boostPower.land,
+				),
+				animalInstance.animal.getPosition(),
 			);
 		},
 		150,
-		{ trailing: false }
+		{ trailing: false },
 	);
 
 	app.view.addEventListener?.("mousedown", (event: Event) => {
@@ -779,7 +855,10 @@ const setupBoost = (animal: Animal) => {
 				}
 				try {
 					if (
-						contact.filter((c: planck.ContactEdge) => ((c.other as planck.Body).getUserData() as { type: string }).type === "terrainTop").length > 0
+						contact.filter(
+							(c: planck.ContactEdge) =>
+								((c.other as planck.Body).getUserData() as { type: string }).type === "terrainTop",
+						).length > 0
 					) {
 						landhop = true;
 					}
@@ -806,7 +885,7 @@ app.view.addEventListener?.("wheel", (event: unknown) => {
 	let newZoom = Math.sign((event as { wheelDelta: number }).wheelDelta) === 1 ? zoom * 1.2 : zoom / 1.2;
 	newZoom = clamp(newZoom, 4, 16);
 	const originalZoom = { z: zoom };
-	const zoomTween = new TWEEN.Tween(originalZoom, false)
+	const zoomTween = new TWEEN.Tween(originalZoom)
 		.to({ z: newZoom }, 100)
 		.easing(TWEEN.Easing.Quadratic.Out)
 		.onUpdate(() => {

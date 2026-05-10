@@ -38,8 +38,9 @@ export class Animal {
 		canFly: boolean;
 		canSwim: boolean;
 		canStand: boolean;
-		needsAir: boolean;
 		canClimb: boolean;
+		breathesInAir: boolean;
+		breathesInWater: boolean;
 		poisonResistant: boolean;
 		habitat: number;
 		biomes: number[];
@@ -92,7 +93,15 @@ export class Animal {
 	grabHookVisible: boolean;
 	grabHook: Sprite;
 
-	constructor(world: World, fishLevelId: number, pixiAnimalsLayer: Container, pixiAnimalsUiLayer: Container, x: number, y: number, name: string) {
+	constructor(
+		world: World,
+		fishLevelId: number,
+		pixiAnimalsLayer: Container,
+		pixiAnimalsUiLayer: Container,
+		x: number,
+		y: number,
+		name: string,
+	) {
 		this.animalData = animals.find((a) => a.fishLevel === fishLevelId) || animals[0];
 
 		try {
@@ -125,7 +134,7 @@ export class Animal {
 				density: 0.1,
 				friction: 0.7,
 				restitution: 0,
-			}
+			},
 		);
 		this.animal.setMassData({
 			mass: 1,
@@ -139,13 +148,11 @@ export class Animal {
 		// Create instance in PIXI
 		this.pixiAnimal = new Sprite(Assets.get(`${this.animalData.name}.png`));
 		this.pixiAnimal.anchor.set(0.5);
-		this.pixiAnimal.setTransform(
+		this.pixiAnimal.position.set(
 			this.animal.getPosition().x * planckDownscaleFactor,
 			this.animal.getPosition().y * planckDownscaleFactor,
-			this.animalSize.pixi.scale,
-			this.animalSize.pixi.scale,
-			0
 		);
+		this.pixiAnimal.scale.set(this.animalSize.pixi.scale);
 
 		// Grab hook
 		this.grabHookVisible = false;
@@ -182,16 +189,21 @@ export class Animal {
 		// Add boost bar
 		if (this.animalData.hasSecondaryAbility) {
 			this.chargedBoostBar = new Graphics();
-			this.chargedBoostBar.beginFill(0x000000, 0.3);
-			this.chargedBoostBar.drawRect(0, 0, 16, 72);
-			this.chargedBoostBar.endFill();
+			this.chargedBoostBar.rect(0, 0, 16, 72).fill({
+				color: 0x000000,
+				alpha: 0.3,
+			});
 
-			this.chargedBoostBar.position.set(50 + 40 * (this.animalData.sizeMultiplier - 1), 34 + 40 * (this.animalData.sizeMultiplier - 1));
+			this.chargedBoostBar.position.set(
+				50 + 40 * (this.animalData.sizeMultiplier - 1),
+				34 + 40 * (this.animalData.sizeMultiplier - 1),
+			);
 
 			this.chargedBoostBarInner = new Graphics();
-			this.chargedBoostBarInner.beginFill(0x00edff, 0.7);
-			this.chargedBoostBarInner.drawRect(2, 2, 12, 68);
-			this.chargedBoostBarInner.endFill();
+			this.chargedBoostBarInner.rect(2, 2, 12, 68).fill({
+				color: 0x00edff,
+				alpha: 0.7,
+			});
 
 			this.chargedBoostBar.alpha = 0;
 
@@ -231,12 +243,15 @@ export class Animal {
 	updateScale() {
 		this.animal.destroyFixture(this.fixture);
 		this.fixture = this.animal.createFixture(
-			Box((this.animalSize.planck.width / planckDownscaleFactor) * this.scale, (this.animalSize.planck.height / planckDownscaleFactor) * this.scale),
+			Box(
+				(this.animalSize.planck.width / planckDownscaleFactor) * this.scale,
+				(this.animalSize.planck.height / planckDownscaleFactor) * this.scale,
+			),
 			{
 				density: 0.1,
 				friction: 0.7,
 				restitution: 0,
-			}
+			},
 		);
 	}
 
@@ -249,15 +264,19 @@ export class Animal {
 			} else if (this.chargedBoostBarInner) {
 				this.chargedBoostBar.alpha = 1;
 				const targetColor = percent === 1 ? 0x05ff00 : 0x00edff;
-				if (this.chargedBoostBarInner.fill.color !== targetColor) {
+				if (this.chargedBoostBarInner.fillStyle.color !== targetColor) {
 					this.chargedBoostBarInner.clear();
-					this.chargedBoostBarInner.beginFill(targetColor, 0.7);
-					this.chargedBoostBarInner.drawRect(2, 2, 12, 68);
-					this.chargedBoostBarInner.endFill();
+					this.chargedBoostBarInner.rect(2, 2, 12, 68).fill({
+						color: targetColor,
+						alpha: 0.7,
+					});
 				}
 				this.chargedBoostBarInner.scale.set(1, percent);
 				this.chargedBoostBarInner.position.set(0, 68 * (1 - percent));
-				this.chargedBoostBar.position.set(50 + 40 * (this.animalData.sizeMultiplier - 1), 34 + 40 * (this.animalData.sizeMultiplier - 1));
+				this.chargedBoostBar.position.set(
+					50 + 40 * (this.animalData.sizeMultiplier - 1),
+					34 + 40 * (this.animalData.sizeMultiplier - 1),
+				);
 			}
 			this.chargedBoostPercent = percent;
 		}

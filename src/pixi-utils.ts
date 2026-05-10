@@ -49,7 +49,11 @@ export function createRadialGradient(radius: number, startColor: string, endColo
 	return PIXI.Texture.from(canvas);
 }
 
-export function renderGradientShape(points: Array<{ x: number; y: number }>, gradientStart: number, gradientStop: number): PIXI.Graphics {
+export function renderGradientShape(
+	points: Array<{ x: number; y: number }>,
+	gradientStart: number,
+	gradientStop: number,
+): PIXI.Graphics {
 	const shape: PIXI.Graphics = new PIXI.Graphics();
 	shape.moveTo(points[0].x, points[0].y);
 
@@ -57,18 +61,17 @@ export function renderGradientShape(points: Array<{ x: number; y: number }>, gra
 	const maxY: number = points.reduce((a, b) => (b.y > a ? b.y : a), Number.NEGATIVE_INFINITY);
 	const shapeHeight: number = maxY - minY;
 
-	if (gradientStart === gradientStop) {
-		shape.beginFill(gradientStart, 1);
-	} else {
-		shape.beginTextureFill({
-			texture: createGradient(gradientStart, gradientStop, shapeHeight),
-			matrix: new PIXI.Matrix(1, 0, 0, 1, points[0].x, minY),
-		});
-	}
 	for (let i = 1; i < points.length; i++) {
 		shape.lineTo(points[i].x, points[i].y);
 	}
 	shape.closePath();
+	if (gradientStart === gradientStop) {
+		shape.fill(gradientStart);
+	} else {
+		shape.fill({
+			texture: createGradient(gradientStart, gradientStop, shapeHeight),
+		});
+	}
 	return shape;
 }
 
@@ -95,22 +98,27 @@ function getTextureById(id: number) {
 		19: "volcanicsand",
 	}[id];
 }
-export function renderTerrainShape(points: Array<{ x: number; y: number }>, texture: number | string, isBackground: boolean) {
+export function renderTerrainShape(
+	points: Array<{ x: number; y: number }>,
+	texture: number | string,
+	isBackground: boolean,
+) {
 	const shape: PIXI.Graphics = new PIXI.Graphics();
 	shape.moveTo(points[0].x, points[0].y);
 
-	shape.beginTextureFill({
+	for (let i = 1; i < points.length; i++) {
+		shape.lineTo(points[i].x, points[i].y);
+	}
+	shape.closePath();
+	shape.fill({
 		texture:
 			typeof texture === "number"
 				? PIXI.Texture.from(`/textures/${getTextureById(texture)}.png`)
 				: PIXI.Texture.from(texture.replace("assets/terrains", "/textures")),
 		color: "ffffff",
-		matrix: new PIXI.Matrix(0.1, 0, 0, 0.1, isBackground ? 2 : 0, isBackground ? 2 : 0),
+		matrix: new PIXI.Matrix().scale(0.1, 0.1).translate(isBackground ? 2 : 0, 0),
+		textureSpace: "global",
 	});
-	for (let i = 1; i < points.length; i++) {
-		shape.lineTo(points[i].x, points[i].y);
-	}
-	shape.closePath();
 	return shape;
 }
 
@@ -119,7 +127,7 @@ export function renderTerrainShape(points: Array<{ x: number; y: number }>, text
 export function renderWaterBorder(
 	points: Array<{ x: number; y: number }>,
 	color: number,
-	isAirPocket = false
+	isAirPocket = false,
 ): {
 	topBorder: Array<PIXI.Graphics>;
 	bottomBorder: Array<PIXI.Graphics>;
@@ -140,20 +148,22 @@ export function renderWaterBorder(
 
 		if (current.x > last.x && current.x - last.x > 10) {
 			const top = new PIXI.Graphics();
-			top.moveTo(last.x, last.y - 1.5);
-			top.beginFill(borderColor);
-			top.lineTo(current.x, current.y - 1.5);
-			top.lineTo(current.x, current.y);
-			top.lineTo(last.x, last.y);
-			top.closePath();
+			top
+				.moveTo(last.x, last.y - 1.5)
+				.lineTo(current.x, current.y - 1.5)
+				.lineTo(current.x, current.y)
+				.lineTo(last.x, last.y)
+				.closePath()
+				.fill(borderColor);
 
 			const bottom = new PIXI.Graphics();
-			bottom.moveTo(last.x, last.y - 0.1);
-			bottom.beginFill(borderColor);
-			bottom.lineTo(current.x, current.y - 0.1);
-			bottom.lineTo(current.x, current.y + 1.5 - 0.1);
-			bottom.lineTo(last.x, last.y + 1.5 - 0.1);
-			bottom.closePath();
+			bottom
+				.moveTo(last.x, last.y - 0.1)
+				.lineTo(current.x, current.y - 0.1)
+				.lineTo(current.x, current.y + 1.5 - 0.1)
+				.lineTo(last.x, last.y + 1.5 - 0.1)
+				.closePath()
+				.fill(borderColor);
 
 			topBorders.push(top);
 			bottomBorders.push(bottom);
@@ -166,7 +176,15 @@ export function renderWaterBorder(
 	};
 }
 
-export function clampCamera(x: number, y: number, zoom: number, mapW: number, mapH: number, width: number, height: number) {
+export function clampCamera(
+	x: number,
+	y: number,
+	zoom: number,
+	mapW: number,
+	mapH: number,
+	width: number,
+	height: number,
+) {
 	const hvw: number = width / 2 / zoom;
 	const hvh: number = height / 2 / zoom;
 	return [Math.max(hvw, Math.min(x, mapW - hvw)), Math.max(hvh, Math.min(y, mapH - hvh))];

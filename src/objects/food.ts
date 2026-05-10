@@ -1,5 +1,5 @@
-import { Assets, Container, DisplayObject, Sprite, Texture } from "pixi.js";
-import { Body, Box, Circle, Vec2, World } from "planck";
+import { Assets, Container, ContainerChild, Sprite } from "pixi.js";
+import { Body, Box, Vec2, World } from "planck";
 import foods from "../game-utils/consts/foods.json";
 import { planckDownscaleFactor } from "./constants";
 import robustPointInPolygon from "robust-point-in-polygon";
@@ -53,8 +53,8 @@ export class Food {
 		x: number,
 		y: number,
 		data: FoodData,
-		terrains: DisplayObject[],
-		waters: DisplayObject[]
+		terrains: ContainerChild[],
+		waters: ContainerChild[],
 	) {
 		this.foodData = foods.find((f) => f.id === foodId) || foods[13];
 
@@ -72,7 +72,7 @@ export class Food {
 
 				let interrupt = false;
 				for (let i = 0; i < terrains.length; i++) {
-					const t = terrains[i] as DisplayObject & { points?: [number, number][] };
+					const t = terrains[i] as ContainerChild & { points?: [number, number][] };
 					// 1 is outside, 0 is on the line, -1 is inside
 					if (t.points && [-1, 0].includes(robustPointInPolygon(t.points, [spawnX, spawnY]))) {
 						interrupt = true;
@@ -85,7 +85,7 @@ export class Food {
 
 				if (data.onlyOnWater) {
 					for (let i = 0; i < waters.length; i++) {
-						const w = waters[i] as DisplayObject & { points?: [number, number][] };
+						const w = waters[i] as ContainerChild & { points?: [number, number][] };
 						// 1 is outside, 0 is on the line, -1 is inside
 						if (w.points && [-1, 0].includes(robustPointInPolygon(w.points, [spawnX, spawnY]))) {
 							validLocation = true;
@@ -106,10 +106,13 @@ export class Food {
 		});
 
 		this.food.createFixture(
-			Box((this.foodData.width / planckDownscaleFactor / 2) * foodScale, (this.foodData.height / planckDownscaleFactor / 2) * foodScale),
+			Box(
+				(this.foodData.width / planckDownscaleFactor / 2) * foodScale,
+				(this.foodData.height / planckDownscaleFactor / 2) * foodScale,
+			),
 			{
 				isSensor: true,
-			}
+			},
 		);
 
 		// create instance in PIXI
@@ -117,13 +120,11 @@ export class Food {
 		this.pixiFood.anchor.set(0.5);
 		this.pixiFood.width = this.foodData.width;
 		this.pixiFood.height = this.foodData.height;
-		this.pixiFood.setTransform(
+		this.pixiFood.position.set(
 			this.food.getPosition().x * planckDownscaleFactor,
 			this.food.getPosition().y * planckDownscaleFactor,
-			this.foodData.width * foodScale,
-			this.foodData.width * foodScale,
-			0
 		);
+		this.pixiFood.scale.set(this.foodData.width * foodScale);
 
 		pixiFoodLayer.addChild(this.pixiFood);
 	}
