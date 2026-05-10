@@ -12,7 +12,21 @@
 		"hitbox": null,
 		"params": [{ "key": "text", "type": "s", "title": "Text" }],
 		"cs_mode": "b",
-		"above": true,
-		"deleted_at": null
+		"above": true
+	},
+	{
+		"id": 3,
+		"pack_id": 1,
+		"name": "Giant Clam",
+		"asset": "giantclam.png",
+		"width": 2.56,
+		"height": 1.64,
+		"anchor_x": 0.5,
+		"anchor_y": 1,
+		"shape": 1,
+		"hitbox": null,
+		"params": null,
+		"cs_mode": "b",
+		"above": false
 	}
 ]
