@@ -251,16 +251,19 @@ map.screenObjects.props?.forEach((prop: DeeeepioMapScreenObject) => {
 
 	// Message sign
 	if (p.id === 1 && prop.params?.text) {
-		const text = new PIXI.Text(prop.params.text, {
-			fontFamily: "Quicksand",
-			fontSize: 24,
-			fill: 0x7f694e,
-			align: "center",
-			wordWrapWidth: 300,
-			trim: true,
-			wordWrap: true,
-			breakWords: true,
-			fontWeight: "bolder",
+		const text = new PIXI.Text({
+			text: prop.params.text,
+			style: {
+				fontFamily: "Quicksand",
+				fontSize: 24,
+				fill: 0x7f694e,
+				align: "center",
+				wordWrapWidth: 300,
+				trim: true,
+				wordWrap: true,
+				breakWords: true,
+				fontWeight: "bolder",
+			},
 		});
 		text.anchor.set(0.5);
 		text.localTransform.setTransform(0, -350, 0, 0, 1, 1, 0, 0, 0);
