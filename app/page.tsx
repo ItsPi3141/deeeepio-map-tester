@@ -75,7 +75,7 @@ export default class Home extends React.Component {
 	render() {
 		return (
 			<>
-				<main className="grid h-[100dvh] w-screen grid-cols-1 grid-rows-1 bg-gray-800 text-white">
+				<main className="h-dvh grid w-screen grid-cols-1 grid-rows-1 bg-gray-800 text-white">
 					<div className="game col-[1/1] row-[1/1] h-full w-full" />
 
 					<div className="menu-screen col-[1/1] row-[1/1] grid h-full w-full grid-cols-1 grid-rows-1">
@@ -97,7 +97,7 @@ export default class Home extends React.Component {
 									</p>
 								</div>
 								<input
-									className="z-10 rounded border border-gray-700 bg-gray-800 px-3 py-1.5 outline-none [line-height:1] focus:border-blue-500"
+									className="z-10 rounded border border-gray-700 bg-gray-800 px-3 py-1.5 leading-none outline-none focus:border-blue-500"
 									placeholder="Enter a name"
 									type="text"
 									value={this.state.name}
@@ -107,7 +107,7 @@ export default class Home extends React.Component {
 								/>
 								<div className="flex gap-2">
 									<input
-										className="z-10 rounded border border-gray-700 bg-gray-800 px-3 py-1.5 outline-none [line-height:1] focus:border-blue-500"
+										className="z-10 rounded border border-gray-700 bg-gray-800 px-3 py-1.5 leading-none outline-none focus:border-blue-500"
 										placeholder="Enter map string ID"
 										type="text"
 										value={this.state.mapId}
