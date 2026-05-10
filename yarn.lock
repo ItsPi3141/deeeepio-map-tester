@@ -311,6 +311,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mdi/js@npm:^7.4.47":
+  version: 7.4.47
+  resolution: "@mdi/js@npm:7.4.47"
+  checksum: 10c0/4364d4dff943c630f9cdddba1a74d3713654e4da1b85bc7a307b2285447a57c41434a39a8520b39957df1028186a2e5944102fd1386d6c0c73e709335f5ccb3e
+  languageName: node
+  linkType: hard
+
+"@mdi/react@npm:^1.6.1":
+  version: 1.6.1
+  resolution: "@mdi/react@npm:1.6.1"
+  dependencies:
+    prop-types: "npm:^15.7.2"
+  checksum: 10c0/6e5c5dcec6596eba4ff274181e1311aa790b5480c4594eaf67a5c74184de15796f7755e6a70e7590be5af7f009ffd328b0f82e7f46f0b09773d774de21a22ddc
+  languageName: node
+  linkType: hard
+
 "@napi-rs/wasm-runtime@npm:^1.1.4":
   version: 1.1.4
   resolution: "@napi-rs/wasm-runtime@npm:1.1.4"
@@ -688,6 +704,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-dom@npm:^19.2.3":
+  version: 19.2.3
+  resolution: "@types/react-dom@npm:19.2.3"
+  peerDependencies:
+    "@types/react": ^19.2.0
+  checksum: 10c0/b486ebe0f4e2fb35e2e108df1d8fc0927ca5d6002d5771e8a739de11239fe62d0e207c50886185253c99eb9dedfeeb956ea7429e5ba17f6693c7acb4c02f8cd1
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:19.2.14":
   version: 19.2.14
   resolution: "@types/react@npm:19.2.14"
@@ -701,6 +726,15 @@ __metadata:
   version: 1.0.4
   resolution: "@types/robust-point-in-polygon@npm:1.0.4"
   checksum: 10c0/c01ecf1c001ec3c976fdb9b4d9c2ed454cde728eb0e1c416ecb6f2c8123734946491c57738a4cd13bdb2660a3820d6a615ccc126a073cc57cf5bdadc41be4a05
+  languageName: node
+  linkType: hard
+
+"@types/simple-icons@npm:^5.21.1":
+  version: 5.21.1
+  resolution: "@types/simple-icons@npm:5.21.1"
+  dependencies:
+    simple-icons: "npm:*"
+  checksum: 10c0/4af7b2620c2b7082ab8cf58741bc04bade5feb8f0d2744f86e9c9093e406f693915c5cee2cd9b759b90be14ff146e18d9a1ec2bf5618f8eb789da5f70fbd676d
   languageName: node
   linkType: hard
 
@@ -784,15 +818,20 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "deeeepio-map-preview@workspace:."
   dependencies:
+    "@mdi/js": "npm:^7.4.47"
+    "@mdi/react": "npm:^1.6.1"
     "@pixi/loaders": "npm:^6.5.10"
     "@tailwindcss/postcss": "npm:^4.3.0"
     "@tweenjs/tween.js": "npm:25.0.0"
     "@types/lodash.throttle": "npm:^4.1.9"
     "@types/node": "npm:25.6.2"
     "@types/react": "npm:19.2.14"
+    "@types/react-dom": "npm:^19.2.3"
     "@types/robust-point-in-polygon": "npm:^1.0.4"
+    "@types/simple-icons": "npm:^5.21.1"
     autoprefixer: "npm:^10.5.0"
     lodash.throttle: "npm:^4.1.1"
+    motion: "npm:^12.38.0"
     next: "npm:16.2.6"
     pixi.js: "npm:8.18.1"
     planck: "npm:^1.5.0"
@@ -800,6 +839,7 @@ __metadata:
     react: "npm:19.2.6"
     react-dom: "npm:19.2.6"
     robust-point-in-polygon: "npm:^1.0.3"
+    simple-icons: "npm:^16.19.0"
     simplepolygon: "npm:2.0.4"
     tailwindcss: "npm:4.3.0"
     typescript: "npm:6.0.3"
@@ -858,6 +898,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framer-motion@npm:^12.38.0":
+  version: 12.38.0
+  resolution: "framer-motion@npm:12.38.0"
+  dependencies:
+    motion-dom: "npm:^12.38.0"
+    motion-utils: "npm:^12.36.0"
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/bca830d85606ba49e84a1b12fb2b5353622a992809a4ae302084f06fd142e21d790f07ca3678c27e4fb75a8b8e687f42f2ae0cbb13345f2e5730a3fa2c4a5ecf
+  languageName: node
+  linkType: hard
+
 "geojson-polygon-self-intersections@npm:3.0.0":
   version: 3.0.0
   resolution: "geojson-polygon-self-intersections@npm:3.0.0"
@@ -910,6 +972,13 @@ __metadata:
   version: 2.0.3
   resolution: "js-binary-schema-parser@npm:2.0.3"
   checksum: 10c0/0acf895918974d95f5c8c432486d23b6257c555c8a3efff1e4f6a72818877b40c2467bcb2fbd79e519b9c34612526b3595f805eb294e19f48f68f6aa9ee8469e
+  languageName: node
+  linkType: hard
+
+"js-tokens@npm:^3.0.0 || ^4.0.0":
+  version: 4.0.0
+  resolution: "js-tokens@npm:4.0.0"
+  checksum: 10c0/e248708d377aa058eacf2037b07ded847790e6de892bbad3dac0abba2e759cb9f121b00099a65195616badcb6eca8d14d975cb3e89eb1cfda644756402c8aeed
   languageName: node
   linkType: hard
 
@@ -1040,12 +1109,60 @@ __metadata:
   languageName: node
   linkType: hard
 
+"loose-envify@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "loose-envify@npm:1.4.0"
+  dependencies:
+    js-tokens: "npm:^3.0.0 || ^4.0.0"
+  bin:
+    loose-envify: cli.js
+  checksum: 10c0/655d110220983c1a4b9c0c679a2e8016d4b67f6e9c7b5435ff5979ecdb20d0813f4dec0a08674fcbdd4846a3f07edbb50a36811fd37930b94aaa0d9daceb017e
+  languageName: node
+  linkType: hard
+
 "magic-string@npm:^0.30.21":
   version: 0.30.21
   resolution: "magic-string@npm:0.30.21"
   dependencies:
     "@jridgewell/sourcemap-codec": "npm:^1.5.5"
   checksum: 10c0/299378e38f9a270069fc62358522ddfb44e94244baa0d6a8980ab2a9b2490a1d03b236b447eee309e17eb3bddfa482c61259d47960eb018a904f0ded52780c4a
+  languageName: node
+  linkType: hard
+
+"motion-dom@npm:^12.38.0":
+  version: 12.38.0
+  resolution: "motion-dom@npm:12.38.0"
+  dependencies:
+    motion-utils: "npm:^12.36.0"
+  checksum: 10c0/ce41da75c240568abd9708cc859cbffb7d6aa490913619e20d23df57abe232ad6cce961c129933535c92b64bfb886958d73e5d162bcd5ddf174378f869977bbe
+  languageName: node
+  linkType: hard
+
+"motion-utils@npm:^12.36.0":
+  version: 12.36.0
+  resolution: "motion-utils@npm:12.36.0"
+  checksum: 10c0/fe08231759064eef5d351a869379246f1e1b2031bda357a6197d2a99ff6b472bce69f8250212713d8bff2ff46978f354ca8c3b8c8f0c5bd337d26a6793ba42fa
+  languageName: node
+  linkType: hard
+
+"motion@npm:^12.38.0":
+  version: 12.38.0
+  resolution: "motion@npm:12.38.0"
+  dependencies:
+    framer-motion: "npm:^12.38.0"
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/661a08b17592295b267df6a4a4887e9da78b29c310aaf60860fcfa68dac6cf2c39ce03701d6182159ad6f3000f28b8c62c3c6d139e620435d56b3bb5f28c5c1b
   languageName: node
   linkType: hard
 
@@ -1122,6 +1239,13 @@ __metadata:
   version: 2.0.38
   resolution: "node-releases@npm:2.0.38"
   checksum: 10c0/db9909234ed750c5b9d0075f83214cd16b76370b54eab50e3554f3ba939ba7ac39f3aca2ddf93471ae8553dbde2ea9354b0ae380c9cff1f8e53b55e414903413
+  languageName: node
+  linkType: hard
+
+"object-assign@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "object-assign@npm:4.1.1"
+  checksum: 10c0/1f4df9945120325d041ccf7b86f31e8bcc14e73d29171e37a7903050e96b81323784ec59f93f102ec635bcf6fa8034ba3ea0a8c7e69fa202b87ae3b6cec5a414
   languageName: node
   linkType: hard
 
@@ -1204,6 +1328,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prop-types@npm:^15.7.2":
+  version: 15.8.1
+  resolution: "prop-types@npm:15.8.1"
+  dependencies:
+    loose-envify: "npm:^1.4.0"
+    object-assign: "npm:^4.1.1"
+    react-is: "npm:^16.13.1"
+  checksum: 10c0/59ece7ca2fb9838031d73a48d4becb9a7cc1ed10e610517c7d8f19a1e02fa47f7c27d557d8a5702bec3cfeccddc853579832b43f449e54635803f277b1c78077
+  languageName: node
+  linkType: hard
+
 "quickselect@npm:^3.0.0":
   version: 3.0.0
   resolution: "quickselect@npm:3.0.0"
@@ -1228,6 +1363,13 @@ __metadata:
   peerDependencies:
     react: ^19.2.6
   checksum: 10c0/dbf2aef67857c03a612bc9316a4562e5066f43fa04bf28f7f0734963fc1350da2c9f8eb973930655453281079f30cc8222bab383dbec4b5097084e2c081e3334
+  languageName: node
+  linkType: hard
+
+"react-is@npm:^16.13.1":
+  version: 16.13.1
+  resolution: "react-is@npm:16.13.1"
+  checksum: 10c0/33977da7a5f1a287936a0c85639fec6ca74f4f15ef1e59a6bc20338fc73dc69555381e211f7a3529b8150a1f71e4225525b41b60b52965bda53ce7d47377ada1
   languageName: node
   linkType: hard
 
@@ -1387,6 +1529,13 @@ __metadata:
     "@img/sharp-win32-x64":
       optional: true
   checksum: 10c0/fd79e29df0597a7d5704b8461c51f944ead91a5243691697be6e8243b966402beda53ddc6f0a53b96ea3cb8221f0b244aa588114d3ebf8734fb4aefd41ab802f
+  languageName: node
+  linkType: hard
+
+"simple-icons@npm:*, simple-icons@npm:^16.19.0":
+  version: 16.19.0
+  resolution: "simple-icons@npm:16.19.0"
+  checksum: 10c0/66ebac999fa63a752f688a9375ec9720fcfaecbd780c1659b8b6756825b68e6c25a6224362500a07287dffb1fea380f81e4268fe9c56e79489aa8cd737e34214
   languageName: node
   linkType: hard
 

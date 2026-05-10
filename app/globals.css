@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+:root {
+	@apply text-white;
+}
+
+button {
+	@apply cursor-pointer;
+}
+
 @keyframes slide-up-out {
 	0% {
 		transform: translateY(0);
@@ -25,7 +33,7 @@
 	animation: slide-down-in 0.5s ease-out;
 }
 
-button {
+.btn {
 	padding: 0.625rem 1.25rem;
 	border-radius: 0.875rem;
 	border-bottom-width: 0.25rem;
@@ -37,6 +45,9 @@ button {
 	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 	transition-duration: 150ms;
+}
+.link {
+	@apply text-blue-300 underline decoration-dashed;
 }
 
 .ffa {
