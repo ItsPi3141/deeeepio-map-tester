@@ -814,9 +814,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deeeepio-map-preview@workspace:.":
+"deeeepio-map-tester@workspace:.":
   version: 0.0.0-use.local
-  resolution: "deeeepio-map-preview@workspace:."
+  resolution: "deeeepio-map-tester@workspace:."
   dependencies:
     "@mdi/js": "npm:^7.4.47"
     "@mdi/react": "npm:^1.6.1"
