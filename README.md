@@ -1,14 +1,14 @@
-# Deeeep.io Map Preview
+# Deeeep.io Map Tester
 
 ## 🚀 Running locally
 
 ```sh
-npm run dev
+yarn dev
 ```
 
 ## 📦 Build and deploy
 
 ```sh
-npm run build
-npm start
+yarn build
+yarn start
 ```

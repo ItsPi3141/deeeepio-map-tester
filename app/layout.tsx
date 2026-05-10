@@ -9,7 +9,7 @@ const quicksand = Quicksand({
 });
 
 export const metadata = {
-	title: "Deeeep.io Map Preview",
+	title: "Deeeep.io Map Tester",
 	description: "Try playing your own Deeeep.io map",
 };
 
