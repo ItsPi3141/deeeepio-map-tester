@@ -264,9 +264,9 @@ map.screenObjects.props?.forEach((prop: DeeeepioMapScreenObject) => {
 				breakWords: true,
 				fontWeight: "bolder",
 			},
+			anchor: 0.5,
 		});
-		text.anchor.set(0.5);
-		text.localTransform.setTransform(0, -350, 0, 0, 1, 1, 0, 0, 0);
+		text.position.set(0, -350);
 		object.addChild(text);
 	}
 
