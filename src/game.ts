@@ -328,7 +328,7 @@ const whirlPoolTween = new TWEEN.Tween(whirlPool)
 
 // Render player.pixi
 const myAnimals: Animal[] = [];
-myAnimals.push(new Animal(world, 7, animalsLayer, animalsUiLayer, 1, 1, window.playerName));
+myAnimals.push(new Animal(world, 11, animalsLayer, animalsUiLayer, 1, 1, window.playerName));
 // for (var i = 0; i < 100; i++) {
 // 	setTimeout(() => {
 // 		var animal = new Animal(world, 11, animalsLayer, animalsUiLayer, 1, 1, window.playerName);
@@ -461,49 +461,78 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				return nearest.y - (p.y + halfHeight) > 0 && Math.abs((v[0].y - v[1].y) / (v[0].x - v[1].x)) < 3;
 			});
 
-		const nearestContact = terrainContacts.reduce(
-			(prev: (planck.Body & { dist?: number }) | null, cur: planck.Body): (planck.Body & { dist?: number }) | null => {
-				const v = (cur.getUserData() as { vertices?: { x: number; y: number }[] })?.vertices;
+		const walkRange = (1.4 / planckDownscaleFactor) * thisAnimal.animalSize.planck.height;
+
+		const edgeInfos = terrainContacts
+			.map((body: planck.Body) => {
+				const v = (body.getUserData() as { vertices?: { x: number; y: number }[] })?.vertices;
 				const p = thisAnimal.animal.getPosition();
-				if (!v || !p) return prev;
+				if (!v || !p) return null;
 				const n = findNearestPointOnLine(p.x, p.y + halfHeight, v[0].x, v[0].y, v[1].x, v[1].y);
 				const dist = Math.sqrt((n.x - p.x) ** 2 + (n.y - (p.y + halfHeight)) ** 2);
-				if (prev != null && dist >= (prev.dist || Number.POSITIVE_INFINITY)) return prev;
-				distToGround = dist;
-				const c: planck.Body & { dist?: number } = cur;
-				c.dist = dist;
-				return c;
-			},
-			null,
-		);
-
-		if (
-			nearestContact != null &&
-			distToGround < (1.4 / planckDownscaleFactor) * thisAnimal.animalSize.planck.height &&
-			(thisAnimal.animalData.canWalkUnderwater || !thisAnimal.inWater)
-		) {
-			const data = nearestContact.getUserData();
-			const v = (data as { vertices?: { x: number; y: number }[] })?.vertices;
-			if (v) {
+				if (dist > walkRange) return null;
 				const rise = v[0].y - v[1].y;
 				const run = v[0].x - v[1].x;
 				const edgeAngle = Math.atan2(rise, run);
-				const nx = -Math.sin(edgeAngle);
-				const ny = Math.cos(edgeAngle);
-				surfaceNormal = new planck.Vec2(nx, ny);
-				const nearest = findNearestPointOnLine(
-					thisAnimal.animal.getPosition().x,
-					thisAnimal.animal.getPosition().y + halfHeight,
-					v[0].x,
-					v[0].y,
-					v[1].x,
-					v[1].y,
-				);
-				nearestPointOnTerrain = new planck.Vec2(nearest.x, nearest.y);
+				return {
+					dist,
+					nx: -Math.sin(edgeAngle),
+					ny: Math.cos(edgeAngle),
+					px: n.x,
+					py: n.y,
+				};
+			})
+			.filter((e): e is NonNullable<typeof e> => e !== null);
+
+		if (edgeInfos.length > 0 && (thisAnimal.animalData.canWalkUnderwater || !thisAnimal.inWater)) {
+			distToGround = Math.min(...edgeInfos.map((e) => e.dist));
+
+			let wnx = 0,
+				wny = 0,
+				wpx = 0,
+				wpy = 0,
+				totalW = 0;
+			for (const e of edgeInfos) {
+				const w = 1 / (e.dist + 0.01);
+				wnx += e.nx * w;
+				wny += e.ny * w;
+				wpx += e.px * w;
+				wpy += e.py * w;
+				totalW += w;
+			}
+			wnx /= totalW;
+			wny /= totalW;
+			wpx /= totalW;
+			wpy /= totalW;
+
+			const len = Math.sqrt(wnx * wnx + wny * wny);
+			if (len > 0.001) {
+				surfaceNormal = new planck.Vec2(wnx / len, wny / len);
+				nearestPointOnTerrain = new planck.Vec2(wpx, wpy);
 				thisAnimal.walking = true;
 			}
-		} else if (distToGround > 1.2) {
-			thisAnimal.walking = false;
+		} else {
+			const nearestContact = terrainContacts.reduce(
+				(
+					prev: (planck.Body & { dist?: number }) | null,
+					cur: planck.Body,
+				): (planck.Body & { dist?: number }) | null => {
+					const v = (cur.getUserData() as { vertices?: { x: number; y: number }[] })?.vertices;
+					const p = thisAnimal.animal.getPosition();
+					if (!v || !p) return prev;
+					const n = findNearestPointOnLine(p.x, p.y + halfHeight, v[0].x, v[0].y, v[1].x, v[1].y);
+					const dist = Math.sqrt((n.x - p.x) ** 2 + (n.y - (p.y + halfHeight)) ** 2);
+					if (prev != null && dist >= (prev.dist || Number.POSITIVE_INFINITY)) return prev;
+					distToGround = dist;
+					const c: planck.Body & { dist?: number } = cur;
+					c.dist = dist;
+					return c;
+				},
+				null,
+			);
+			if (nearestContact == null && distToGround > 1.2) {
+				thisAnimal.walking = false;
+			}
 		}
 	}
 
