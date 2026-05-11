@@ -512,28 +512,9 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				nearestPointOnTerrain = new planck.Vec2(wpx, wpy);
 				thisAnimal.walking = true;
 			}
-		} else {
-			const nearestContact = terrainContacts.reduce(
-				(
-					prev: (planck.Body & { dist?: number }) | null,
-					cur: planck.Body,
-				): (planck.Body & { dist?: number }) | null => {
-					const v = (cur.getUserData() as { vertices?: { x: number; y: number }[] })?.vertices;
-					const p = thisAnimal.animal.getPosition();
-					if (!v || !p) return prev;
-					const n = findNearestPointOnLine(p.x, p.y + halfHeight, v[0].x, v[0].y, v[1].x, v[1].y);
-					const dist = Math.sqrt((n.x - p.x) ** 2 + (n.y - (p.y + halfHeight)) ** 2);
-					if (prev != null && dist >= (prev.dist || Number.POSITIVE_INFINITY)) return prev;
-					distToGround = dist;
-					const c: planck.Body & { dist?: number } = cur;
-					c.dist = dist;
-					return c;
-				},
-				null,
-			);
-			if (nearestContact == null && distToGround > 1.2) {
-				thisAnimal.walking = false;
-			}
+		}
+		if (distToGround > walkRange) {
+			thisAnimal.walking = false;
 		}
 	}
 
@@ -574,17 +555,6 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 		const normalAngle = Math.atan2(surfaceNormal.y, surfaceNormal.x);
 
 		thisAnimal.animal.setAngle(normalAngle + Math.PI / 2);
-
-		const vel = thisAnimal.animal.getLinearVelocity();
-		const velAlongNormal = vel.x * surfaceNormal.x + vel.y * surfaceNormal.y;
-		const velAlongTangent = vel.x * tangent.x + vel.y * tangent.y;
-
-		thisAnimal.animal.setLinearVelocity(
-			new planck.Vec2(
-				tangent.x * velAlongTangent + surfaceNormal.x * (velAlongNormal * 0.1),
-				tangent.y * velAlongTangent + surfaceNormal.y * (velAlongNormal * 0.1),
-			),
-		);
 
 		if (nearestPointOnTerrain) {
 			const bottomY = thisAnimal.animal.getPosition().y + halfHeight;
