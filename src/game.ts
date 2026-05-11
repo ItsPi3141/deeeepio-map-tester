@@ -328,7 +328,7 @@ const whirlPoolTween = new TWEEN.Tween(whirlPool)
 
 // Render player.pixi
 const myAnimals: Animal[] = [];
-myAnimals.push(new Animal(world, 11, animalsLayer, animalsUiLayer, 1, 1, window.playerName));
+myAnimals.push(new Animal(world, 7, animalsLayer, animalsUiLayer, 1, 1, window.playerName));
 // for (var i = 0; i < 100; i++) {
 // 	setTimeout(() => {
 // 		var animal = new Animal(world, 11, animalsLayer, animalsUiLayer, 1, 1, window.playerName);
@@ -441,6 +441,7 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 	// walking logic
 	let surfaceNormal: planck.Vec2 | null = null;
 	let nearestPointOnTerrain: planck.Vec2 | null = null;
+	const halfHeight = (0.5 * thisAnimal.animalSize.planck.height) / planckDownscaleFactor;
 
 	if (thisAnimal.animalData.canStand) {
 		let terrainContacts: planck.Body[] = [];
@@ -456,8 +457,8 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				const v = (d.getUserData() as { vertices?: { x: number; y: number }[] })?.vertices;
 				const p = thisAnimal.animal.getPosition();
 				if (!v || !p) return false;
-				const nearest = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
-				return nearest.y - p.y > 0 && Math.abs((v[0].y - v[1].y) / (v[0].x - v[1].x)) < 3;
+				const nearest = findNearestPointOnLine(p.x, p.y + halfHeight, v[0].x, v[0].y, v[1].x, v[1].y);
+				return nearest.y - (p.y + halfHeight) > 0 && Math.abs((v[0].y - v[1].y) / (v[0].x - v[1].x)) < 3;
 			});
 
 		const nearestContact = terrainContacts.reduce(
@@ -465,8 +466,8 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				const v = (cur.getUserData() as { vertices?: { x: number; y: number }[] })?.vertices;
 				const p = thisAnimal.animal.getPosition();
 				if (!v || !p) return prev;
-				const n = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
-				const dist = Math.sqrt((n.x - p.x) ** 2 + (n.y - p.y) ** 2);
+				const n = findNearestPointOnLine(p.x, p.y + halfHeight, v[0].x, v[0].y, v[1].x, v[1].y);
+				const dist = Math.sqrt((n.x - p.x) ** 2 + (n.y - (p.y + halfHeight)) ** 2);
 				if (prev != null && dist >= (prev.dist || Number.POSITIVE_INFINITY)) return prev;
 				distToGround = dist;
 				const c: planck.Body & { dist?: number } = cur;
@@ -492,7 +493,7 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				surfaceNormal = new planck.Vec2(nx, ny);
 				const nearest = findNearestPointOnLine(
 					thisAnimal.animal.getPosition().x,
-					thisAnimal.animal.getPosition().y,
+					thisAnimal.animal.getPosition().y + halfHeight,
 					v[0].x,
 					v[0].y,
 					v[1].x,
@@ -556,8 +557,9 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 		);
 
 		if (nearestPointOnTerrain) {
+			const bottomY = thisAnimal.animal.getPosition().y + halfHeight;
 			const dx = nearestPointOnTerrain.x - thisAnimal.animal.getPosition().x;
-			const dy = nearestPointOnTerrain.y - thisAnimal.animal.getPosition().y;
+			const dy = nearestPointOnTerrain.y - bottomY;
 			const suctionForce = 20 * thisAnimal.animal.getMass();
 			const dist = Math.sqrt(dx * dx + dy * dy);
 			if (dist > thisAnimal.animalSize.planck.height * 0.5 + 0.1) {
