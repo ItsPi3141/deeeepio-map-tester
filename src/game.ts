@@ -59,7 +59,7 @@ await app.init({
 	antialias: true,
 	clearBeforeRender: true,
 });
-(document.querySelector("main > div.game") as HTMLDivElement).appendChild(app.view as HTMLCanvasElement);
+(document.querySelector("main > div.game") as HTMLDivElement).appendChild(app.canvas as HTMLCanvasElement);
 
 // Layer order from top to bottom:
 // *food
