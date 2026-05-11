@@ -438,6 +438,75 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 		) >
 		6 * zoom;
 
+	// walking logic
+	let surfaceNormal: planck.Vec2 | null = null;
+	let nearestPointOnTerrain: planck.Vec2 | null = null;
+
+	if (thisAnimal.animalData.canStand) {
+		let terrainContacts: planck.Body[] = [];
+		let distToGround = Number.POSITIVE_INFINITY;
+
+		for (let ce = thisAnimal.animal.getContactList(); ce; ce = ce.next) {
+			if (ce.other) terrainContacts.push(ce.other);
+		}
+
+		terrainContacts = terrainContacts
+			.filter((d: planck.Body) => (d.getUserData() as { type?: string })?.type === "terrain")
+			.filter((d: planck.Body) => {
+				const v = (d.getUserData() as { vertices?: { x: number; y: number }[] })?.vertices;
+				const p = thisAnimal.animal.getPosition();
+				if (!v || !p) return false;
+				const nearest = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
+				return nearest.y - p.y > 0 && Math.abs((v[0].y - v[1].y) / (v[0].x - v[1].x)) < 3;
+			});
+
+		const nearestContact = terrainContacts.reduce(
+			(prev: (planck.Body & { dist?: number }) | null, cur: planck.Body): (planck.Body & { dist?: number }) | null => {
+				const v = (cur.getUserData() as { vertices?: { x: number; y: number }[] })?.vertices;
+				const p = thisAnimal.animal.getPosition();
+				if (!v || !p) return prev;
+				const n = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
+				const dist = Math.sqrt((n.x - p.x) ** 2 + (n.y - p.y) ** 2);
+				if (prev != null && dist >= (prev.dist || Number.POSITIVE_INFINITY)) return prev;
+				distToGround = dist;
+				const c: planck.Body & { dist?: number } = cur;
+				c.dist = dist;
+				return c;
+			},
+			null,
+		);
+
+		if (
+			nearestContact != null &&
+			distToGround < (1.4 / planckDownscaleFactor) * thisAnimal.animalSize.planck.height &&
+			(thisAnimal.animalData.canWalkUnderwater || !thisAnimal.inWater)
+		) {
+			const data = nearestContact.getUserData();
+			const v = (data as { vertices?: { x: number; y: number }[] })?.vertices;
+			if (v) {
+				const rise = v[0].y - v[1].y;
+				const run = v[0].x - v[1].x;
+				const edgeAngle = Math.atan2(rise, run);
+				const nx = -Math.sin(edgeAngle);
+				const ny = Math.cos(edgeAngle);
+				surfaceNormal = new planck.Vec2(nx, ny);
+				const nearest = findNearestPointOnLine(
+					thisAnimal.animal.getPosition().x,
+					thisAnimal.animal.getPosition().y,
+					v[0].x,
+					v[0].y,
+					v[1].x,
+					v[1].y,
+				);
+				nearestPointOnTerrain = new planck.Vec2(nearest.x, nearest.y);
+				thisAnimal.walking = true;
+			}
+		} else if (distToGround > 1.2) {
+			thisAnimal.walking = false;
+		}
+	}
+
+	// movement and damping
 	if (!thisAnimal.inWater) {
 		if (!thisAnimal.walking) {
 			thisAnimal.doApplyForce = false;
@@ -467,20 +536,64 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 		}, 100);
 		thisAnimal.animal.setLinearDamping(linearDampingFactor * 2);
 	}
+	// apply force to attach to terrain
 
-	const rotation = thisAnimal.direction - Math.PI / 2;
+	if (thisAnimal.walking && surfaceNormal) {
+		const tangent = new planck.Vec2(-surfaceNormal.y, surfaceNormal.x);
+		const normalAngle = Math.atan2(surfaceNormal.y, surfaceNormal.x);
 
-	thisAnimal.animal.setAngle(thisAnimal.direction);
-	thisAnimal.animal.applyForce(
-		new planck.Vec2(Math.cos(rotation) * spdf, Math.sin(rotation) * spdf),
-		thisAnimal.animal.getPosition(),
-	);
+		thisAnimal.animal.setAngle(normalAngle + Math.PI / 2);
 
+		const vel = thisAnimal.animal.getLinearVelocity();
+		const velAlongNormal = vel.x * surfaceNormal.x + vel.y * surfaceNormal.y;
+		const velAlongTangent = vel.x * tangent.x + vel.y * tangent.y;
+
+		thisAnimal.animal.setLinearVelocity(
+			new planck.Vec2(
+				tangent.x * velAlongTangent + surfaceNormal.x * (velAlongNormal * 0.1),
+				tangent.y * velAlongTangent + surfaceNormal.y * (velAlongNormal * 0.1),
+			),
+		);
+
+		if (nearestPointOnTerrain) {
+			const dx = nearestPointOnTerrain.x - thisAnimal.animal.getPosition().x;
+			const dy = nearestPointOnTerrain.y - thisAnimal.animal.getPosition().y;
+			const suctionForce = 20 * thisAnimal.animal.getMass();
+			const dist = Math.sqrt(dx * dx + dy * dy);
+			if (dist > thisAnimal.animalSize.planck.height * 0.5 + 0.1) {
+				thisAnimal.animal.applyForceToCenter(new planck.Vec2((dx / dist) * -suctionForce, (dy / dist) * -suctionForce));
+			}
+			if (dist < thisAnimal.animalSize.planck.height * 0.5 + 0.01) {
+				thisAnimal.animal.applyForceToCenter(new planck.Vec2((dx / dist) * suctionForce, (dy / dist) * suctionForce));
+			}
+		}
+
+		const rotation = thisAnimal.direction - Math.PI / 2;
+		const inputDir = new planck.Vec2(Math.cos(rotation), Math.sin(rotation));
+		const inputAlongTangent = inputDir.x * tangent.x + inputDir.y * tangent.y;
+
+		thisAnimal.animal.applyForceToCenter(
+			new planck.Vec2(tangent.x * inputAlongTangent * spdf, tangent.y * inputAlongTangent * spdf),
+		);
+	} else {
+		const rotation = thisAnimal.direction - Math.PI / 2;
+		thisAnimal.animal.setAngle(thisAnimal.direction);
+		thisAnimal.animal.applyForceToCenter(new planck.Vec2(Math.cos(rotation) * spdf, Math.sin(rotation) * spdf));
+	}
+
+	// sync data between planck and pixi
 	thisAnimal.pixiAnimal.position.set(
 		thisAnimal.animal.getPosition().x * planckDownscaleFactor,
 		thisAnimal.animal.getPosition().y * planckDownscaleFactor,
 	);
 	thisAnimal.pixiAnimal.scale.set(thisAnimal.animalSize.pixi.scale * thisAnimal.scale);
+
+	// display animal as walking in pixi
+	// if (thisAnimal.walking && surfaceNormal) {
+	// 	const tangent = new planck.Vec2(-surfaceNormal.y, surfaceNormal.x);
+	// 	const edgeAngle = Math.atan2(tangent.y, tangent.x);
+	// 	thisAnimal.pixiAnimal.rotation = edgeAngle;
+	// }
 
 	thisAnimal.grabHook.rotation = -thisAnimal.pixiAnimal.rotation;
 
@@ -489,132 +602,6 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 		thisAnimal.animal.getPosition().y * planckDownscaleFactor - 7 - 4 * (thisAnimal.animalData.sizeMultiplier - 1),
 	);
 	thisAnimal.pixiAnimalUi.scale.set(0.1);
-
-	if (thisAnimal.animalData.canStand) {
-		let contacts = [];
-		let distToGround = Number.POSITIVE_INFINITY;
-		for (let ce = thisAnimal.animal.getContactList(); ce; ce = ce.next) {
-			const c = ce.contact;
-			contacts.push(c.getFixtureA().getBody());
-		}
-		contacts = contacts
-			.filter((d: planck.Body) => (d.getUserData() as { type?: string })?.type === "terrain")
-			.filter((d: planck.Body) => {
-				const v = (d.getUserData() as { vertices?: { x: number; y: number }[] })?.vertices;
-				const p = thisAnimal.animal.getPosition();
-				if (!v || !p) return false;
-				const nearestPoint = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
-				return nearestPoint.y - p.y > 0 && Math.abs((v[0].y - v[1].y) / (v[0].x - v[1].x)) < 3;
-			});
-		const nearestContact = contacts.reduce(
-			(prev: (planck.Body & { dist?: number }) | null, cur: planck.Body): (planck.Body & { dist?: number }) | null => {
-				const v = (cur.getUserData() as { vertices?: { x: number; y: number }[] })?.vertices;
-				const p = thisAnimal.animal.getPosition();
-				if (!v || !p) return prev;
-				const n = findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y);
-				const dist = Math.sqrt((n.x - p.x) ** 2 + (n.y - p.y) ** 2);
-
-				if (prev != null && dist >= (prev.dist || Number.POSITIVE_INFINITY)) return prev;
-
-				distToGround = dist;
-				const c: planck.Body & { dist?: number } = cur;
-				c.dist = dist;
-				return c;
-			},
-			null,
-		);
-		if (
-			nearestContact != null &&
-			distToGround < 1.1 * thisAnimal.animalData.sizeScale.y &&
-			(thisAnimal.animalData.canWalkUnderwater || thisAnimal.inWater)
-		) {
-			const data = nearestContact.getUserData();
-			const v = (data as { vertices?: { x: number; y: number }[] })?.vertices;
-			if (v) {
-				const rise = v[0].y - v[1].y;
-				const run = v[0].x - v[1].x;
-				const angle = Math.atan2(rise, run);
-				thisAnimal.pixiAnimal.rotation = angle + Math.PI;
-				thisAnimal.animal.setAngle(angle + Math.PI / 2);
-				thisAnimal.walking = true;
-
-				// Walking using apply force
-				// thisAnimal.animal.applyForce(new planck.Vec2(Math.cos(angle - Math.PI / 2) * 10, Math.sin(angle - Math.PI / 2) * 10), thisAnimal.animal.getPosition());
-
-				// Walking using distance joint
-				thisAnimal.groundJoints.forEach((j) => {
-					world.destroyJoint(j);
-				});
-				thisAnimal.groundJoints = [];
-				const p = thisAnimal.animal.getPosition();
-				// Make the animal closer to the ground before creating a joint
-				// TODO: actually use math to do this instead of applying a force
-				// thisAnimal.animal.applyForce(
-				// 	new planck.Vec2(
-				// 		Math.cos(angle - Math.PI / 2) * 10,
-				// 		Math.sin(angle - Math.PI / 2) * 10
-				// 	),
-				// 	thisAnimal.animal.getPosition()
-				// );
-				contacts.forEach((c) => {
-					const s = thisAnimal.animalSize.planck.height / 5;
-					const animalX =
-						thisAnimal.animal.getWorldCenter().x +
-						new planck.Vec2(Math.cos(angle - Math.PI / 2) * s, Math.sin(angle - Math.PI / 2) * s).x;
-					const animalY =
-						thisAnimal.animal.getWorldCenter().y +
-						new planck.Vec2(Math.cos(angle - Math.PI / 2) * s, Math.sin(angle - Math.PI / 2) * s).y;
-					const joint = world.createJoint(
-						new planck.DistanceJoint(
-							{
-								frequencyHz: 8,
-								dampingRatio: 0.9,
-								collideConnected: true,
-							},
-							c,
-							thisAnimal.animal,
-							findNearestPointOnLine(p.x, p.y, v[0].x, v[0].y, v[1].x, v[1].y),
-							new planck.Vec2(animalX, animalY),
-						),
-					);
-					joint?.setLength(thisAnimal.animalSize.planck.height / 4 - s);
-					if (joint) thisAnimal.groundJoints.push(joint);
-				});
-
-				// Walking using prismatic joint
-				// if (thisAnimal.groundAnchorId != data.id) {
-				// 	thisAnimal.groundAnchorId = data.id;
-
-				// 	thisAnimal.groundJoints.forEach((j) => {
-				// 		world.destroyJoint(j);
-				// 	});
-				// 	thisAnimal.groundJoints = [];
-
-				// 	var joint = world.createJoint(
-				// 		new planck.PrismaticJoint(
-				// 			{
-				// 				collideConnected: true
-				// 			},
-				// 			contacts,
-				// 			thisAnimal.animal,
-				// 			thisAnimal.animal.getWorldCenter(),
-				// 			new planck.Vec2(run, rise)
-				// 		)
-				// 	);
-				// 	thisAnimal.groundJoints.push(joint);
-				// }
-			}
-		} else {
-			if (distToGround > 1.2) {
-				thisAnimal.walking = false;
-				// thisAnimal.groundAnchorId = null;
-				thisAnimal.groundJoints.forEach((j) => {
-					world.destroyJoint(j);
-				});
-				thisAnimal.groundJoints = [];
-			}
-		}
-	}
 
 	if (isMine) {
 		const centerX = (thisAnimal.pixiAnimal.x - app.stage.pivot.x) * zoom;
@@ -627,9 +614,8 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				centerY,
 			) +
 			Math.PI / 2;
-		if (!thisAnimal.walking) {
-			thisAnimal.pixiAnimal.rotation = thisAnimal.direction;
-		}
+
+		thisAnimal.pixiAnimal.rotation = thisAnimal.animal.getAngle();
 
 		if (isMain) {
 			const viewportPos = clampCamera(
@@ -870,7 +856,7 @@ const setupBoost = (animal: Animal) => {
 
 			if (landhop) {
 				throttledLandhop(event, myAnimal);
-			} else {
+			} else if (!myAnimal.walking) {
 				throttledBoost(event, myAnimal);
 			}
 		}

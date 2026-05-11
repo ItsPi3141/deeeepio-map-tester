@@ -76,8 +76,6 @@ export class Animal {
 	oldDoApplyForce: boolean;
 	direction: number;
 	walking: boolean;
-	groundAnchorId: number | null;
-	groundJoints: DistanceJoint[];
 	speedFac: number;
 
 	xp: number;
@@ -222,8 +220,6 @@ export class Animal {
 		this.direction = 0;
 
 		this.walking = false;
-		this.groundAnchorId = null;
-		this.groundJoints = [];
 
 		this.speedFac = linearDampingFactor * speedRatio;
 
