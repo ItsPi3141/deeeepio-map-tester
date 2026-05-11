@@ -337,9 +337,32 @@ myAnimals.push(new Animal(world, 11, animalsLayer, animalsUiLayer, 1, 1, window.
 // 	}, 500 * i);
 // }
 
+// Pre-compute water bounding boxes for fast intersection checks
+const waterBBoxes = waterObjects.map((pts) => {
+	let minX = Infinity,
+		minY = Infinity,
+		maxX = -Infinity,
+		maxY = -Infinity;
+	for (const p of pts) {
+		if (p.x < minX) minX = p.x;
+		if (p.y < minY) minY = p.y;
+		if (p.x > maxX) maxX = p.x;
+		if (p.y > maxY) maxY = p.y;
+	}
+	return { minX, minY, maxX, maxY };
+});
+
 // Render foods
 const foods: Food[] = [];
 map.screenObjects["food-spawns"]?.forEach((f: DeeeepioMapScreenObject) => {
+	if (f.settings.onlyOnWater) {
+		const fx = f.position.x,
+			fy = f.position.y,
+			fw = f.size.width,
+			fh = f.size.height;
+		const intersects = waterBBoxes.some((b) => fx < b.maxX && fx + fw > b.minX && fy < b.maxY && fy + fh > b.minY);
+		if (!intersects) return;
+	}
 	for (let i = 0; i < f.settings.count; i++) {
 		const foodId = f.settings.foodIds[Math.floor(Math.random() * f.settings.foodIds.length)];
 		foods.push(

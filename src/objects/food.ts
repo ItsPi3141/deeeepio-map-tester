@@ -5,6 +5,7 @@ import { planckDownscaleFactor } from "./constants";
 import robustPointInPolygon from "robust-point-in-polygon";
 
 const foodScale = 0.32;
+const maxRetries = 1000;
 
 export type FoodData = {
 	type: "ground" | "water";
@@ -66,7 +67,9 @@ export class Food {
 		let spawnY = y;
 		if (data?.type === "water" && data?.spawner?.water) {
 			let validLocation = false;
-			while (!validLocation) {
+			let remainingTries = maxRetries;
+			while (!validLocation && remainingTries > 0) {
+				remainingTries--;
 				spawnX = data.spawner.water.x + Math.random() * data.spawner.water.width;
 				spawnY = data.spawner.water.y + Math.random() * data.spawner.water.height;
 
