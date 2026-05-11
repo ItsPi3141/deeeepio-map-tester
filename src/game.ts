@@ -461,7 +461,7 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				return nearest.y - (p.y + halfHeight) > 0 && Math.abs((v[0].y - v[1].y) / (v[0].x - v[1].x)) < 3;
 			});
 
-		const walkRange = (1.4 / planckDownscaleFactor) * thisAnimal.animalSize.planck.height;
+		const walkRange = ((thisAnimal.walking ? 1 : 0.7) / planckDownscaleFactor) * thisAnimal.animalSize.planck.height;
 
 		const edgeInfos = terrainContacts
 			.map((body: planck.Body) => {
