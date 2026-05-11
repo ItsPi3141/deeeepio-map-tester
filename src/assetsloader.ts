@@ -1,7 +1,7 @@
 import { Assets } from "pixi.js";
 
 const mapSpritesheets = [1, 2, 3, 4, 5, 6, 10];
-const animalSpritesheets = ["assets", "assets-1", "assets-2", "assets-3", "assets-4"];
+const animalSpritesheets = ["assets", "assets-1", "assets-2", "assets-3", "assets-4", "swamp"];
 export function loadAssets() {
 	return new Promise<void>((resolve) => {
 		console.log("Loading assets...");

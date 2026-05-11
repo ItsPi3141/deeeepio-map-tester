@@ -1,49 +1,84 @@
 {
 	"frames": {
+		"arapaima.png": {
+			"frame": { "x": 595, "y": 1674, "w": 151, "h": 327 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 151, "h": 327 },
+			"sourceSize": { "w": 151, "h": 327 }
+		},
+		"arapaimatrail.png": {
+			"frame": { "x": 622, "y": 568, "w": 128, "h": 50 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 50 },
+			"sourceSize": { "w": 128, "h": 50 }
+		},
+		"breathingindicator_a.png": {
+			"frame": { "x": 1054, "y": 237, "w": 64, "h": 128 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 128 },
+			"sourceSize": { "w": 64, "h": 128 }
+		},
+		"breathingindicator_aw.png": {
+			"frame": { "x": 1065, "y": 1744, "w": 64, "h": 128 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 128 },
+			"sourceSize": { "w": 64, "h": 128 }
+		},
+		"breathingindicator_w.png": {
+			"frame": { "x": 1065, "y": 1875, "w": 64, "h": 128 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 128 },
+			"sourceSize": { "w": 64, "h": 128 }
+		},
 		"capybara.png": {
-			"frame": { "x": 622, "y": 163, "w": 196, "h": 297 },
+			"frame": { "x": 779, "y": 927, "w": 196, "h": 297 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 196, "h": 297 },
 			"sourceSize": { "w": 196, "h": 297 }
 		},
 		"capybarashield.png": {
-			"frame": { "x": 695, "y": 775, "w": 180, "h": 231 },
+			"frame": { "x": 954, "y": 1510, "w": 180, "h": 231 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 180, "h": 231 },
 			"sourceSize": { "w": 180, "h": 231 }
 		},
 		"cb_cattletyrant.png": {
-			"frame": { "x": 821, "y": 247, "w": 56, "h": 77 },
+			"frame": { "x": 850, "y": 1963, "w": 56, "h": 77 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 56, "h": 77 },
 			"sourceSize": { "w": 56, "h": 77 }
 		},
 		"cb_cattletyrant2.png": {
-			"frame": { "x": 751, "y": 1140, "w": 120, "h": 77 },
+			"frame": { "x": 978, "y": 1100, "w": 120, "h": 77 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 120, "h": 77 },
 			"sourceSize": { "w": 120, "h": 77 }
 		},
 		"cb_dartfrog.png": {
-			"frame": { "x": 588, "y": 775, "w": 98, "h": 64 },
+			"frame": { "x": 749, "y": 1963, "w": 98, "h": 64 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 98, "h": 64 },
 			"sourceSize": { "w": 98, "h": 64 }
 		},
 		"cb_mudturtle.png": {
-			"frame": { "x": 588, "y": 842, "w": 94, "h": 61 },
+			"frame": { "x": 1021, "y": 452, "w": 94, "h": 61 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 94, "h": 61 },
 			"sourceSize": { "w": 94, "h": 61 }
 		},
 		"cb_wateranole.png": {
-			"frame": { "x": 821, "y": 163, "w": 63, "h": 81 },
+			"frame": { "x": 1054, "y": 368, "w": 63, "h": 81 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 63, "h": 81 },
@@ -78,46 +113,116 @@
 			"sourceSize": { "w": 618, "h": 624 }
 		},
 		"fiddlertarget.png": {
-			"frame": { "x": 751, "y": 1009, "w": 128, "h": 128 },
+			"frame": { "x": 934, "y": 1880, "w": 128, "h": 128 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
 			"sourceSize": { "w": 128, "h": 128 }
 		},
+		"giantfreshwaterstingray.png": {
+			"frame": { "x": 622, "y": 1, "w": 396, "h": 564 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 396, "h": 564 },
+			"sourceSize": { "w": 396, "h": 564 }
+		},
+		"giantfreshwaterstingrayclosed.png": {
+			"frame": { "x": 588, "y": 628, "w": 188, "h": 563 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 188, "h": 563 },
+			"sourceSize": { "w": 188, "h": 563 }
+		},
+		"giantfreshwaterstingrayray.png": {
+			"frame": { "x": 1021, "y": 1, "w": 30, "h": 418 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 418 },
+			"sourceSize": { "w": 30, "h": 418 }
+		},
+		"hippo.png": {
+			"frame": { "x": 954, "y": 1227, "w": 180, "h": 280 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 180, "h": 280 },
+			"sourceSize": { "w": 180, "h": 280 }
+		},
+		"hippo_jaw.png": {
+			"frame": { "x": 695, "y": 1227, "w": 256, "h": 259 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 259 },
+			"sourceSize": { "w": 256, "h": 259 }
+		},
+		"hippoopen.png": {
+			"frame": { "x": 779, "y": 568, "w": 180, "h": 356 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 180, "h": 356 },
+			"sourceSize": { "w": 180, "h": 356 }
+		},
 		"lungfish.png": {
-			"frame": { "x": 695, "y": 1242, "w": 166, "h": 296 },
+			"frame": { "x": 962, "y": 568, "w": 166, "h": 296 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 166, "h": 296 },
 			"sourceSize": { "w": 166, "h": 296 }
 		},
 		"lungfishcocoon.png": {
-			"frame": { "x": 588, "y": 1009, "w": 160, "h": 230 },
+			"frame": { "x": 978, "y": 867, "w": 160, "h": 230 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 160, "h": 230 },
 			"sourceSize": { "w": 160, "h": 230 }
 		},
 		"lungfishcocoonshard.png": {
-			"frame": { "x": 807, "y": 463, "w": 64, "h": 233 },
+			"frame": { "x": 1054, "y": 1, "w": 64, "h": 233 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 233 },
 			"sourceSize": { "w": 64, "h": 233 }
 		},
+		"particle_bubble.png": {
+			"frame": { "x": 588, "y": 1194, "w": 32, "h": 32 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+			"sourceSize": { "w": 32, "h": 32 }
+		},
 		"platypus.png": {
-			"frame": { "x": 622, "y": 463, "w": 182, "h": 309 },
+			"frame": { "x": 749, "y": 1651, "w": 182, "h": 309 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 182, "h": 309 },
 			"sourceSize": { "w": 182, "h": 309 }
 		},
 		"platypuswave.png": {
-			"frame": { "x": 622, "y": 1, "w": 256, "h": 159 },
+			"frame": { "x": 695, "y": 1489, "w": 256, "h": 159 },
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 159 },
 			"sourceSize": { "w": 256, "h": 159 }
+		},
+		"welscatfish.png": {
+			"frame": { "x": 354, "y": 1674, "w": 238, "h": 312 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 238, "h": 312 },
+			"sourceSize": { "w": 238, "h": 312 }
+		},
+		"welscatfishblock.png": {
+			"frame": { "x": 934, "y": 1744, "w": 128, "h": 133 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 133 },
+			"sourceSize": { "w": 128, "h": 133 }
+		},
+		"welscatfishwhirpool.png": {
+			"frame": { "x": 1, "y": 1674, "w": 350, "h": 350 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 350, "h": 350 },
+			"sourceSize": { "w": 350, "h": 350 }
 		}
 	},
 	"meta": {
@@ -125,8 +230,8 @@
 		"version": "1.0",
 		"image": "assets-4.png",
 		"format": "RGBA8888",
-		"size": { "w": 885, "h": 1672 },
+		"size": { "w": 1139, "h": 2041 },
 		"scale": "1",
-		"smartupdate": "$TexturePacker:SmartUpdate:b7c7219921c92070cc0a5a933ec323f8:cca8cc241ebef116c26ff87ce9b557f6:da2c7f32f20f5fe2594212c8a65e7340$"
+		"smartupdate": "$TexturePacker:SmartUpdate:bbd406f8b0d631812cd49c266d9700ef:fd89eb87242907a3207bb98f893d3b21:da2c7f32f20f5fe2594212c8a65e7340$"
 	}
 }
