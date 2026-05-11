@@ -49,7 +49,9 @@ import animals from "./consts/animals.json";
 export function loadMap(json: Record<string, string | number | object>) {
 	if (!json.data) return false;
 	const data = JSON.parse(json.data as string);
-	data.screenObjects = data.screenObjects.filter((l: Record<string, string>) => !["animals", "npc-spawns", "triggers", "currents"].includes(l.layerId));
+	data.screenObjects = data.screenObjects.filter(
+		(l: Record<string, string>) => !["animals", "npc-spawns", "triggers", "currents"].includes(l.layerId),
+	);
 	const tempObj: Record<string, string | number | object> = {};
 	data.screenObjects.forEach((l: Record<string, string | number>) => {
 		if (!tempObj[l.layerId]) tempObj[l.layerId] = [];
@@ -126,9 +128,9 @@ export function makeBrighter(color: number, brightnessFactor: number) {
 	const newL = l * c;
 	const [red, green, blue] = redistributeRgb(newR, newO, newL);
 
-	const newHexString = `#${`0${Math.floor(red).toString(16)}`.slice(-2)}${`0${Math.floor(green).toString(16)}`.slice(-2)}${`0${Math.floor(blue).toString(
-		16
-	)}`.slice(-2)}`;
+	const newHexString = `#${`0${Math.floor(red).toString(16)}`.slice(-2)}${`0${Math.floor(green).toString(16)}`.slice(-2)}${`0${Math.floor(
+		blue,
+	).toString(16)}`.slice(-2)}`;
 
 	return stringColorToHex(newHexString);
 }

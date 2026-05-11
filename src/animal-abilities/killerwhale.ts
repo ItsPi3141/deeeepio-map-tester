@@ -11,7 +11,7 @@ const throttleGrabHook = throttle(
 	850,
 	{
 		trailing: false,
-	}
+	},
 );
 
 export function chargedBoost(animal: Animal, throttledBoost: () => void) {
