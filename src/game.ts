@@ -493,7 +493,8 @@ function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				wpy = 0,
 				totalW = 0;
 			for (const e of edgeInfos) {
-				const w = 1 / (e.dist + 0.01);
+				// x^4 prevents further edges from being significant
+				const w = 1 / (e.dist * e.dist * e.dist * e.dist + 0.001);
 				wnx += e.nx * w;
 				wny += e.ny * w;
 				wpx += e.px * w;
