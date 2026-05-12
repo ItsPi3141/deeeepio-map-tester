@@ -1,4 +1,5 @@
 import { chargedBoost as defaultChargedBoost } from "../animal-abilities/default";
+import { chargedBoost as killerwhaleChargedBoost } from "../animal-abilities/killerwhale";
 import { calculateAssetSize } from "../game-utils/animal-sizing";
 import animals from "../game-utils/consts/animals.json";
 import { makeHumanReadableNumber } from "../math-utils";
@@ -7,20 +8,13 @@ import { linearDampingFactor, planckDownscaleFactor, speedRatio } from "./consta
 import { Assets, Container, Graphics, Sprite, Text } from "pixi.js";
 import { type Body, Box, Vec2, type World, type Fixture } from "planck";
 
-const defaultAbilities: AnimalAbilities = { chargedBoost: defaultChargedBoost };
-
-const abilityModules: Record<string, AnimalAbilities> = {};
+const abilityMap: Record<string, AnimalAbilities> = {
+	default: { chargedBoost: defaultChargedBoost },
+	killerwhale: { chargedBoost: killerwhaleChargedBoost },
+};
 
 function getAbilityModule(name: string): AnimalAbilities {
-	if (!abilityModules[name]) {
-		try {
-			// eslint-disable-next-line @typescript-eslint/no-require-imports
-			abilityModules[name] = require(`../animal-abilities/${name}.ts`) as AnimalAbilities;
-		} catch {
-			abilityModules[name] = defaultAbilities;
-		}
-	}
-	return abilityModules[name];
+	return abilityMap[name] ?? abilityMap.default;
 }
 
 export class Animal {
