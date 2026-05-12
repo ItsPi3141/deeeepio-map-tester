@@ -119,7 +119,7 @@ export const setupBoost = (animal: Animal) => {
 					if (
 						contact.filter(
 							(c: planck.ContactEdge) =>
-								((c.other as planck.Body).getUserData() as { type: string }).type === "terrainTop",
+								((c.other as planck.Body).getUserData() as { type?: string })?.type === "terrainTop",
 						).length > 0
 					) {
 						landhop = true;
