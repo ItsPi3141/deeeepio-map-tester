@@ -30,14 +30,14 @@ export function createTerrainCollider(world: World, terrain: DeeeepioMapScreenOb
 		terrain.points.reverse();
 	}
 	terrain.points.forEach((p, i) => {
-		var v0 = Vec2(p.x / pdf, p.y / pdf);
+		const v0 = Vec2(p.x / pdf, p.y / pdf);
 		const pOld = terrain.points[(i + 1) % terrain.points.length];
-		var v1 = Vec2(pOld.x / pdf, pOld.y / pdf);
+		const v1 = Vec2(pOld.x / pdf, pOld.y / pdf);
 
-		var pGhostOld = terrain.points[(terrain.points.length + i - 1) % terrain.points.length];
-		var vprev = Vec2(pGhostOld.x / pdf, pGhostOld.y / pdf);
-		var pGhostNew = terrain.points[(i + 2) % terrain.points.length];
-		var vnext = Vec2(pGhostNew.x / pdf, pGhostNew.y / pdf);
+		const pGhostOld = terrain.points[(terrain.points.length + i - 1) % terrain.points.length];
+		const vprev = Vec2(pGhostOld.x / pdf, pGhostOld.y / pdf);
+		const pGhostNew = terrain.points[(i + 2) % terrain.points.length];
+		const vnext = Vec2(pGhostNew.x / pdf, pGhostNew.y / pdf);
 
 		const edge = world.createBody({
 			userData: {

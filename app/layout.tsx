@@ -1,3 +1,4 @@
+import React from "react";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
@@ -8,7 +9,7 @@ const quicksand = Quicksand({
 	preload: true,
 });
 
-export const metadata = {
+export const metadata: Metadata = {
 	title: "Deeeep.io Map Tester",
 	description: "Try playing your own Deeeep.io map",
 };

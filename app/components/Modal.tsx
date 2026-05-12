@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { createPortal } from "react-dom";
 import { mdiClose } from "@mdi/js";

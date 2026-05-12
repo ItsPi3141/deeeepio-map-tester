@@ -3,7 +3,7 @@ import * as TWEEN from "@tweenjs/tween.js";
 import throttle from "lodash.throttle";
 import { gameState } from "./game-state";
 import { point2rad, clamp } from "../math-utils";
-import { boostPower, linearDampingFactor, planckDownscaleFactor } from "../objects/constants";
+import { boostPower } from "../objects/constants";
 import type { Animal } from "../objects/animal";
 
 export function initMouseTracking() {

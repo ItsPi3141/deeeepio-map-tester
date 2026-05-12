@@ -169,13 +169,13 @@ const WelcomeModal = () => {
 					</p>
 					<p>
 						If you are interested in contributing, join the Discord server:{" "}
-						<a href={`https://discord.gg/${DISCORD}`} className="link" target="_blank">
+						<a href={`https://discord.gg/${DISCORD}`} className="link" target="_blank" rel="noreferrer">
 							discord.gg/{DISCORD}
 						</a>
 					</p>
 					<p>
 						This project is also open-source! You can find it on GitHub:{" "}
-						<a href={`https://github.com/${GITHUB}`} className="link" target="_blank">
+						<a href={`https://github.com/${GITHUB}`} className="link" target="_blank" rel="noreferrer">
 							github.com/{GITHUB}
 						</a>
 					</p>
@@ -198,6 +198,7 @@ const SocialLinks = () => {
 				href="https://github.com/deeeepio-map-tester/deeeepio-map-tester"
 				target="_blank"
 				className="flex h-10 w-10 items-center justify-center rounded-lg border-b-4 border-neutral-800 bg-neutral-700 transition-colors hover:border-neutral-900 hover:bg-neutral-800"
+				rel="noreferrer"
 			>
 				<Icon path={mdiGithub} size="1.5em" color="white" />
 			</a>
@@ -205,6 +206,7 @@ const SocialLinks = () => {
 				href="https://discord.gg/3ydkfFw89r"
 				target="_blank"
 				className="flex h-10 w-10 items-center justify-center rounded-lg border-b-4 border-sky-600 bg-sky-500 transition-colors hover:border-sky-700 hover:bg-sky-600"
+				rel="noreferrer"
 			>
 				<Icon path={siDiscord.path} size="1.25em" color="white" />
 			</a>

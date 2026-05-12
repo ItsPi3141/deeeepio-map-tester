@@ -2,7 +2,7 @@ import { type Body, Box, type DistanceJoint, Vec2, type World, type Fixture } fr
 import { calculateAssetSize } from "../game-utils/animal-sizing";
 import { linearDampingFactor, planckDownscaleFactor, speedRatio } from "./constants";
 import animals from "../game-utils/consts/animals.json";
-import { Assets, Container, Graphics, Sprite, Text, Texture } from "pixi.js";
+import { Assets, Container, Graphics, Sprite, Text } from "pixi.js";
 import { makeHumanReadableNumber } from "../math-utils";
 import type { AnimalAbilities } from "../types";
 

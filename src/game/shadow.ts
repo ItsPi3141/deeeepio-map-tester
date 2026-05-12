@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { gameState, type LayerRefs } from "./game-state";
+import { gameState } from "./game-state";
 import { createRadialGradient } from "../pixi-utils";
 
 const shadowSettings = gameState.shadowSettings;
