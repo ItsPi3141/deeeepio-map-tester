@@ -16,7 +16,9 @@ export default defineConfig([
 		extends: ["js/recommended"],
 		languageOptions: { globals: globals.browser },
 	},
-	tseslint.configs.recommended,
+	tseslint.configs.recommendedTypeChecked,
+	{ languageOptions: { parserOptions: { projectService: true } } },
 	pluginReact.configs.flat.recommended,
 	{ rules: { "react/no-unescaped-entities": "off" } },
+	{ rules: { "@typescript-eslint/no-deprecated": "warn", "@typescript-eslint/no-unused-vars": "warn" } },
 ]);
