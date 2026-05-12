@@ -1,6 +1,6 @@
+import animals from "./consts/animals.json";
 import hideSpaces from "./consts/hidespaces.json";
 import props from "./consts/props.json";
-import animals from "./consts/animals.json";
 
 /**
  * Load the map from a JSON object.
@@ -43,8 +43,7 @@ import animals from "./consts/animals.json";
  * @typedef {object} worldSize
  * @property {string} width
  * @property {string} height
- *
- * @returns {{screenObjects: screenObjects, settings: settings, worldSize: worldSize}} The parsed map data.
+ * @returns {{ screenObjects: screenObjects; settings: settings; worldSize: worldSize }} The parsed map data.
  */
 export function loadMap(json: Record<string, string | number | object>) {
 	if (!json.data) return false;

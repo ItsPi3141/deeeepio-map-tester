@@ -1,5 +1,5 @@
-import { gameState } from "./game-state";
 import type { Food } from "../objects/food";
+import { gameState } from "./game-state";
 
 export function updateFood(food: Food): Food | null {
 	const s = gameState;

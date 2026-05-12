@@ -1,10 +1,10 @@
 "use client";
 
+import { DISCORD, GITHUB } from "./const";
+import { mdiGithub } from "@mdi/js";
+import Icon from "@mdi/react";
 import dynamic from "next/dynamic";
 import React, { Suspense, useState } from "react";
-import { DISCORD, GITHUB } from "./const";
-import Icon from "@mdi/react";
-import { mdiGithub } from "@mdi/js";
 import { siDiscord } from "simple-icons";
 
 const Modal = dynamic(() => import("@/components/Modal"), { ssr: false });
@@ -18,12 +18,7 @@ declare global {
 }
 
 export default class Home extends React.Component {
-	state: Readonly<{
-		gameStarted: boolean;
-		name: string;
-		mapId: string;
-		mapError: boolean;
-	}> = {
+	state: Readonly<{ gameStarted: boolean; name: string; mapId: string; mapError: boolean }> = {
 		gameStarted: false,
 		name: "",
 		mapId: "",
@@ -31,10 +26,7 @@ export default class Home extends React.Component {
 	};
 
 	componentDidMount() {
-		this.setState({
-			name: localStorage.getItem("name") || "",
-			mapId: localStorage.getItem("mapId") || "",
-		});
+		this.setState({ name: localStorage.getItem("name") || "", mapId: localStorage.getItem("mapId") || "" });
 	}
 	async startGame(builtInMap = "") {
 		window.playerName = this.state.name || "Unnamed";
@@ -75,7 +67,7 @@ export default class Home extends React.Component {
 	render() {
 		return (
 			<>
-				<main className="h-dvh grid w-screen grid-cols-1 grid-rows-1 bg-gray-800 text-white">
+				<main className="grid h-dvh w-screen grid-cols-1 grid-rows-1 bg-gray-800 text-white">
 					<div className="game col-[1/1] row-[1/1] h-full w-full" />
 
 					<div className="menu-screen col-[1/1] row-[1/1] grid h-full w-full grid-cols-1 grid-rows-1">
@@ -89,10 +81,10 @@ export default class Home extends React.Component {
 						/>
 						<div className="relative z-20 col-[1/1] row-[1/1] flex h-full w-full items-center justify-center">
 							<SocialLinks />
-							<div className="flex w-72 select-none flex-col items-stretch justify-center gap-3">
+							<div className="flex w-72 flex-col items-stretch justify-center gap-3 select-none">
 								<div className="relative">
 									<img className="-mb-7 w-full" src="/assets/logov1.png" draggable="false" />
-									<p className="absolute -right-6 -top-3 rotate-[8deg] rounded-full bg-red-500 px-2 text-sm shadow-md shadow-[#0003]">
+									<p className="absolute -top-3 -right-6 rotate-[8deg] rounded-full bg-red-500 px-2 text-sm shadow-md shadow-[#0003]">
 										Map tester
 									</p>
 								</div>
@@ -112,14 +104,10 @@ export default class Home extends React.Component {
 										type="text"
 										value={this.state.mapId}
 										onChange={(e) => {
-											this.setState({
-												mapId: e.target.value,
-											});
+											this.setState({ mapId: e.target.value });
 											this.setState({ mapError: false });
 										}}
-										style={{
-											borderColor: this.state.mapError ? "#ef4444" : "",
-										}}
+										style={{ borderColor: this.state.mapError ? "#ef4444" : "" }}
 									/>
 									<button
 										className="btn w-24 border-emerald-600 bg-emerald-500 hover:border-emerald-700 hover:bg-emerald-600"
@@ -193,7 +181,7 @@ const WelcomeModal = () => {
 
 const SocialLinks = () => {
 	return (
-		<div className="absolute right-0 top-0 flex gap-2 rounded-bl-xl bg-black/50 px-3 py-2">
+		<div className="absolute top-0 right-0 flex gap-2 rounded-bl-xl bg-black/50 px-3 py-2">
 			<a
 				href="https://github.com/deeeepio-map-tester/deeeepio-map-tester"
 				target="_blank"

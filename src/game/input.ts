@@ -1,10 +1,10 @@
-import * as planck from "planck";
+import { point2rad, clamp } from "../math-utils";
+import type { Animal } from "../objects/animal";
+import { boostPower } from "../objects/constants";
+import { gameState } from "./game-state";
 import * as TWEEN from "@tweenjs/tween.js";
 import throttle from "lodash.throttle";
-import { gameState } from "./game-state";
-import { point2rad, clamp } from "../math-utils";
-import { boostPower } from "../objects/constants";
-import type { Animal } from "../objects/animal";
+import * as planck from "planck";
 
 export function initMouseTracking() {
 	const s = gameState;

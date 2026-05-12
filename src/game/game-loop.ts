@@ -1,17 +1,17 @@
-import * as PIXI from "pixi.js";
-import * as TWEEN from "@tweenjs/tween.js";
-import { gameState, type MapData } from "./game-state";
 import { loadAssets } from "../assetsloader";
 import { loadMap, getShadowSize } from "../game-utils/maploader";
 import { Animal } from "../objects/animal";
-import { initWorld } from "./world-init";
+import type { DeeeepioMapScreenObject } from "../types";
+import { updateAnimal } from "./animal-update";
+import { updateFood } from "./food-update";
+import { gameState, type MapData } from "./game-state";
+import { initMouseTracking, setupBoost, initZoomControls } from "./input";
 import { createLayers } from "./layer-manager";
 import { renderMap } from "./map-renderer";
 import { setShadowSize as setShadow } from "./shadow";
-import { updateAnimal } from "./animal-update";
-import { updateFood } from "./food-update";
-import { initMouseTracking, setupBoost, initZoomControls } from "./input";
-import type { DeeeepioMapScreenObject } from "../types";
+import { initWorld } from "./world-init";
+import * as TWEEN from "@tweenjs/tween.js";
+import * as PIXI from "pixi.js";
 
 export async function initGame() {
 	const s = gameState;

@@ -1,13 +1,11 @@
-import * as planck from "planck";
-import { addBoundaries, createTerrainCollider } from "../planck-utils";
 import { planckDownscaleFactor } from "../objects/constants";
+import { addBoundaries, createTerrainCollider } from "../planck-utils";
 import type { DeeeepioMapScreenObject } from "../types";
 import type { MapData } from "./game-state";
+import * as planck from "planck";
 
 export function initWorld(map: MapData): planck.World {
-	const world = new planck.World({
-		gravity: new planck.Vec2(0, map.settings.gravity * 3),
-	});
+	const world = new planck.World({ gravity: new planck.Vec2(0, map.settings.gravity * 3) });
 
 	addBoundaries(
 		world,

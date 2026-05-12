@@ -1,10 +1,10 @@
-import * as PIXI from "pixi.js";
-import { gameState, type MapData } from "./game-state";
-import { renderGradientShape, renderTerrainShape, renderWaterBorder } from "../pixi-utils";
 import { getHidespaceById, getPropById } from "../game-utils/maploader";
 import { Food } from "../objects/food";
+import { renderGradientShape, renderTerrainShape, renderWaterBorder } from "../pixi-utils";
 import type { DeeeepioMapScreenObject } from "../types";
+import { gameState, type MapData } from "./game-state";
 import type { LayerRefs } from "./game-state";
+import * as PIXI from "pixi.js";
 
 export function renderMap(map: MapData, layers: LayerRefs) {
 	const s = gameState;
@@ -176,14 +176,7 @@ export function renderMap(map: MapData, layers: LayerRefs) {
 								? Number.parseInt(f.settings.reSpawnMs)
 								: f.settings.reSpawnMs || 1000,
 						onlyOnWater: f.settings.onlyOnWater,
-						spawner: {
-							water: {
-								x: f.position.x,
-								y: f.position.y,
-								width: f.size.width,
-								height: f.size.height,
-							},
-						},
+						spawner: { water: { x: f.position.x, y: f.position.y, width: f.size.width, height: f.size.height } },
 					},
 					[...layers.terrainsLayer.children, ...layers.islandsLayer.children],
 					layers.waterLayer.children,

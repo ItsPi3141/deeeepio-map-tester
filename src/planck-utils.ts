@@ -1,28 +1,16 @@
-import { Edge, Vec2, type World } from "planck";
 import { isClockwise } from "./game-utils/maploader";
 import { DeeeepioMapScreenObject } from "./types";
+import { Edge, Vec2, type World } from "planck";
 
 export function addBoundaries(world: World, width: number, height: number) {
 	const bottom = world.createBody();
-	bottom.createFixture({
-		shape: new Edge(new Vec2(0, height), new Vec2(width, height)),
-		restitution: 0.1,
-	});
+	bottom.createFixture({ shape: new Edge(new Vec2(0, height), new Vec2(width, height)), restitution: 0.1 });
 	const top = world.createBody();
-	top.createFixture({
-		shape: new Edge(new Vec2(0, 0), new Vec2(width, 0)),
-		restitution: 0.1,
-	});
+	top.createFixture({ shape: new Edge(new Vec2(0, 0), new Vec2(width, 0)), restitution: 0.1 });
 	const left = world.createBody();
-	left.createFixture({
-		shape: new Edge(new Vec2(0, 0), new Vec2(0, height)),
-		restitution: 0.1,
-	});
+	left.createFixture({ shape: new Edge(new Vec2(0, 0), new Vec2(0, height)), restitution: 0.1 });
 	const right = world.createBody();
-	right.createFixture({
-		shape: new Edge(new Vec2(width, 0), new Vec2(width, height)),
-		restitution: 0.1,
-	});
+	right.createFixture({ shape: new Edge(new Vec2(width, 0), new Vec2(width, height)), restitution: 0.1 });
 }
 
 export function createTerrainCollider(world: World, terrain: DeeeepioMapScreenObject, pdf: number) {
@@ -49,11 +37,7 @@ export function createTerrainCollider(world: World, terrain: DeeeepioMapScreenOb
 				id: terrain.id,
 			},
 		});
-		edge.createFixture({
-			shape: Edge(v0, v1).setPrevVertex(vprev).setNextVertex(vnext),
-			friction: 1,
-			restitution: 0,
-		});
+		edge.createFixture({ shape: Edge(v0, v1).setPrevVertex(vprev).setNextVertex(vnext), friction: 1, restitution: 0 });
 	});
 }
 

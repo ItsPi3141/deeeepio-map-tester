@@ -1,24 +1,13 @@
-import React from "react";
+import "./globals.css";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
-import "./globals.css";
+import React from "react";
 
-const quicksand = Quicksand({
-	subsets: ["latin", "latin-ext", "vietnamese"],
-	fallback: ["sans-serif"],
-	preload: true,
-});
+const quicksand = Quicksand({ subsets: ["latin", "latin-ext", "vietnamese"], fallback: ["sans-serif"], preload: true });
 
-export const metadata: Metadata = {
-	title: "Deeeep.io Map Tester",
-	description: "Try playing your own Deeeep.io map",
-};
+export const metadata: Metadata = { title: "Deeeep.io Map Tester", description: "Try playing your own Deeeep.io map" };
 
-export default function RootLayout({
-	children,
-}: Readonly<{
-	children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<html lang="en">
 			<body className={quicksand.className}>{children}</body>

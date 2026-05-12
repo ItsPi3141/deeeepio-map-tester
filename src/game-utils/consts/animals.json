@@ -1,10 +1,7 @@
 [
 	{
 		"name": "fish",
-		"size": {
-			"x": 48,
-			"y": 68
-		},
+		"size": { "x": 48, "y": 68 },
 		"mass": 1,
 		"boosts": 1,
 		"level": 0,
@@ -21,10 +18,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 0.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 1,
 		"healthMultiplier": 1.5,
 		"damageBlock": 0,
@@ -72,10 +66,7 @@
 		"walkSpeedMultiplier": 1.1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.1,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 2.5,
 		"healthMultiplier": 1.5,
 		"damageBlock": 0.5,
@@ -123,10 +114,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.1,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 2,
 		"healthMultiplier": 2,
 		"damageBlock": 0,
@@ -174,10 +162,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 3,
 		"healthMultiplier": 3,
 		"damageBlock": 0,
@@ -225,10 +210,7 @@
 		"walkSpeedMultiplier": 1.05,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.4,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 4.5,
 		"healthMultiplier": 4,
 		"damageBlock": 0,
@@ -276,10 +258,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.5,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 5,
 		"damageBlock": 0,
@@ -327,10 +306,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.7,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 6,
 		"damageBlock": 0,
@@ -378,10 +354,7 @@
 		"walkSpeedMultiplier": 1.15,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 5.5,
 		"damageBlock": 0,
@@ -429,10 +402,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 7.5,
 		"healthMultiplier": 7,
 		"damageBlock": 0,
@@ -480,10 +450,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 7,
 		"damageBlock": 0,
@@ -531,10 +498,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 9,
 		"healthMultiplier": 9,
 		"damageBlock": 0,
@@ -582,10 +546,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2.1,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 8,
 		"healthMultiplier": 9,
 		"damageBlock": 0,
@@ -633,10 +594,7 @@
 		"walkSpeedMultiplier": 1.05,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2.2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 15,
 		"damageBlock": 0,
@@ -684,10 +642,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 0.9,
-		"sizeScale": {
-			"x": 0.8,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.8, "y": 1 },
 		"damageMultiplier": 1,
 		"healthMultiplier": 1,
 		"damageBlock": 0,
@@ -735,10 +690,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.7,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 6,
 		"damageBlock": 0,
@@ -786,10 +738,7 @@
 		"walkSpeedMultiplier": 1.15,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 7,
 		"damageBlock": 0,
@@ -837,10 +786,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.1,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 1,
 		"healthMultiplier": 2,
 		"damageBlock": 0,
@@ -888,10 +834,7 @@
 		"walkSpeedMultiplier": 1.1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 2.5,
 		"healthMultiplier": 1.5,
 		"damageBlock": 0.5,
@@ -939,10 +882,7 @@
 		"walkSpeedMultiplier": 0.75,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 0,
 		"healthMultiplier": 0.5,
 		"damageBlock": 0,
@@ -990,10 +930,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 7,
 		"damageBlock": 0.5,
@@ -1041,10 +978,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 0.76,
-			"y": 1.03
-		},
+		"sizeScale": { "x": 0.76, "y": 1.03 },
 		"damageMultiplier": 6.5,
 		"healthMultiplier": 8,
 		"damageBlock": 0,
@@ -1092,10 +1026,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.4,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 6,
 		"damageBlock": 0,
@@ -1143,10 +1074,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 8,
 		"healthMultiplier": 8.5,
 		"damageBlock": 0,
@@ -1194,10 +1122,7 @@
 		"walkSpeedMultiplier": 0.95,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 7.5,
 		"damageBlock": 0,
@@ -1245,10 +1170,7 @@
 		"walkSpeedMultiplier": 0.9,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2.1,
-		"sizeScale": {
-			"x": 1,
-			"y": 1.15
-		},
+		"sizeScale": { "x": 1, "y": 1.15 },
 		"damageMultiplier": 8,
 		"healthMultiplier": 12,
 		"damageBlock": 0,
@@ -1296,10 +1218,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 8,
 		"healthMultiplier": 9,
 		"damageBlock": 0,
@@ -1347,10 +1266,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 0.6,
-		"sizeScale": {
-			"x": 1,
-			"y": 1.35
-		},
+		"sizeScale": { "x": 1, "y": 1.35 },
 		"damageMultiplier": 2,
 		"healthMultiplier": 1.5,
 		"damageBlock": 0,
@@ -1398,10 +1314,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.4,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 5,
 		"damageBlock": 0,
@@ -1449,10 +1362,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2.1,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 12,
 		"damageBlock": 0,
@@ -1500,10 +1410,7 @@
 		"walkSpeedMultiplier": 1.4,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 0.5,
-		"sizeScale": {
-			"x": 0.5,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.5, "y": 1 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 1.5,
 		"damageBlock": 0,
@@ -1551,10 +1458,7 @@
 		"walkSpeedMultiplier": 1.2,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.7,
-		"sizeScale": {
-			"x": 0.85,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.85, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 7,
 		"damageBlock": 0,
@@ -1602,10 +1506,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 3,
 		"healthMultiplier": 9,
 		"damageBlock": 0.3,
@@ -1653,10 +1554,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.4,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 7,
 		"damageBlock": 0,
@@ -1704,10 +1602,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 0,
 		"healthMultiplier": 1.5,
 		"damageBlock": 0,
@@ -1755,10 +1650,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 7,
 		"damageBlock": 0.3,
@@ -1806,10 +1698,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.7,
-		"sizeScale": {
-			"x": 0.57,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.57, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 7,
 		"damageBlock": 0,
@@ -1857,10 +1746,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 2,
 		"sizeMultiplier": 1.2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 2,
 		"healthMultiplier": 3,
 		"damageBlock": 0,
@@ -1908,10 +1794,7 @@
 		"walkSpeedMultiplier": 0.85,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 8,
 		"healthMultiplier": 9,
 		"damageBlock": 0.3,
@@ -1959,10 +1842,7 @@
 		"walkSpeedMultiplier": 0.9,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 4,
 		"healthMultiplier": 8,
 		"damageBlock": 0.5,
@@ -2010,10 +1890,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 5,
 		"damageBlock": 0.4,
@@ -2061,10 +1938,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 0.8,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 1.5,
 		"healthMultiplier": 3,
 		"damageBlock": 0,
@@ -2112,10 +1986,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 0.62,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.62, "y": 1 },
 		"damageMultiplier": 5.5,
 		"healthMultiplier": 6.5,
 		"damageBlock": 0,
@@ -2163,10 +2034,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.4,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 7.5,
 		"damageBlock": 0,
@@ -2214,10 +2082,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.3,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.85
-		},
+		"sizeScale": { "x": 1, "y": 0.85 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 6.5,
 		"damageBlock": 0,
@@ -2265,10 +2130,7 @@
 		"walkSpeedMultiplier": 0.9,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 0.5,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 0,
 		"healthMultiplier": 0.1,
 		"damageBlock": 0,
@@ -2316,10 +2178,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 9,
 		"damageBlock": 0,
@@ -2367,10 +2226,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 10,
 		"damageBlock": 0,
@@ -2418,10 +2274,7 @@
 		"walkSpeedMultiplier": 0.75,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1,
-		"sizeScale": {
-			"x": 0.86,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.86, "y": 1 },
 		"damageMultiplier": 0,
 		"healthMultiplier": 0.5,
 		"damageBlock": 0,
@@ -2469,10 +2322,7 @@
 		"walkSpeedMultiplier": 0.8,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1.02
-		},
+		"sizeScale": { "x": 1, "y": 1.02 },
 		"damageMultiplier": 8,
 		"healthMultiplier": 10,
 		"damageBlock": 0,
@@ -2520,10 +2370,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.7,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 5,
 		"damageBlock": 0,
@@ -2571,10 +2418,7 @@
 		"walkSpeedMultiplier": 0.8,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 3,
 		"healthMultiplier": 3,
 		"damageBlock": 0.5,
@@ -2622,10 +2466,7 @@
 		"walkSpeedMultiplier": 0,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 0.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.7
-		},
+		"sizeScale": { "x": 1, "y": 0.7 },
 		"damageMultiplier": 3,
 		"healthMultiplier": 3,
 		"damageBlock": 1,
@@ -2673,10 +2514,7 @@
 		"walkSpeedMultiplier": 0.9,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 0,
 		"healthMultiplier": 0.5,
 		"damageBlock": 0,
@@ -2724,10 +2562,7 @@
 		"walkSpeedMultiplier": 1.15,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.3,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.92
-		},
+		"sizeScale": { "x": 1, "y": 0.92 },
 		"damageMultiplier": 3,
 		"healthMultiplier": 3,
 		"damageBlock": 0,
@@ -2775,10 +2610,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 1,
 		"healthMultiplier": 2,
 		"damageBlock": 0,
@@ -2826,10 +2658,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.3,
-		"sizeScale": {
-			"x": 1,
-			"y": 1.07
-		},
+		"sizeScale": { "x": 1, "y": 1.07 },
 		"damageMultiplier": 3.5,
 		"healthMultiplier": 4,
 		"damageBlock": 0,
@@ -2877,10 +2706,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.4,
-		"sizeScale": {
-			"x": 1,
-			"y": 1.29
-		},
+		"sizeScale": { "x": 1, "y": 1.29 },
 		"damageMultiplier": 6.25,
 		"healthMultiplier": 6,
 		"damageBlock": 0,
@@ -2928,10 +2754,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.7,
-		"sizeScale": {
-			"x": 0.83,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.83, "y": 1 },
 		"damageMultiplier": 4,
 		"healthMultiplier": 6,
 		"damageBlock": 0,
@@ -2979,10 +2802,7 @@
 		"walkSpeedMultiplier": 1.1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.7,
-		"sizeScale": {
-			"x": 1,
-			"y": 1.03
-		},
+		"sizeScale": { "x": 1, "y": 1.03 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 6,
 		"damageBlock": 0,
@@ -3030,10 +2850,7 @@
 		"walkSpeedMultiplier": 1.1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.1,
-		"sizeScale": {
-			"x": 0.7,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.7, "y": 1 },
 		"damageMultiplier": 2,
 		"healthMultiplier": 3,
 		"damageBlock": 0,
@@ -3081,10 +2898,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.4,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 4,
 		"healthMultiplier": 4.5,
 		"damageBlock": 0,
@@ -3132,10 +2946,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 7.5,
 		"healthMultiplier": 7.5,
 		"damageBlock": 0,
@@ -3183,10 +2994,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 3,
 		"healthMultiplier": 3,
 		"damageBlock": 0,
@@ -3234,10 +3042,7 @@
 		"walkSpeedMultiplier": 1.05,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.2,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.89
-		},
+		"sizeScale": { "x": 1, "y": 0.89 },
 		"damageMultiplier": 3,
 		"healthMultiplier": 3,
 		"damageBlock": 0,
@@ -3285,10 +3090,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 5,
 		"damageBlock": 0,
@@ -3336,10 +3138,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.3,
-		"sizeScale": {
-			"x": 1.17,
-			"y": 1
-		},
+		"sizeScale": { "x": 1.17, "y": 1 },
 		"damageMultiplier": 1,
 		"healthMultiplier": 5,
 		"damageBlock": 0.6,
@@ -3387,10 +3186,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 1.14
-		},
+		"sizeScale": { "x": 1, "y": 1.14 },
 		"damageMultiplier": 8,
 		"healthMultiplier": 8,
 		"damageBlock": 0,
@@ -3438,10 +3234,7 @@
 		"walkSpeedMultiplier": 0.5,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 5,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.55
-		},
+		"sizeScale": { "x": 1, "y": 0.55 },
 		"damageMultiplier": 4,
 		"healthMultiplier": 20,
 		"damageBlock": 0,
@@ -3489,10 +3282,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2,
-		"sizeScale": {
-			"x": 0.49,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.49, "y": 1 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 8,
 		"damageBlock": 0,
@@ -3540,10 +3330,7 @@
 		"walkSpeedMultiplier": 0.85,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.4,
-		"sizeScale": {
-			"x": 0.66,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.66, "y": 1 },
 		"damageMultiplier": 3.5,
 		"healthMultiplier": 4,
 		"damageBlock": 0,
@@ -3591,10 +3378,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.7,
-		"sizeScale": {
-			"x": 0.93,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.93, "y": 1 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 6,
 		"damageBlock": 0,
@@ -3642,10 +3426,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 9,
 		"damageBlock": 0,
@@ -3693,10 +3474,7 @@
 		"walkSpeedMultiplier": 0.8,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 0.53,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.53, "y": 1 },
 		"damageMultiplier": 4.5,
 		"healthMultiplier": 7,
 		"damageBlock": 0,
@@ -3744,10 +3522,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 6.5,
 		"healthMultiplier": 9,
 		"damageBlock": 0,
@@ -3795,10 +3570,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.4,
-		"sizeScale": {
-			"x": 0.85,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.85, "y": 1 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 6.5,
 		"damageBlock": 0,
@@ -3846,10 +3618,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 3,
 		"healthMultiplier": 3,
 		"damageBlock": 0,
@@ -3897,10 +3666,7 @@
 		"walkSpeedMultiplier": 1.15,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 4.5,
 		"healthMultiplier": 3.5,
 		"damageBlock": 0,
@@ -3948,10 +3714,7 @@
 		"walkSpeedMultiplier": 0.9,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 0.8,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.9
-		},
+		"sizeScale": { "x": 1, "y": 0.9 },
 		"damageMultiplier": 0,
 		"healthMultiplier": 0.5,
 		"damageBlock": 0,
@@ -3999,10 +3762,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 0.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 1,
 		"healthMultiplier": 1.5,
 		"damageBlock": 0,
@@ -4050,10 +3810,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 2,
 		"healthMultiplier": 1.5,
 		"damageBlock": 0.5,
@@ -4101,10 +3858,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 2,
 		"sizeMultiplier": 1.5,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.81
-		},
+		"sizeScale": { "x": 1, "y": 0.81 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 5,
 		"damageBlock": 0,
@@ -4152,10 +3906,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.88
-		},
+		"sizeScale": { "x": 1, "y": 0.88 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 7,
 		"damageBlock": 0,
@@ -4203,10 +3954,7 @@
 		"walkSpeedMultiplier": 0.9,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 7,
 		"damageBlock": 0.35,
@@ -4254,10 +4002,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.82
-		},
+		"sizeScale": { "x": 1, "y": 0.82 },
 		"damageMultiplier": 4,
 		"healthMultiplier": 9,
 		"damageBlock": 0.3,
@@ -4305,10 +4050,7 @@
 		"walkSpeedMultiplier": 0,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.79
-		},
+		"sizeScale": { "x": 1, "y": 0.79 },
 		"damageMultiplier": 3,
 		"healthMultiplier": 9,
 		"damageBlock": 0.9,
@@ -4356,10 +4098,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.2,
-		"sizeScale": {
-			"x": 0.77,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.77, "y": 1 },
 		"damageMultiplier": 2,
 		"healthMultiplier": 3,
 		"damageBlock": 0,
@@ -4407,10 +4146,7 @@
 		"walkSpeedMultiplier": 1.05,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 1.2
-		},
+		"sizeScale": { "x": 1, "y": 1.2 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 8,
 		"damageBlock": 0.1,
@@ -4458,10 +4194,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2.2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1.06
-		},
+		"sizeScale": { "x": 1, "y": 1.06 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 12,
 		"damageBlock": 0,
@@ -4509,10 +4242,7 @@
 		"walkSpeedMultiplier": 0.75,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 0,
 		"healthMultiplier": 0.5,
 		"damageBlock": 0,
@@ -4560,10 +4290,7 @@
 		"walkSpeedMultiplier": 0.9,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.3,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.75
-		},
+		"sizeScale": { "x": 1, "y": 0.75 },
 		"damageMultiplier": 2,
 		"healthMultiplier": 3,
 		"damageBlock": 0.5,
@@ -4611,10 +4338,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2.1,
-		"sizeScale": {
-			"x": 1,
-			"y": 1.04
-		},
+		"sizeScale": { "x": 1, "y": 1.04 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 10,
 		"damageBlock": 0,
@@ -4662,10 +4386,7 @@
 		"walkSpeedMultiplier": 0.9,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 10,
 		"damageBlock": 0,
@@ -4713,10 +4434,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.1,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 2,
 		"healthMultiplier": 2,
 		"damageBlock": 0,
@@ -4764,10 +4482,7 @@
 		"walkSpeedMultiplier": 1.1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.4,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 4,
 		"healthMultiplier": 4.5,
 		"damageBlock": 0,
@@ -4815,10 +4530,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.7,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.93
-		},
+		"sizeScale": { "x": 1, "y": 0.93 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 5.5,
 		"damageBlock": 0,
@@ -4866,10 +4578,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.4,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 4,
 		"healthMultiplier": 4,
 		"damageBlock": 0.35,
@@ -4917,10 +4626,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.7,
-		"sizeScale": {
-			"x": 0.75,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.75, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 6.5,
 		"damageBlock": 0,
@@ -4968,10 +4674,7 @@
 		"walkSpeedMultiplier": 1.1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.6,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.82
-		},
+		"sizeScale": { "x": 1, "y": 0.82 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 5.5,
 		"damageBlock": 0,
@@ -5019,10 +4722,7 @@
 		"walkSpeedMultiplier": 1.1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 0.55,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.55, "y": 1 },
 		"damageMultiplier": 7.5,
 		"healthMultiplier": 7.5,
 		"damageBlock": 0,
@@ -5070,10 +4770,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 1,
-			"y": 1.03
-		},
+		"sizeScale": { "x": 1, "y": 1.03 },
 		"damageMultiplier": 6.5,
 		"healthMultiplier": 7,
 		"damageBlock": 0,
@@ -5121,10 +4818,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 6.5,
 		"healthMultiplier": 8.5,
 		"damageBlock": 0.3,
@@ -5172,10 +4866,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 8,
 		"damageBlock": 0,
@@ -5223,10 +4914,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.93
-		},
+		"sizeScale": { "x": 1, "y": 0.93 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 8,
 		"damageBlock": 0,
@@ -5274,10 +4962,7 @@
 		"walkSpeedMultiplier": 1.1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.6,
-		"sizeScale": {
-			"x": 1.4,
-			"y": 0.79
-		},
+		"sizeScale": { "x": 1.4, "y": 0.79 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 7,
 		"damageBlock": 0.35,
@@ -5325,10 +5010,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.99
-		},
+		"sizeScale": { "x": 1, "y": 0.99 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 8,
 		"damageBlock": 0,
@@ -5376,10 +5058,7 @@
 		"walkSpeedMultiplier": 1.1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.1,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.86
-		},
+		"sizeScale": { "x": 1, "y": 0.86 },
 		"damageMultiplier": 2.5,
 		"healthMultiplier": 2.5,
 		"damageBlock": 0,
@@ -5427,10 +5106,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.7,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 9,
 		"healthMultiplier": 7.5,
 		"damageBlock": 0,
@@ -5478,10 +5154,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 9,
 		"damageBlock": 0,
@@ -5529,10 +5202,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 10,
 		"damageBlock": 0,
@@ -5580,10 +5250,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 8,
 		"damageBlock": 0,
@@ -5631,10 +5298,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.3,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 4,
 		"healthMultiplier": 3.5,
 		"damageBlock": 0,
@@ -5682,10 +5346,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 8,
 		"damageBlock": 0,
@@ -5733,10 +5394,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2.2,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.95
-		},
+		"sizeScale": { "x": 1, "y": 0.95 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 11,
 		"damageBlock": 0,
@@ -5784,10 +5442,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.6,
-		"sizeScale": {
-			"x": 1.1,
-			"y": 0.73
-		},
+		"sizeScale": { "x": 1.1, "y": 0.73 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 8,
 		"damageBlock": 0.25,
@@ -5835,10 +5490,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.3,
-		"sizeScale": {
-			"x": 0.8,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.8, "y": 1 },
 		"damageMultiplier": 4,
 		"healthMultiplier": 4.5,
 		"damageBlock": 0,
@@ -5886,10 +5538,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.4,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 4.5,
 		"damageBlock": 0,
@@ -5937,10 +5586,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.3,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.97
-		},
+		"sizeScale": { "x": 1, "y": 0.97 },
 		"damageMultiplier": 3.5,
 		"healthMultiplier": 4,
 		"damageBlock": 0,
@@ -5988,10 +5634,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.7,
-		"sizeScale": {
-			"x": 0.64,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.64, "y": 1 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 7,
 		"damageBlock": 0,
@@ -6039,10 +5682,7 @@
 		"walkSpeedMultiplier": 0.55,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 2.1,
-		"sizeScale": {
-			"x": 1.25,
-			"y": 1
-		},
+		"sizeScale": { "x": 1.25, "y": 1 },
 		"damageMultiplier": 0,
 		"healthMultiplier": 10,
 		"damageBlock": 0,
@@ -6090,10 +5730,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 0.94,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.94, "y": 1 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 8,
 		"damageBlock": 0.2,
@@ -6141,10 +5778,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.9
-		},
+		"sizeScale": { "x": 1, "y": 0.9 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 8,
 		"damageBlock": 0.15,
@@ -6192,10 +5826,7 @@
 		"walkSpeedMultiplier": 0.6,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.2,
-		"sizeScale": {
-			"x": 1.6,
-			"y": 0.84
-		},
+		"sizeScale": { "x": 1.6, "y": 0.84 },
 		"damageMultiplier": 2,
 		"healthMultiplier": 3,
 		"damageBlock": 0,
@@ -6243,10 +5874,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.4,
-		"sizeScale": {
-			"x": 1,
-			"y": 0.94
-		},
+		"sizeScale": { "x": 1, "y": 0.94 },
 		"damageMultiplier": 3.5,
 		"healthMultiplier": 4,
 		"damageBlock": 0,
@@ -6294,10 +5922,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.7,
-		"sizeScale": {
-			"x": 1,
-			"y": 1
-		},
+		"sizeScale": { "x": 1, "y": 1 },
 		"damageMultiplier": 5,
 		"healthMultiplier": 6,
 		"damageBlock": 0,
@@ -6345,10 +5970,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.8,
-		"sizeScale": {
-			"x": 0.79,
-			"y": 1
-		},
+		"sizeScale": { "x": 0.79, "y": 1 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 7.5,
 		"damageBlock": 0,
@@ -6396,10 +6018,7 @@
 		"walkSpeedMultiplier": 0.95,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 0.76,
-			"y": 1.05
-		},
+		"sizeScale": { "x": 0.76, "y": 1.05 },
 		"damageMultiplier": 6.5,
 		"healthMultiplier": 8.5,
 		"damageBlock": 0.15,
@@ -6447,10 +6066,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 0.76,
-			"y": 1.05
-		},
+		"sizeScale": { "x": 0.76, "y": 1.05 },
 		"damageMultiplier": 6,
 		"healthMultiplier": 10,
 		"damageBlock": 0,
@@ -6498,10 +6114,7 @@
 		"walkSpeedMultiplier": 1,
 		"jumpForceMultiplier": 1,
 		"sizeMultiplier": 1.9,
-		"sizeScale": {
-			"x": 1.08,
-			"y": 1
-		},
+		"sizeScale": { "x": 1.08, "y": 1 },
 		"damageMultiplier": 7,
 		"healthMultiplier": 9,
 		"damageBlock": 0,

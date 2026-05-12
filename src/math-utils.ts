@@ -14,21 +14,12 @@ export function clamp(number: number, min: number, max: number) {
 }
 
 export function findNearestPointOnLine(px: number, py: number, x1: number, y1: number, x2: number, y2: number) {
-	const atob = {
-		x: x2 - x1,
-		y: y2 - y1,
-	};
-	const atop = {
-		x: px - x1,
-		y: py - y1,
-	};
+	const atob = { x: x2 - x1, y: y2 - y1 };
+	const atop = { x: px - x1, y: py - y1 };
 	const len = atob.x * atob.x + atob.y * atob.y;
 	const dot = atop.x * atob.x + atop.y * atob.y;
 	const t = Math.min(1, Math.max(0, dot / len));
-	return {
-		x: x1 + atob.x * t,
-		y: y1 + atob.y * t,
-	};
+	return { x: x1 + atob.x * t, y: y1 + atob.y * t };
 }
 
 export function makeHumanReadableNumber(number: number, isXpText = false) {

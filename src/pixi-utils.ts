@@ -1,5 +1,5 @@
-import * as PIXI from "pixi.js";
 import { isClockwise, makeBrighter } from "./game-utils/maploader";
+import * as PIXI from "pixi.js";
 
 export function createGradient(startColor: number, endColor: number, quality = 256): PIXI.Texture {
 	const canvas: HTMLCanvasElement = document.createElement("canvas");
@@ -69,9 +69,7 @@ export function renderGradientShape(
 	if (gradientStart === gradientStop) {
 		shape.fill(gradientStart);
 	} else {
-		shape.fill({
-			texture: createGradient(gradientStart, gradientStop, shapeHeight),
-		});
+		shape.fill({ texture: createGradient(gradientStart, gradientStop, shapeHeight) });
 	}
 	return shape;
 }
@@ -129,10 +127,7 @@ export function renderWaterBorder(
 	points: Array<{ x: number; y: number }>,
 	color: number,
 	isAirPocket = false,
-): {
-	topBorder: Array<PIXI.Graphics>;
-	bottomBorder: Array<PIXI.Graphics>;
-} {
+): { topBorder: Array<PIXI.Graphics>; bottomBorder: Array<PIXI.Graphics> } {
 	const borderColor = makeBrighter(color, 1.75);
 	if (isAirPocket) {
 		if (isClockwise(points)) points.reverse();
@@ -171,10 +166,7 @@ export function renderWaterBorder(
 		}
 	}
 
-	return {
-		topBorder: topBorders,
-		bottomBorder: bottomBorders,
-	};
+	return { topBorder: topBorders, bottomBorder: bottomBorders };
 }
 
 export function clampCamera(

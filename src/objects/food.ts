@@ -1,7 +1,7 @@
-import { Assets, Container, ContainerChild, Sprite } from "pixi.js";
-import { Body, Box, Vec2, World } from "planck";
 import foods from "../game-utils/consts/foods.json";
 import { planckDownscaleFactor } from "./constants";
+import { Assets, Container, ContainerChild, Sprite } from "pixi.js";
+import { Body, Box, Vec2, World } from "planck";
 import robustPointInPolygon from "robust-point-in-polygon";
 
 const foodScale = 0.32;
@@ -14,12 +14,7 @@ export type FoodData = {
 	onlyOnWater: boolean;
 	spawner: {
 		ground?: { x: number; y: number }[];
-		water?: {
-			x: number;
-			y: number;
-			width: number;
-			height: number;
-		};
+		water?: { x: number; y: number; width: number; height: number };
 	} | null;
 };
 
@@ -113,9 +108,7 @@ export class Food {
 				(this.foodData.width / planckDownscaleFactor / 2) * foodScale,
 				(this.foodData.height / planckDownscaleFactor / 2) * foodScale,
 			),
-			{
-				isSensor: true,
-			},
+			{ isSensor: true },
 		);
 
 		// create instance in PIXI

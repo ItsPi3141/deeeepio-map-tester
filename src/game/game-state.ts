@@ -1,8 +1,8 @@
-import type * as PIXI from "pixi.js";
-import type * as planck from "planck";
 import type { Animal } from "../objects/animal";
 import type { Food } from "../objects/food";
 import type { DeeeepioMapScreenObject } from "../types";
+import type * as PIXI from "pixi.js";
+import type * as planck from "planck";
 
 export interface LayerRefs {
 	skyLayer: PIXI.Container;

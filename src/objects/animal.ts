@@ -1,10 +1,10 @@
-import { type Body, Box, type DistanceJoint, Vec2, type World, type Fixture } from "planck";
 import { calculateAssetSize } from "../game-utils/animal-sizing";
-import { linearDampingFactor, planckDownscaleFactor, speedRatio } from "./constants";
 import animals from "../game-utils/consts/animals.json";
-import { Assets, Container, Graphics, Sprite, Text } from "pixi.js";
 import { makeHumanReadableNumber } from "../math-utils";
 import type { AnimalAbilities } from "../types";
+import { linearDampingFactor, planckDownscaleFactor, speedRatio } from "./constants";
+import { Assets, Container, Graphics, Sprite, Text } from "pixi.js";
+import { type Body, Box, type DistanceJoint, Vec2, type World, type Fixture } from "planck";
 
 export class Animal {
 	animalData: {
@@ -57,15 +57,7 @@ export class Animal {
 		walkingAbilityLoadTime: number;
 	};
 	animal: Body;
-	animalSize: {
-		planck: {
-			width: number;
-			height: number;
-		};
-		pixi: {
-			scale: number;
-		};
-	};
+	animalSize: { planck: { width: number; height: number }; pixi: { scale: number } };
 	fixture: Fixture;
 	scale: number;
 	pixiAnimal: Container;
@@ -129,20 +121,10 @@ export class Animal {
 		this.scale = 1;
 		this.fixture = this.animal.createFixture(
 			Box(this.animalSize.planck.width / planckDownscaleFactor, this.animalSize.planck.height / planckDownscaleFactor),
-			{
-				density: 0.1,
-				friction: 0.7,
-				restitution: 0,
-			},
+			{ density: 0.1, friction: 0.7, restitution: 0 },
 		);
-		this.animal.setMassData({
-			mass: 1,
-			center: Vec2(0, 0),
-			I: 0,
-		});
-		this.animal.setUserData({
-			increaseXp: this.increaseXp.bind(this),
-		});
+		this.animal.setMassData({ mass: 1, center: Vec2(0, 0), I: 0 });
+		this.animal.setUserData({ increaseXp: this.increaseXp.bind(this) });
 
 		// Create instance in PIXI
 		this.pixiAnimal = new Container();
@@ -169,24 +151,14 @@ export class Animal {
 		if (name) {
 			const nameText = new Text({
 				text: name,
-				style: {
-					fontFamily: "Quicksand",
-					fontSize: 20,
-					fill: 0xffffff,
-					align: "center",
-				},
+				style: { fontFamily: "Quicksand", fontSize: 20, fill: 0xffffff, align: "center" },
 			});
 			nameText.anchor.set(0.5);
 			this.pixiAnimalUi.addChild(nameText);
 
 			this.xpText = new Text({
 				text: makeHumanReadableNumber(this.xp),
-				style: {
-					fontFamily: "Quicksand",
-					fontSize: 14,
-					fill: 0xffffff,
-					align: "center",
-				},
+				style: { fontFamily: "Quicksand", fontSize: 14, fill: 0xffffff, align: "center" },
 			});
 			this.xpText.position.set(0, 20);
 			this.xpText.anchor.set(0.5);
@@ -196,10 +168,7 @@ export class Animal {
 		// Add boost bar
 		if (this.animalData.hasSecondaryAbility) {
 			this.chargedBoostBar = new Graphics();
-			this.chargedBoostBar.rect(0, 0, 16, 72).fill({
-				color: 0x000000,
-				alpha: 0.3,
-			});
+			this.chargedBoostBar.rect(0, 0, 16, 72).fill({ color: 0x000000, alpha: 0.3 });
 
 			this.chargedBoostBar.position.set(
 				50 + 40 * (this.animalData.sizeMultiplier - 1),
@@ -207,10 +176,7 @@ export class Animal {
 			);
 
 			this.chargedBoostBarInner = new Graphics();
-			this.chargedBoostBarInner.rect(2, 2, 12, 68).fill({
-				color: 0x00edff,
-				alpha: 0.7,
-			});
+			this.chargedBoostBarInner.rect(2, 2, 12, 68).fill({ color: 0x00edff, alpha: 0.7 });
 
 			this.chargedBoostBar.alpha = 0;
 
@@ -252,11 +218,7 @@ export class Animal {
 				(this.animalSize.planck.width / planckDownscaleFactor) * this.scale,
 				(this.animalSize.planck.height / planckDownscaleFactor) * this.scale,
 			),
-			{
-				density: 0.1,
-				friction: 0.7,
-				restitution: 0,
-			},
+			{ density: 0.1, friction: 0.7, restitution: 0 },
 		);
 	}
 
@@ -271,10 +233,7 @@ export class Animal {
 				const targetColor = percent === 1 ? 0x05ff00 : 0x00edff;
 				if (this.chargedBoostBarInner.fillStyle.color !== targetColor) {
 					this.chargedBoostBarInner.clear();
-					this.chargedBoostBarInner.rect(2, 2, 12, 68).fill({
-						color: targetColor,
-						alpha: 0.7,
-					});
+					this.chargedBoostBarInner.rect(2, 2, 12, 68).fill({ color: targetColor, alpha: 0.7 });
 				}
 				this.chargedBoostBarInner.scale.set(1, percent);
 				this.chargedBoostBarInner.position.set(0, 68 * (1 - percent));

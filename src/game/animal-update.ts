@@ -1,13 +1,13 @@
-import * as planck from "planck";
-import * as PIXI from "pixi.js";
-import { gameState } from "./game-state";
-import { clampCamera } from "../pixi-utils";
-import { linearDampingFactor, planckDownscaleFactor } from "../objects/constants";
+import { getBiomes } from "../game-utils/maploader";
 import { findNearestPointOnLine, point2rad } from "../math-utils";
 import type { Animal } from "../objects/animal";
+import { linearDampingFactor, planckDownscaleFactor } from "../objects/constants";
+import { clampCamera } from "../pixi-utils";
 import type { DeeeepioMapScreenObject } from "../types";
-import { getBiomes } from "../game-utils/maploader";
+import { gameState } from "./game-state";
 import { shadowSettings } from "./shadow";
+import * as PIXI from "pixi.js";
+import * as planck from "planck";
 import pointInPolygon from "robust-point-in-polygon";
 
 export function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
@@ -81,13 +81,7 @@ export function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 				const rise = v[0].y - v[1].y;
 				const run = v[0].x - v[1].x;
 				const edgeAngle = Math.atan2(rise, run);
-				return {
-					dist,
-					nx: -Math.sin(edgeAngle),
-					ny: Math.cos(edgeAngle),
-					px: n.x,
-					py: n.y,
-				};
+				return { dist, nx: -Math.sin(edgeAngle), ny: Math.cos(edgeAngle), px: n.x, py: n.y };
 			})
 			.filter((e): e is NonNullable<typeof e> => e !== null);
 

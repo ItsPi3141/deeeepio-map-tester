@@ -1,5 +1,5 @@
-import throttle from "lodash.throttle";
 import type { Animal } from "../objects/animal";
+import throttle from "lodash.throttle";
 
 const throttleGrabHook = throttle(
 	(animal: Animal) => {
@@ -9,9 +9,7 @@ const throttleGrabHook = throttle(
 		}, 500);
 	},
 	850,
-	{
-		trailing: false,
-	},
+	{ trailing: false },
 );
 
 export function chargedBoost(animal: Animal, throttledBoost: () => void) {

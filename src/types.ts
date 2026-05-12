@@ -18,9 +18,7 @@ export interface DeeeepioMap {
 	updated_at: string;
 	deleted_at: string | null;
 	user: DeeeepioUser;
-	tags: {
-		id: string;
-	}[];
+	tags: { id: string }[];
 }
 
 export interface DeeeepioUser {
@@ -49,31 +47,17 @@ export interface DeeeepioUser {
 
 export interface DeeeepioMapData {
 	screenObjects: DeeeepioMapScreenObject[];
-	settings: {
-		gravity: number;
-	};
-	worldSize: {
-		width: string;
-		height: string;
-	};
+	settings: { gravity: number };
+	worldSize: { width: string; height: string };
 }
 
 export interface DeeeepioMapScreenObject {
 	id: number;
 	type: string;
 	layerId: string;
-	points: {
-		x: number;
-		y: number;
-	}[];
-	position: {
-		x: number;
-		y: number;
-	};
-	size: {
-		width: number;
-		height: number;
-	};
+	points: { x: number; y: number }[];
+	position: { x: number; y: number };
+	size: { width: number; height: number };
 	settings: {
 		collidable: boolean;
 		angle: number;
@@ -89,19 +73,7 @@ export interface DeeeepioMapScreenObject {
 		npcType: number;
 		restrictMovement: boolean;
 	};
-	triggers: {
-		actions: {
-			type: number;
-			data: {
-				pos: {
-					x: number;
-					y: number;
-				};
-			};
-		}[];
-		delay: number;
-		when: number;
-	}[];
+	triggers: { actions: { type: number; data: { pos: { x: number; y: number } } }[]; delay: number; when: number }[];
 	texture: number;
 	foodSpawnSettings: {
 		foodIds: number[];
@@ -114,9 +86,7 @@ export interface DeeeepioMapScreenObject {
 	y: number;
 	rotation: number;
 	pType: number;
-	params: {
-		text: string;
-	};
+	params: { text: string };
 	hSType: number;
 	opacity: number;
 	borderColor: number;

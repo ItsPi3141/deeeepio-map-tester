@@ -1,5 +1,5 @@
-import * as PIXI from "pixi.js";
 import { gameState, type LayerRefs } from "./game-state";
+import * as PIXI from "pixi.js";
 
 // Layer order from top to bottom:
 // *food
