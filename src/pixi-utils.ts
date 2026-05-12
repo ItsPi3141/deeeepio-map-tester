@@ -26,7 +26,7 @@ export function createGradient(startColor: number, endColor: number, quality = 2
 	return PIXI.Texture.from(canvas);
 }
 
-export function createRadialGradient(radius: number, startColor: string, endColor: string): PIXI.Texture {
+export function createRadialGradient(radius: number, stops: { color: string; offset: number }[]): PIXI.Texture {
 	const canvas: HTMLCanvasElement = document.createElement("canvas");
 
 	canvas.width = radius;
@@ -40,8 +40,9 @@ export function createRadialGradient(radius: number, startColor: string, endColo
 	const hr = radius / 2;
 	const grd: CanvasGradient = ctx.createRadialGradient(hr, hr, 0, hr, hr, hr);
 
-	grd.addColorStop(0, startColor);
-	grd.addColorStop(1, endColor);
+	stops.forEach((stop) => {
+		grd.addColorStop(stop.offset, stop.color);
+	});
 
 	ctx.fillStyle = grd;
 	ctx.fillRect(0, 0, radius, radius);

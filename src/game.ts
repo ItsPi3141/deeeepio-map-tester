@@ -296,7 +296,13 @@ function setShadowSize(size: number) {
 		.fill(0x000000);
 
 	shadow.rect(leftRightWidth, topBottomHeight, size / zoom, size / zoom).fill({
-		texture: createRadialGradient(size / zoom, "#00000000", "#000000ff"),
+		texture: createRadialGradient(size / zoom, [
+			{ offset: 0, color: "#00000000" },
+			{ offset: 0.25, color: "#0000000f" },
+			{ offset: 0.5, color: "#0000003f" },
+			{ offset: 0.75, color: "#0000008f" },
+			{ offset: 1, color: "#000000ff" },
+		]),
 	});
 
 	shadowLayer.addChild(shadow);
