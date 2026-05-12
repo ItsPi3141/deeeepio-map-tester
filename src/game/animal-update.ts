@@ -46,7 +46,9 @@ export function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 		6 * s.zoom;
 
 	// walking logic
+	// eslint-disable-next-line @typescript-eslint/no-deprecated
 	let surfaceNormal: planck.Vec2 | null = null;
+	// eslint-disable-next-line @typescript-eslint/no-deprecated
 	let nearestPointOnTerrain: planck.Vec2 | null = null;
 	const halfHeight = (0.5 * thisAnimal.animalSize.planck.height) / planckDownscaleFactor;
 

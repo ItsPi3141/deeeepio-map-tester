@@ -2,7 +2,12 @@ import { isClockwise } from "./game-utils/maploader";
 import { DeeeepioMapScreenObject } from "./types";
 import { Edge, Vec2, type World } from "planck";
 
-export function addBoundaries(world: World, width: number, height: number) {
+export function addBoundaries(
+	// eslint-disable-next-line @typescript-eslint/no-deprecated
+	world: World,
+	width: number,
+	height: number,
+) {
 	const bottom = world.createBody();
 	bottom.createFixture({ shape: new Edge(new Vec2(0, height), new Vec2(width, height)), restitution: 0.1 });
 	const top = world.createBody();
@@ -13,19 +18,24 @@ export function addBoundaries(world: World, width: number, height: number) {
 	right.createFixture({ shape: new Edge(new Vec2(width, 0), new Vec2(width, height)), restitution: 0.1 });
 }
 
-export function createTerrainCollider(world: World, terrain: DeeeepioMapScreenObject, pdf: number) {
+export function createTerrainCollider(
+	// eslint-disable-next-line @typescript-eslint/no-deprecated
+	world: World,
+	terrain: DeeeepioMapScreenObject,
+	pdf: number,
+) {
 	if (!isClockwise(terrain.points)) {
 		terrain.points.reverse();
 	}
 	terrain.points.forEach((p, i) => {
-		const v0 = Vec2(p.x / pdf, p.y / pdf);
+		const v0 = new Vec2(p.x / pdf, p.y / pdf);
 		const pOld = terrain.points[(i + 1) % terrain.points.length];
-		const v1 = Vec2(pOld.x / pdf, pOld.y / pdf);
+		const v1 = new Vec2(pOld.x / pdf, pOld.y / pdf);
 
 		const pGhostOld = terrain.points[(terrain.points.length + i - 1) % terrain.points.length];
-		const vprev = Vec2(pGhostOld.x / pdf, pGhostOld.y / pdf);
+		const vprev = new Vec2(pGhostOld.x / pdf, pGhostOld.y / pdf);
 		const pGhostNew = terrain.points[(i + 2) % terrain.points.length];
-		const vnext = Vec2(pGhostNew.x / pdf, pGhostNew.y / pdf);
+		const vnext = new Vec2(pGhostNew.x / pdf, pGhostNew.y / pdf);
 
 		const edge = world.createBody({
 			userData: {
@@ -37,10 +47,15 @@ export function createTerrainCollider(world: World, terrain: DeeeepioMapScreenOb
 				id: terrain.id,
 			},
 		});
-		edge.createFixture({ shape: Edge(v0, v1).setPrevVertex(vprev).setNextVertex(vnext), friction: 1, restitution: 0 });
+		edge.createFixture({
+			shape: new Edge(v0, v1).setPrevVertex(vprev).setNextVertex(vnext),
+			friction: 1,
+			restitution: 0,
+		});
 	});
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function isTopEdge(current: { x: number; y: number }, last: { x: number; y: number }) {
 	return current.x > last.x && current.x - last.x > 10;
 }

@@ -79,7 +79,7 @@ export const setupBoost = (animal: Animal) => {
 
 	app.canvas.addEventListener("mousedown", (event: Event) => {
 		const mouseEvent = event as MouseEvent;
-		if (mouseEvent.which === 1) {
+		if (mouseEvent.button === 0) {
 			const myAnimal = animal.getState;
 
 			if (myAnimal.animalData.hasSecondaryAbility) {
@@ -91,7 +91,7 @@ export const setupBoost = (animal: Animal) => {
 		const mouseEvent = event as MouseEvent;
 		const myAnimal = animal.getState;
 
-		if (mouseEvent.which === 3) {
+		if (mouseEvent.button === 2) {
 			myAnimal.chargedBoostStartTime = null;
 			return;
 		}

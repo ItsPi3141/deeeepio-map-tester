@@ -96,6 +96,7 @@ export class Animal {
 	grabHook: Sprite;
 
 	constructor(
+		// eslint-disable-next-line @typescript-eslint/no-deprecated
 		world: World,
 		fishLevelId: number,
 		pixiAnimalsLayer: Container,
@@ -114,7 +115,7 @@ export class Animal {
 		// Create Planck.js body
 		this.animal = world.createBody({
 			type: "dynamic",
-			position: Vec2(x, y),
+			position: new Vec2(x, y),
 			angle: 0,
 			linearDamping: linearDampingFactor,
 			angularDamping: 0.01,
@@ -127,10 +128,13 @@ export class Animal {
 
 		this.scale = 1;
 		this.fixture = this.animal.createFixture(
-			Box(this.animalSize.planck.width / planckDownscaleFactor, this.animalSize.planck.height / planckDownscaleFactor),
+			new Box(
+				this.animalSize.planck.width / planckDownscaleFactor,
+				this.animalSize.planck.height / planckDownscaleFactor,
+			),
 			{ density: 0.1, friction: 0.7, restitution: 0 },
 		);
-		this.animal.setMassData({ mass: 1, center: Vec2(0, 0), I: 0 });
+		this.animal.setMassData({ mass: 1, center: new Vec2(0, 0), I: 0 });
 		this.animal.setUserData({ increaseXp: this.increaseXp.bind(this) });
 
 		// Create instance in PIXI
@@ -221,7 +225,7 @@ export class Animal {
 	updateScale() {
 		this.animal.destroyFixture(this.fixture);
 		this.fixture = this.animal.createFixture(
-			Box(
+			new Box(
 				(this.animalSize.planck.width / planckDownscaleFactor) * this.scale,
 				(this.animalSize.planck.height / planckDownscaleFactor) * this.scale,
 			),

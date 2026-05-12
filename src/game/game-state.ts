@@ -34,6 +34,7 @@ export interface MapData {
 
 export interface GameState {
 	app: PIXI.Application | null;
+	// eslint-disable-next-line @typescript-eslint/no-deprecated
 	world: planck.World | null;
 	map: MapData | null;
 	zoom: number;

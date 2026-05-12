@@ -43,6 +43,7 @@ export class Food {
 	pixiFood: Sprite;
 
 	constructor(
+		// eslint-disable-next-line @typescript-eslint/no-deprecated
 		world: World,
 		foodId: number,
 		pixiFoodLayer: Container,
@@ -97,14 +98,14 @@ export class Food {
 		}
 		this.food = world.createBody({
 			type: "static", // TODO: add exception for coconut, volcanofood, and meat
-			position: Vec2(spawnX / planckDownscaleFactor, spawnY / planckDownscaleFactor),
+			position: new Vec2(spawnX / planckDownscaleFactor, spawnY / planckDownscaleFactor),
 			awake: true,
 			gravityScale: 0,
 			bullet: true,
 		});
 
 		this.food.createFixture(
-			Box(
+			new Box(
 				(this.foodData.width / planckDownscaleFactor / 2) * foodScale,
 				(this.foodData.height / planckDownscaleFactor / 2) * foodScale,
 			),
