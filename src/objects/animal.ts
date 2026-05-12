@@ -68,7 +68,8 @@ export class Animal {
 	};
 	fixture: Fixture;
 	scale: number;
-	pixiAnimal: Sprite;
+	pixiAnimal: Container;
+	pixiAnimalSprite: Sprite;
 	pixiAnimalUi: Container;
 	inWater: boolean;
 	prevInWater: boolean;
@@ -144,13 +145,15 @@ export class Animal {
 		});
 
 		// Create instance in PIXI
-		this.pixiAnimal = new Sprite(Assets.get(`${this.animalData.name}.png`));
-		this.pixiAnimal.anchor.set(0.5);
+		this.pixiAnimal = new Container();
+		this.pixiAnimalSprite = new Sprite(Assets.get(`${this.animalData.name}.png`));
+		this.pixiAnimalSprite.anchor.set(0.5);
 		this.pixiAnimal.position.set(
 			this.animal.getPosition().x * planckDownscaleFactor,
 			this.animal.getPosition().y * planckDownscaleFactor,
 		);
 		this.pixiAnimal.scale.set(this.animalSize.pixi.scale);
+		this.pixiAnimal.addChild(this.pixiAnimalSprite);
 
 		// Grab hook
 		this.grabHookVisible = false;
@@ -164,20 +167,26 @@ export class Animal {
 		this.pixiAnimalUi = new Container();
 		// Add name
 		if (name) {
-			const nameText = new Text(name, {
-				fontFamily: "Quicksand",
-				fontSize: 20,
-				fill: 0xffffff,
-				align: "center",
+			const nameText = new Text({
+				text: name,
+				style: {
+					fontFamily: "Quicksand",
+					fontSize: 20,
+					fill: 0xffffff,
+					align: "center",
+				},
 			});
 			nameText.anchor.set(0.5);
 			this.pixiAnimalUi.addChild(nameText);
 
-			this.xpText = new Text(makeHumanReadableNumber(this.xp), {
-				fontFamily: "Quicksand",
-				fontSize: 14,
-				fill: 0xffffff,
-				align: "center",
+			this.xpText = new Text({
+				text: makeHumanReadableNumber(this.xp),
+				style: {
+					fontFamily: "Quicksand",
+					fontSize: 14,
+					fill: 0xffffff,
+					align: "center",
+				},
 			});
 			this.xpText.position.set(0, 20);
 			this.xpText.anchor.set(0.5);

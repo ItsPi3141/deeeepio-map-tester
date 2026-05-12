@@ -77,7 +77,7 @@ export const setupBoost = (animal: Animal) => {
 		{ trailing: false },
 	);
 
-	app.view.addEventListener?.("mousedown", (event: Event) => {
+	app.canvas.addEventListener("mousedown", (event: Event) => {
 		// left click
 		if ((event as MouseEvent).which === 1) {
 			const myAnimal = animal.getState;
@@ -87,7 +87,7 @@ export const setupBoost = (animal: Animal) => {
 			}
 		}
 	});
-	app.view.addEventListener?.("mouseup", (event: Event) => {
+	app.canvas.addEventListener("mouseup", (event: Event) => {
 		const myAnimal = animal.getState;
 
 		// right click
@@ -135,7 +135,7 @@ export const setupBoost = (animal: Animal) => {
 		}
 		myAnimal.chargedBoostStartTime = null;
 	});
-	app.view.addEventListener?.("contextmenu", (event: Event) => {
+	app.canvas.addEventListener("contextmenu", (event: Event) => {
 		event.preventDefault();
 		const myAnimal = animal.getState;
 		myAnimal.chargedBoostStartTime = null;
@@ -146,7 +146,7 @@ export function initZoomControls() {
 	const s = gameState;
 	const app = s.app!;
 
-	app.view.addEventListener?.("wheel", (event: unknown) => {
+	app.canvas.addEventListener("wheel", (event: unknown) => {
 		let newZoom = Math.sign((event as { wheelDelta: number }).wheelDelta) === 1 ? s.zoom * 1.2 : s.zoom / 1.2;
 		newZoom = clamp(newZoom, 4, 16);
 		const originalZoom = { z: s.zoom };
