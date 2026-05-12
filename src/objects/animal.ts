@@ -1,3 +1,4 @@
+import { chargedBoost as defaultChargedBoost } from "../animal-abilities/default";
 import { calculateAssetSize } from "../game-utils/animal-sizing";
 import animals from "../game-utils/consts/animals.json";
 import { makeHumanReadableNumber } from "../math-utils";
@@ -5,6 +6,22 @@ import type { AnimalAbilities } from "../types";
 import { linearDampingFactor, planckDownscaleFactor, speedRatio } from "./constants";
 import { Assets, Container, Graphics, Sprite, Text } from "pixi.js";
 import { type Body, Box, Vec2, type World, type Fixture } from "planck";
+
+const defaultAbilities: AnimalAbilities = { chargedBoost: defaultChargedBoost };
+
+const abilityModules: Record<string, AnimalAbilities> = {};
+
+function getAbilityModule(name: string): AnimalAbilities {
+	if (!abilityModules[name]) {
+		try {
+			// eslint-disable-next-line @typescript-eslint/no-require-imports
+			abilityModules[name] = require(`../animal-abilities/${name}.ts`) as AnimalAbilities;
+		} catch {
+			abilityModules[name] = defaultAbilities;
+		}
+	}
+	return abilityModules[name];
+}
 
 export class Animal {
 	animalData: {
@@ -95,11 +112,7 @@ export class Animal {
 	) {
 		this.animalData = animals.find((a) => a.fishLevel === fishLevelId) || animals[0];
 
-		try {
-			this.abilities = require(`../animal-abilities/${this.animalData.name}.ts`);
-		} catch {
-			this.abilities = require("../animal-abilities/default.ts");
-		}
+		this.abilities = getAbilityModule(this.animalData.name);
 
 		// initialize values
 		this.xp = 0;

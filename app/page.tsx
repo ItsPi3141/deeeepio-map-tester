@@ -1,5 +1,6 @@
 "use client";
 
+import starRainFfa from "../src/star_rain_ffa.json";
 import { DISCORD, GITHUB } from "./const";
 import { mdiGithub } from "@mdi/js";
 import Icon from "@mdi/react";
@@ -13,7 +14,8 @@ declare global {
 	interface Window {
 		playerName: string;
 		mapId: string;
-		mapData: Record<string, string | number | object>;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		mapData: Record<string, any>;
 	}
 }
 
@@ -33,10 +35,9 @@ export default class Home extends React.Component {
 		window.mapId = this.state.mapId;
 
 		if (!builtInMap) {
-			const map: Record<string, string | number | object> = await (
-				await fetch(`https://apibeta.deeeep.io/maps/s/${this.state.mapId}`)
-			).json();
-			if (map.statusCode) {
+			const response = await fetch(`https://apibeta.deeeep.io/maps/s/${this.state.mapId}`);
+			const map = (await response.json()) as typeof window.mapData;
+			if ((map as Record<string, unknown>).statusCode) {
 				this.setState({ mapError: true });
 				return;
 			}
@@ -44,7 +45,7 @@ export default class Home extends React.Component {
 		} else {
 			switch (builtInMap) {
 				case "star_rain_ffa":
-					window.mapData = require("../src/star_rain_ffa.json");
+					window.mapData = starRainFfa;
 					break;
 			}
 		}
@@ -62,7 +63,7 @@ export default class Home extends React.Component {
 			{ once: true },
 		);
 
-		require("../src/game.ts");
+		await import("../src/game");
 	}
 	render() {
 		return (
@@ -113,7 +114,7 @@ export default class Home extends React.Component {
 										className="btn w-24 border-emerald-600 bg-emerald-500 hover:border-emerald-700 hover:bg-emerald-600"
 										type="button"
 										onClick={() => {
-											this.startGame();
+											void this.startGame();
 										}}
 									>
 										Play
@@ -123,7 +124,7 @@ export default class Home extends React.Component {
 									className="btn w-72 border-blue-600 bg-blue-500 hover:border-blue-700 hover:bg-blue-600"
 									type="button"
 									onClick={() => {
-										this.startGame("star_rain_ffa");
+										void this.startGame("star_rain_ffa");
 									}}
 								>
 									Try star_rain_ffa

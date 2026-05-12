@@ -19,7 +19,7 @@ export const setupBoost = (animal: Animal) => {
 	const app = s.app!;
 
 	const throttledBoost = throttle(
-		(event, animalInstance) => {
+		(event: { clientX: number; clientY: number }, animalInstance: Animal) => {
 			const centerX = (animalInstance.pixiAnimal.x - app.stage.pivot.x) * s.zoom;
 			const centerY = (animalInstance.pixiAnimal.y - app.stage.pivot.y) * s.zoom;
 			const angle = point2rad(
@@ -55,7 +55,7 @@ export const setupBoost = (animal: Animal) => {
 		{ trailing: false },
 	);
 	const throttledLandhop = throttle(
-		(event, animalInstance) => {
+		(event: { clientX: number; clientY: number }, animalInstance: Animal) => {
 			const centerX = (animalInstance.pixiAnimal.x - app.stage.pivot.x) * s.zoom;
 			const centerY = (animalInstance.pixiAnimal.y - app.stage.pivot.y) * s.zoom;
 			const angle = point2rad(
@@ -78,8 +78,8 @@ export const setupBoost = (animal: Animal) => {
 	);
 
 	app.canvas.addEventListener("mousedown", (event: Event) => {
-		// left click
-		if ((event as MouseEvent).which === 1) {
+		const mouseEvent = event as MouseEvent;
+		if (mouseEvent.which === 1) {
 			const myAnimal = animal.getState;
 
 			if (myAnimal.animalData.hasSecondaryAbility) {
@@ -88,10 +88,10 @@ export const setupBoost = (animal: Animal) => {
 		}
 	});
 	app.canvas.addEventListener("mouseup", (event: Event) => {
+		const mouseEvent = event as MouseEvent;
 		const myAnimal = animal.getState;
 
-		// right click
-		if ((event as MouseEvent).which === 3) {
+		if (mouseEvent.which === 3) {
 			myAnimal.chargedBoostStartTime = null;
 			return;
 		}
@@ -101,7 +101,7 @@ export const setupBoost = (animal: Animal) => {
 			typeof myAnimal.chargedBoostStartTime === "number" &&
 			Date.now() - myAnimal.chargedBoostStartTime > myAnimal.animalData.secondaryAbilityLoadTime
 		) {
-			myAnimal.useSecondaryAbility(throttledBoost.bind(null, event, myAnimal));
+			myAnimal.useSecondaryAbility(throttledBoost.bind(null, mouseEvent, myAnimal));
 		} else if (
 			(myAnimal.animalData.hasSecondaryAbility &&
 				typeof myAnimal.chargedBoostStartTime === "number" &&
@@ -130,9 +130,9 @@ export const setupBoost = (animal: Animal) => {
 			}
 
 			if (landhop) {
-				throttledLandhop(event, myAnimal);
+				throttledLandhop(mouseEvent, myAnimal);
 			} else if (!myAnimal.walking) {
-				throttledBoost(event, myAnimal);
+				throttledBoost(mouseEvent, myAnimal);
 			}
 		}
 		myAnimal.chargedBoostStartTime = null;

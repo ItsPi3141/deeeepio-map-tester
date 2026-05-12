@@ -1,18 +1,34 @@
 import type { Food } from "../objects/food";
 import { gameState } from "./game-state";
 
+interface FoodUserData {
+	increaseXp?: (xp: number) => void;
+	[key: string]: unknown;
+}
+
+type FoodConstructor = new (
+	world: NonNullable<typeof gameState.world>,
+	foodId: number,
+	pixiFoodLayer: NonNullable<typeof gameState.layers>["foodLayer"],
+	x: number,
+	y: number,
+	foodData: Food["data"],
+	terrains: NonNullable<typeof gameState.layers>["terrainsLayer"]["children"],
+	waters: NonNullable<typeof gameState.layers>["waterLayer"]["children"],
+) => Food;
+
 export function updateFood(food: Food): Food | null {
 	const s = gameState;
 	const thisFood = food.getState;
 
 	for (let ce = thisFood.food.getContactList(); ce; ce = ce.next) {
-		const data = ce.other?.getUserData() as Record<string, any>;
+		const data = ce.other?.getUserData() as FoodUserData | undefined;
 
-		if (typeof data.increaseXp !== "undefined") {
+		if (data && typeof data.increaseXp !== "undefined") {
 			setTimeout(() => {
 				s.foods.push(
-					new (food.constructor as any)(
-						s.world,
+					new (food.constructor as FoodConstructor)(
+						s.world!,
 						food.data.id,
 						s.layers!.foodLayer,
 						0,

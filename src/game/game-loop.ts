@@ -36,7 +36,7 @@ export async function initGame() {
 		antialias: true,
 		clearBeforeRender: true,
 	});
-	(document.querySelector("main > div.game") as HTMLDivElement).appendChild(app.canvas as HTMLCanvasElement);
+	(document.querySelector("main > div.game") as HTMLDivElement).appendChild(app.canvas);
 	s.app = app;
 
 	// Create layers

@@ -5,7 +5,7 @@ const animalSpritesheets = ["assets", "assets-1", "assets-2", "assets-3", "asset
 export function loadAssets() {
 	return new Promise<void>((resolve) => {
 		console.log("Loading assets...");
-		(async () => {
+		void (async () => {
 			await Assets.load([
 				"/textures/beach_underwater.png",
 				"/textures/beach.png",

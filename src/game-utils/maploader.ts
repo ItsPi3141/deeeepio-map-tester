@@ -45,18 +45,25 @@ import props from "./consts/props.json";
  * @property {string} height
  * @returns {{ screenObjects: screenObjects; settings: settings; worldSize: worldSize }} The parsed map data.
  */
-export function loadMap(json: Record<string, string | number | object>) {
+interface MapDataParsed {
+	screenObjects: { layerId: string; [key: string]: unknown }[];
+	settings: { gravity?: number; [key: string]: unknown };
+	worldSize: { width: string; height: string };
+	[key: string]: unknown;
+}
+
+export function loadMap(json: Record<string, unknown>) {
 	if (!json.data) return false;
-	const data = JSON.parse(json.data as string);
+	const data = JSON.parse(json.data as string) as MapDataParsed;
 	data.screenObjects = data.screenObjects.filter(
-		(l: Record<string, string>) => !["animals", "npc-spawns", "triggers", "currents"].includes(l.layerId),
+		(l) => !["animals", "npc-spawns", "triggers", "currents"].includes(l.layerId),
 	);
-	const tempObj: Record<string, string | number | object> = {};
-	data.screenObjects.forEach((l: Record<string, string | number>) => {
+	const tempObj: Record<string, unknown[]> = {};
+	data.screenObjects.forEach((l) => {
 		if (!tempObj[l.layerId]) tempObj[l.layerId] = [];
-		(tempObj[l.layerId] as Record<string, string | number>[]).push(l);
+		tempObj[l.layerId].push(l);
 	});
-	data.screenObjects = tempObj;
+	data.screenObjects = tempObj as unknown as MapDataParsed["screenObjects"];
 	if (!data.settings) {
 		data.settings = {};
 	}
@@ -84,7 +91,7 @@ export function loadMap(json: Record<string, string | number | object>) {
 	// 	});
 	// 	data.screenObjects[l] = newShapesList;
 	// });
-	return data;
+	return data as unknown as Record<string, unknown>;
 }
 
 export function getHidespaceById(id: number) {
@@ -181,7 +188,7 @@ export function getBiomes(n: number) {
 	];
 	return n
 		.toString(2)
-		.substr(-7)
+		.slice(-7)
 		.padStart(7, "0")
 		.split("")
 		.map((e: string, i: number) => (Number.parseInt(e) === 0 ? null : habitats[i]))
