@@ -4,7 +4,7 @@ import { makeHumanReadableNumber } from "../math-utils";
 import type { AnimalAbilities } from "../types";
 import { linearDampingFactor, planckDownscaleFactor, speedRatio } from "./constants";
 import { Assets, Container, Graphics, Sprite, Text } from "pixi.js";
-import { type Body, Box, type DistanceJoint, Vec2, type World, type Fixture } from "planck";
+import { type Body, Box, Vec2, type World, type Fixture } from "planck";
 
 export class Animal {
 	animalData: {

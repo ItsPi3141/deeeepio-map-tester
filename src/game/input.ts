@@ -124,7 +124,9 @@ export const setupBoost = (animal: Animal) => {
 					) {
 						landhop = true;
 					}
-				} catch {}
+				} catch (e) {
+					console.error(e);
+				}
 			}
 
 			if (landhop) {

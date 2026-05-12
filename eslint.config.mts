@@ -18,4 +18,5 @@ export default defineConfig([
 	},
 	tseslint.configs.recommended,
 	pluginReact.configs.flat.recommended,
+	{ rules: { "react/no-unescaped-entities": "off" } },
 ]);
