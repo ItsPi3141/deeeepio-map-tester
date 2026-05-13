@@ -15,6 +15,7 @@ type FoodConstructor = new (
 	foodData: Food["data"],
 	terrains: NonNullable<typeof gameState.layers>["terrainsLayer"]["children"],
 	waters: NonNullable<typeof gameState.layers>["waterLayer"]["children"],
+	airPockets: { x: number; y: number }[][],
 ) => Food;
 
 export function updateFood(food: Food): Food | null {
@@ -36,6 +37,7 @@ export function updateFood(food: Food): Food | null {
 						food.data,
 						[...s.layers!.terrainsLayer.children, ...s.layers!.islandsLayer.children],
 						s.layers!.waterLayer.children,
+						s.airPocketObjects,
 					),
 				);
 			}, food.data.respawnDelay || 1000);

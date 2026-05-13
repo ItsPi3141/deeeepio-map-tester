@@ -180,6 +180,7 @@ export function renderMap(map: MapData, layers: LayerRefs) {
 					},
 					[...layers.terrainsLayer.children, ...layers.islandsLayer.children],
 					layers.waterLayer.children,
+					s.airPocketObjects,
 				),
 			);
 		}

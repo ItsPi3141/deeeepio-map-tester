@@ -52,6 +52,7 @@ export class Food {
 		data: FoodData,
 		terrains: ContainerChild[],
 		waters: ContainerChild[],
+		airPockets: { x: number; y: number }[][],
 	) {
 		this.foodData = foods.find((f) => f.id === foodId) || foods[13];
 
@@ -89,6 +90,22 @@ export class Food {
 						if (w.points && [-1, 0].includes(robustPointInPolygon(w.points, [spawnX, spawnY]))) {
 							validLocation = true;
 							break;
+						}
+					}
+					if (validLocation) {
+						for (let i = 0; i < airPockets.length; i++) {
+							const ap = airPockets[i];
+							if (
+								[-1, 0].includes(
+									robustPointInPolygon(
+										ap.map((p) => [p.x, p.y]),
+										[spawnX, spawnY],
+									),
+								)
+							) {
+								validLocation = false;
+								break;
+							}
 						}
 					}
 				} else {
