@@ -65,11 +65,13 @@ export function renderMap(map: MapData, layers: LayerRefs) {
 		const shape: PIXI.Graphics & { points?: number[][] } = renderTerrainShape(island.points, island.texture, false);
 		shape.points = island.points.map((p) => [p.x, p.y]);
 		layers.islandsLayer.addChild(shape);
+		s.islandPolygons.push(island.points);
 	});
 	map.screenObjects.terrains?.forEach((terrain: DeeeepioMapScreenObject) => {
 		const shape: PIXI.Graphics & { points?: number[][] } = renderTerrainShape(terrain.points, terrain.texture, false);
 		shape.points = terrain.points.map((p) => [p.x, p.y]);
 		layers.terrainsLayer.addChild(shape);
+		s.terrainPolygons.push(terrain.points);
 	});
 	map.screenObjects.ceilings?.forEach((ceiling: DeeeepioMapScreenObject) => {
 		const shape: PIXI.Graphics & { points?: number[][] } = renderTerrainShape(ceiling.points, ceiling.texture, false);
@@ -162,26 +164,16 @@ export function renderMap(map: MapData, layers: LayerRefs) {
 		for (let i = 0; i < f.settings.count; i++) {
 			const foodId = f.settings.foodIds[Math.floor(Math.random() * f.settings.foodIds.length)];
 			s.foods.push(
-				new Food(
-					s.world!,
-					foodId,
-					layers.foodLayer,
-					0,
-					0,
-					{
-						type: "water",
-						id: foodId,
-						respawnDelay:
-							typeof f.settings.reSpawnMs === "string"
-								? Number.parseInt(f.settings.reSpawnMs)
-								: f.settings.reSpawnMs || 1000,
-						onlyOnWater: f.settings.onlyOnWater,
-						spawner: { water: { x: f.position.x, y: f.position.y, width: f.size.width, height: f.size.height } },
-					},
-					[...layers.terrainsLayer.children, ...layers.islandsLayer.children],
-					layers.waterLayer.children,
-					s.airPocketObjects,
-				),
+				new Food(s.world!, foodId, layers.foodLayer, 0, 0, {
+					type: "water",
+					id: foodId,
+					respawnDelay:
+						typeof f.settings.reSpawnMs === "string"
+							? Number.parseInt(f.settings.reSpawnMs)
+							: f.settings.reSpawnMs || 1000,
+					onlyOnWater: f.settings.onlyOnWater,
+					spawner: { water: { x: f.position.x, y: f.position.y, width: f.size.width, height: f.size.height } },
+				}),
 			);
 		}
 	});

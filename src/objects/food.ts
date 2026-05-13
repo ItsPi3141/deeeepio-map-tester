@@ -1,6 +1,7 @@
 import foods from "../game-utils/consts/foods.json";
+import { gameState } from "../game/game-state";
 import { planckDownscaleFactor } from "./constants";
-import { Assets, Container, ContainerChild, Sprite } from "pixi.js";
+import { Assets, Container, Sprite } from "pixi.js";
 import { Body, Box, Vec2, World } from "planck";
 import robustPointInPolygon from "robust-point-in-polygon";
 
@@ -50,13 +51,12 @@ export class Food {
 		x: number,
 		y: number,
 		data: FoodData,
-		terrains: ContainerChild[],
-		waters: ContainerChild[],
-		airPockets: { x: number; y: number }[][],
 	) {
 		this.foodData = foods.find((f) => f.id === foodId) || foods[13];
 
 		this.data = data;
+
+		const s = gameState;
 
 		// determine spawn location
 		// TODO: implement ground food
@@ -65,16 +65,19 @@ export class Food {
 		if (data?.type === "water" && data?.spawner?.water) {
 			let validLocation = false;
 			let remainingTries = maxRetries;
+			const terrainPoints = [...s.terrainPolygons, ...s.islandPolygons].map((poly) =>
+				poly.map((p) => [p.x, p.y] as [number, number]),
+			);
+			const waterPoints = s.waterObjects.map((poly) => poly.map((p) => [p.x, p.y] as [number, number]));
+			const airPocketPoints = s.airPocketObjects.map((poly) => poly.map((p) => [p.x, p.y] as [number, number]));
 			while (!validLocation && remainingTries > 0) {
 				remainingTries--;
 				spawnX = data.spawner.water.x + Math.random() * data.spawner.water.width;
 				spawnY = data.spawner.water.y + Math.random() * data.spawner.water.height;
 
 				let interrupt = false;
-				for (let i = 0; i < terrains.length; i++) {
-					const t = terrains[i] as ContainerChild & { points?: [number, number][] };
-					// 1 is outside, 0 is on the line, -1 is inside
-					if (t.points && [-1, 0].includes(robustPointInPolygon(t.points, [spawnX, spawnY]))) {
+				for (let i = 0; i < terrainPoints.length; i++) {
+					if ([-1, 0].includes(robustPointInPolygon(terrainPoints[i], [spawnX, spawnY]))) {
 						interrupt = true;
 						break;
 					}
@@ -84,25 +87,15 @@ export class Food {
 				}
 
 				if (data.onlyOnWater) {
-					for (let i = 0; i < waters.length; i++) {
-						const w = waters[i] as ContainerChild & { points?: [number, number][] };
-						// 1 is outside, 0 is on the line, -1 is inside
-						if (w.points && [-1, 0].includes(robustPointInPolygon(w.points, [spawnX, spawnY]))) {
+					for (let i = 0; i < waterPoints.length; i++) {
+						if ([-1, 0].includes(robustPointInPolygon(waterPoints[i], [spawnX, spawnY]))) {
 							validLocation = true;
 							break;
 						}
 					}
 					if (validLocation) {
-						for (let i = 0; i < airPockets.length; i++) {
-							const ap = airPockets[i];
-							if (
-								[-1, 0].includes(
-									robustPointInPolygon(
-										ap.map((p) => [p.x, p.y]),
-										[spawnX, spawnY],
-									),
-								)
-							) {
+						for (let i = 0; i < airPocketPoints.length; i++) {
+							if ([-1, 0].includes(robustPointInPolygon(airPocketPoints[i], [spawnX, spawnY]))) {
 								validLocation = false;
 								break;
 							}

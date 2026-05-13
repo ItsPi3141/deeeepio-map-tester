@@ -44,6 +44,8 @@ export interface GameState {
 	foods: Food[];
 	waterObjects: { x: number; y: number }[][];
 	airPocketObjects: { x: number; y: number }[][];
+	terrainPolygons: { x: number; y: number }[][];
+	islandPolygons: { x: number; y: number }[][];
 	waterBBoxes: { minX: number; minY: number; maxX: number; maxY: number }[];
 	shadowSettings: { alpha: number; size: number };
 	whirlPool: { rotation: number };
@@ -61,6 +63,8 @@ export const gameState: GameState = {
 	foods: [],
 	waterObjects: [],
 	airPocketObjects: [],
+	terrainPolygons: [],
+	islandPolygons: [],
 	waterBBoxes: [],
 	shadowSettings: { alpha: 0, size: 0 },
 	whirlPool: { rotation: 0 },

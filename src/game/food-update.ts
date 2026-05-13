@@ -13,32 +13,19 @@ type FoodConstructor = new (
 	x: number,
 	y: number,
 	foodData: Food["data"],
-	terrains: NonNullable<typeof gameState.layers>["terrainsLayer"]["children"],
-	waters: NonNullable<typeof gameState.layers>["waterLayer"]["children"],
-	airPockets: { x: number; y: number }[][],
 ) => Food;
 
 export function updateFood(food: Food): Food | null {
 	const s = gameState;
 	const thisFood = food.getState;
 
-	for (let ce = thisFood.food.getContactList(); ce; ce = ce.next) {
+	for (let ce = thisFood.food.getContactList(); ce; ce.next) {
 		const data = ce.other?.getUserData() as FoodUserData | undefined;
 
 		if (data && typeof data.increaseXp !== "undefined") {
 			setTimeout(() => {
 				s.foods.push(
-					new (food.constructor as FoodConstructor)(
-						s.world!,
-						food.data.id,
-						s.layers!.foodLayer,
-						0,
-						0,
-						food.data,
-						[...s.layers!.terrainsLayer.children, ...s.layers!.islandsLayer.children],
-						s.layers!.waterLayer.children,
-						s.airPocketObjects,
-					),
+					new (food.constructor as FoodConstructor)(s.world!, food.data.id, s.layers!.foodLayer, 0, 0, food.data),
 				);
 			}, food.data.respawnDelay || 1000);
 			data.increaseXp(thisFood.foodData.xp);
