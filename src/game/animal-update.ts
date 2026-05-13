@@ -273,7 +273,12 @@ export function updateAnimal(animal: Animal, isMine: boolean, isMain = false) {
 					(thisAnimal.pixiAnimal.x - f.x) ** 2 + (thisAnimal.pixiAnimal.y - f.y) ** 2 <
 					Math.max(window.innerHeight, window.innerWidth) * s.zoom * 20
 				) {
-					f.renderable = true;
+					const underOpaqueCeiling = layers.ceilingsLayer.children.some(
+						(c: PIXI.ContainerChild & { points?: [number, number][]; alpha?: number }) => {
+							return c.points && c.alpha === 1 && [-1, 0].includes(pointInPolygon(c.points, [f.x, f.y]));
+						},
+					);
+					f.renderable = !underOpaqueCeiling;
 				} else {
 					f.renderable = false;
 				}
